@@ -1,19 +1,32 @@
 package com.bluemsun.entity;
 
 public class User {
-    private int id;
-    private String username;
-    private String password;
-    private int sex;
+
+    private int id;//id
+    private String username;//用户名
+    private String password;//密码
+    private int sex;//性别
+    private String headPortrait;//头像资源路径
+    private int status;//账号状态
+    private String description;//简介
+    private String stuNumber;//学号
+    private int fansNum;//粉丝数量
+    private int followUserNum;//关注数量
 
     public User() {
     }
 
-    public User(int id, String username, String password, int sex) {
+    public User(int id, String username, String password, int sex, String headPortrait, int status, String description, String stuNumber, int fansNum, int followUserNum) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.sex = sex;
+        this.headPortrait = headPortrait;
+        this.status = status;
+        this.description = description;
+        this.stuNumber = stuNumber;
+        this.fansNum = fansNum;
+        this.followUserNum = followUserNum;
     }
 
     public int getId() {
@@ -48,6 +61,54 @@ public class User {
         this.sex = sex;
     }
 
+    public String getHeadPortrait() {
+        return headPortrait;
+    }
+
+    public void setHeadPortrait(String headPortrait) {
+        this.headPortrait = headPortrait;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getStuNumber() {
+        return stuNumber;
+    }
+
+    public void setStuNumber(String stuNumber) {
+        this.stuNumber = stuNumber;
+    }
+
+    public int getFansNum() {
+        return fansNum;
+    }
+
+    public void setFansNum(int fansNum) {
+        this.fansNum = fansNum;
+    }
+
+    public int getFollowUserNum() {
+        return followUserNum;
+    }
+
+    public void setFollowUserNum(int followUserNum) {
+        this.followUserNum = followUserNum;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -55,6 +116,12 @@ public class User {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", sex=" + sex +
+                ", headPortrait='" + headPortrait + '\'' +
+                ", status=" + status +
+                ", description='" + description + '\'' +
+                ", stuNumber='" + stuNumber + '\'' +
+                ", fansNum=" + fansNum +
+                ", followUserNum=" + followUserNum +
                 '}';
     }
 }
