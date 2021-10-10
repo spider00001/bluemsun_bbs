@@ -22,6 +22,8 @@ public class FileUploadController extends HttpServlet {
 
         if (!file.isEmpty()) {
             try {
+                HttpServletRequest req;
+
                 // 文件存放服务端的位置
                 String rootPath = "d:/tmp";
                 File dir = new File(rootPath + File.separator + "tmpFiles");
