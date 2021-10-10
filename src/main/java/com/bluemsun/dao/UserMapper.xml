@@ -17,7 +17,7 @@
         update bs_bbs.tb_user set username=#{username},password=#{password},sex=#{sex} where id=#{id};
     </update>
 
-    <select id="queryUserById" parameterType="int">
+    <select id="queryUserById" parameterType="int" resultType="User">
         select * from bs_bbs.tb_user where id=#{id};
     </select>
 

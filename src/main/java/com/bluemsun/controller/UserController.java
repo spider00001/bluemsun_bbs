@@ -1,6 +1,5 @@
 package com.bluemsun.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.bluemsun.entity.User;
 import com.bluemsun.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController("/user")
+@RestController
+@RequestMapping("/user")
 public class UserController extends HttpServlet {
 
     @Autowired
@@ -24,8 +24,9 @@ public class UserController extends HttpServlet {
 
     }
 
-    @RequestMapping("/login")
-    public void login(@RequestBody User user, HttpServletResponse resp) throws IOException {
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    public Map login(@RequestBody User user) throws IOException {
+
         User user1 = userService.queryUserById(user.getId());
         Map map = new HashMap();
         if (user1 != null) {
@@ -36,7 +37,13 @@ public class UserController extends HttpServlet {
             map.put("msg","登录失败");
             map.put("status",2);
         }
-        resp.getWriter().println(JSON.toJSONString(map));
+//        int a =1/0;
+        System.out.println("=================");
+        return map;
     }
 
+    @RequestMapping("/test")
+    public void test() {
+        System.out.println("+++++++++++++++++++++++++++++");
+    }
 }

@@ -44,7 +44,7 @@
 <!--    </bean>-->
 
     <bean id="userMapperImpl" class="com.bluemsun.dao.UserMapperImpl">
-<!--        <property name="sqlSessionTemplate" ref="sqlSession"/>-->
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
 
 

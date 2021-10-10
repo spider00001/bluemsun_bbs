@@ -38,19 +38,28 @@
     </mvc:interceptors>
 
     <!-- 5.json乱码配置-->
-<!--    <mvc:annotation-driven>-->
-<!--        <mvc:message-converters register-defaults="true">-->
-<!--            <bean class="org.springframework.http.converter.StringHttpMessageConverter">-->
-<!--                <constructor-arg value="UTF-8"/>-->
-<!--            </bean>-->
-<!--            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">-->
-<!--                <property name="objectMapper">-->
-<!--                    <bean class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">-->
-<!--                        <property name="failOnEmptyBeans" value="false"/>-->
-<!--                    </bean>-->
-<!--                </property>-->
-<!--            </bean>-->
-<!--        </mvc:message-converters>-->
-<!--    </mvc:annotation-driven>-->
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+            </bean>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper">
+                    <bean class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+                        <property name="failOnEmptyBeans" value="false"/>
+                    </bean>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+<!--    &lt;!&ndash;注解适配器 &ndash;&gt;-->
+<!--    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">-->
+<!--        <property name="messageConverters">-->
+<!--            <list>-->
+<!--                <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"></bean>-->
+<!--            </list>-->
+<!--        </property>-->
+<!--    </bean>-->
 
 </beans>
