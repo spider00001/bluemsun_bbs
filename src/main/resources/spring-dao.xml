@@ -10,6 +10,7 @@
     <!--    1.关联数据库配置文件-->
     <context:property-placeholder location="classpath:database.properties"/>
 
+
     <!--    2.数据库连接池-->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${jdbc.driver}"/>
@@ -43,7 +44,7 @@
 <!--        <property name="basePackage" value="com.bluemsun.dao"/>-->
 <!--    </bean>-->
 
-    <bean id="userMapperImpl" class="com.bluemsun.dao.UserMapperImpl">
+    <bean id="userMapper" class="com.bluemsun.dao.UserMapperImpl">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
 

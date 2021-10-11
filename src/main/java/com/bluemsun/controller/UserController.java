@@ -16,8 +16,11 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController extends HttpServlet {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping("/register")
     public void register(@RequestBody User user, HttpServletResponse resp) {
@@ -26,6 +29,8 @@ public class UserController extends HttpServlet {
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public Map login(@RequestBody User user) {
+
+        System.out.println("==============");
 
         User user1 = userService.queryUserById(user.getId());
         Map map = new HashMap();

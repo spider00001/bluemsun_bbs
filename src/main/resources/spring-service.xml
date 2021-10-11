@@ -10,21 +10,19 @@
     <!--    扫描service下的包-->
     <context:component-scan base-package="com.bluemsun.service"/>
 
-    <!--    声明式事务配置-->
+        <!--声明式事务配置-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <!--        注入数据源-->
+        <!--注入数据源-->
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-        <constructor-arg index="0" ref="sqlSessionFactory" />
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
     </bean>
 
     <!--    将所有业务注入到spring ；配置、注解皆可-->
-    <bean id="userServiceImpl" class="com.bluemsun.service.UserServiceImpl">
-        <property name="userMapper" ref="userMapperImpl"/>
+    <bean id="userService" class="com.bluemsun.service.UserServiceImpl">
+<!--        <property name="userMapper" ref="userMapper"/>-->
     </bean>
-
-
 
 </beans>

@@ -21,7 +21,7 @@
         select * from bs_bbs.tb_user where id=#{id};
     </select>
 
-    <select id="queryAllUser" resultType="User">
+    <select id="queryAllUser" resultType="com.bluemsun.entity.User">
         select * from bs_bbs.tb_user;
     </select>
 </mapper>
