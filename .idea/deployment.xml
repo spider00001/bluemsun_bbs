@@ -5,7 +5,7 @@
       <paths name="TEST">
         <serverdata>
           <mappings>
-            <mapping deploy="/bluemsun_bbs" local="$PROJECT_DIR$/out/artifacts/bluemsun_bbs_war_exploded" web="/" />
+            <mapping deploy="/usr/local/tomcat/webapps" local="$PROJECT_DIR$/out/artifacts/bluemsun_bbs_war_exploded" web="/" />
           </mappings>
         </serverdata>
       </paths>

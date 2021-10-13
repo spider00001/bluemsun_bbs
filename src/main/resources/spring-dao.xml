@@ -10,7 +10,6 @@
     <!--    1.关联数据库配置文件-->
     <context:property-placeholder location="classpath:database.properties"/>
 
-
     <!--    2.数据库连接池-->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${jdbc.driver}"/>
@@ -27,6 +26,14 @@
         <!-- 当获取连接失败重试次数 -->
         <property name="acquireRetryAttempts" value="2"/>
     </bean>
+
+    <!--配置数据源：数据源有非常多，可以使用第三方的，也可使使用Spring的-->
+<!--    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+<!--        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>-->
+<!--        <property name="url" value="jdbc:mysql://59.110.32.130:3306/bs_bbs?useSSL=true&amp;useUnicode=true&amp;characterEncoding=utf8"/>-->
+<!--        <property name="username" value="root"/>-->
+<!--        <property name="password" value="123456"/>-->
+<!--    </bean>-->
 
     <!-- 3.配置SqlSessionFactory对象 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

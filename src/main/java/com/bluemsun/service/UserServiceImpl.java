@@ -22,23 +22,30 @@ public class UserServiceImpl implements UserService{
         return userMapper.addUser(user);
     }
 
-    @Override
-    public int deleteUserById(int id) {
-        return userMapper.deleteUserById(id);
-    }
+//
+//    @Override
+//    public int addUser(User user) {
+//        return userMapper.addUser(user);
+//    }
+//
+//    @Override
+//    public int deleteUserById(int id) {
+//        return userMapper.deleteUserById(id);
+//    }
+//
+//    @Override
+//    public int updateUser(User user) {
+//        return userMapper.updateUser(user);
+//    }
+//
+//    @Override
+//    public User queryUserById(int id) {
+//        return userMapper.queryUserById(id);
+//    }
+//
+//    @Override
+//    public List<User> queryAllUser() {
+//        return userMapper.queryAllUser();
+//    }
 
-    @Override
-    public int updateUser(User user) {
-        return userMapper.updateUser(user);
-    }
-
-    @Override
-    public User queryUserById(int id) {
-        return userMapper.queryUserById(id);
-    }
-
-    @Override
-    public List<User> queryAllUser() {
-        return userMapper.queryAllUser();
-    }
 }

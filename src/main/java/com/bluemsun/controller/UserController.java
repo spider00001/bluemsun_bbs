@@ -23,27 +23,39 @@ public class UserController extends HttpServlet {
     }
 
     @PostMapping("/register")
-    public void register(@RequestBody User user, HttpServletResponse resp) {
+    public Map register(@RequestBody User user, HttpServletResponse resp) {
 
-    }
-
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public Map login(@RequestBody User user) {
-
-        System.out.println("==============");
-
-        User user1 = userService.queryUserById(user.getId());
+        System.out.println("===========");
+        int res = userService.addUser(user);
         Map map = new HashMap();
-        if (user1 != null) {
-            map.put("msg","登录成功");
+        if (res > 0) {
+            map.put("msg","注册成功");
             map.put("status",1);
         }
         else {
-            map.put("msg","登录失败");
+            map.put("msg","注册失败");
             map.put("status",2);
         }
-
         return map;
     }
+
+//    @RequestMapping(value = "/login",method = RequestMethod.POST)
+//    public Map login(@RequestBody User user) {
+//
+//        System.out.println("==============");
+//
+//        User user1 = userService.queryUserById(user.getId());
+//        Map map = new HashMap();
+//        if (user1 != null) {
+//            map.put("msg","登录成功");
+//            map.put("status",1);
+//        }
+//        else {
+//            map.put("msg","登录失败");
+//            map.put("status",2);
+//        }
+//
+//        return map;
+//    }
 
 }

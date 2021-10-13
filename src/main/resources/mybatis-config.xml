@@ -4,6 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
+    <!--下划线自动映射驼峰字段-->
+    <settings>
+    <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
     <typeAliases>
         <package name="com.bluemsun.entity"/>
     </typeAliases>

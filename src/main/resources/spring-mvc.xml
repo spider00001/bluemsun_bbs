@@ -14,6 +14,8 @@
     <mvc:annotation-driven/>
     <!-- 2.静态资源默认servlet配置-->
     <mvc:default-servlet-handler/>
+<!--    <context:annotation-config/>-->
+
 
     <!-- 3.配置jsp 显示ViewResolver视图解析器 -->
 <!--    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
@@ -53,7 +55,7 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-<!--    &lt;!&ndash;注解适配器 &ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;    &lt;!&ndash;注解适配器 &ndash;&gt;&ndash;&gt;&ndash;&gt;-->
 <!--    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">-->
 <!--        <property name="messageConverters">-->
 <!--            <list>-->

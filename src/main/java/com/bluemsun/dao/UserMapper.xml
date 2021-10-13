@@ -6,22 +6,30 @@
 <mapper namespace="com.bluemsun.dao.UserMapper">
 
     <insert id="addUser" parameterType="User">
-        insert into bs_bbs.tb_user(id, username, password, sex) values (#{username},#{password},#{sex});
+        insert into bs_bbs.tb_user(username, password, stu_number, sex) values (#{username},#{password},#{stuNumber},#{sex})
     </insert>
 
-    <delete id="deleteUserById" parameterType="int">
-        delete from bs_bbs.tb_user where id=#{id};
-    </delete>
 
-    <update id="updateUser" parameterType="User">
-        update bs_bbs.tb_user set username=#{username},password=#{password},sex=#{sex} where id=#{id};
-    </update>
+<!--    <insert id="addUser" parameterType="User">-->
+<!--        insert into bs_bbs.tb_user(id, username, password, sex) values (#{username},#{password},#{sex});-->
+<!--    </insert>-->
 
-    <select id="queryUserById" parameterType="int" resultType="User">
-        select * from bs_bbs.tb_user where id=#{id};
-    </select>
+<!--    <delete id="deleteUserById" parameterType="int">-->
+<!--        delete from bs_bbs.tb_user where id=#{id};-->
+<!--    </delete>-->
 
-    <select id="queryAllUser" resultType="com.bluemsun.entity.User">
-        select * from bs_bbs.tb_user;
-    </select>
+<!--    <update id="updateUser" parameterType="User">-->
+<!--        update bs_bbs.tb_user set username=#{username},password=#{password},sex=#{sex} where id=#{id};-->
+<!--    </update>-->
+
+<!--    <select id="queryUserById" parameterType="int" resultType="User">-->
+<!--        select * from bs_bbs.tb_user where id=#{id};-->
+<!--    </select>-->
+
+<!--    <select id="queryAllUser" resultType="com.bluemsun.entity.User">-->
+<!--        select * from bs_bbs.tb_user;-->
+<!--    </select>-->
+
+
+
 </mapper>

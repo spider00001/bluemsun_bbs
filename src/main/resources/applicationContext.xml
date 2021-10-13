@@ -10,11 +10,11 @@
 
     <bean id="User" class="com.bluemsun.entity.User"/>
 
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
-        <property name="prefix" value="/WEB-INF/jsp/" />
-        <property name="suffix" value=".jsp" />
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
-    </bean>
+<!--    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >-->
+<!--        <property name="prefix" value="/WEB-INF/jsp/" />-->
+<!--        <property name="suffix" value=".jsp" />-->
+<!--        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />-->
+<!--    </bean>-->
 
 <!--    <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>-->
 
@@ -22,5 +22,7 @@
         <property name="maxUploadSize" value="900000" />
         <property name="maxInMemorySize" value="900000" />
     </bean>
+
+
 
 </beans>
