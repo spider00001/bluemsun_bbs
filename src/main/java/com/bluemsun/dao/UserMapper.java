@@ -11,15 +11,14 @@ public interface UserMapper {
 
     int addUser(User user);
 
-//    int addUser(User user);
-//
-//    int deleteUserById(@Param("id") int id);
-//
-//    int updateUser(User user);
-//
-//    User queryUserById(@Param("id") int id);
-//
-//    List<User> queryAllUser();
+    int deleteUser(User user);
 
+    int updateUser(User user);
+
+    User selectUserByStuNumber(User user);
+
+    User selectUserByUsername(User user);
+
+    int frozenUser(User user);
 
 }

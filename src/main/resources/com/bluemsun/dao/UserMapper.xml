@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bluemsun.dao.UserMapper">
+
+    <insert id="addUser" parameterType="User">
+        insert into bs_bbs.tb_user(username, password, stu_number) values (#{username},#{password},#{stuNumber});
+    </insert>
+
+    <delete id="deleteUser" parameterType="User">
+        delete from bs_bbs.tb_user where id=#{id};
+    </delete>
+
+    <update id="updateUser" parameterType="User">
+        update bs_bbs.tb_user set username=#{username},password=#{password},sex=#{sex},description=#{description},head_portrait=#{headPortrait} where id=#{id};
+    </update>
+
+    <select id="selectUserByStuNumber" parameterType="User" resultType="User">
+        select * from tb_user where stu_number=#{stuNumber};
+    </select>
+
+    <select id="selectUserByUsername" parameterType="User" resultType="User">
+        select * from tb_user where username=#{username};
+    </select>
+
+    <update id="frozenUser" parameterType="User">
+        update bs_bbs.tb_user set status=1 where id=#{id};
+    </update>
+
+</mapper>

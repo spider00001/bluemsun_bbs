@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="bluemsun_bbs:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/bluemsun_bbs_war</output-path>
+    <root id="archive" name="bluemsun_bbs_war.war">
+      <element id="artifact" artifact-name="bluemsun_bbs:war exploded" />
+      <element id="dir-copy" path="$PROJECT_DIR$" />
+    </root>
+  </artifact>
+</component>

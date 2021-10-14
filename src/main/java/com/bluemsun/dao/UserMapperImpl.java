@@ -9,32 +9,66 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
 
     @Override
     public int addUser(User user) {
-        return getSqlSession().getMapper(UserMapper.class).addUser(user);
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(UserMapper.class).addUser(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
+    public int deleteUser(User user) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(UserMapper.class).deleteUser(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    public int updateUser(User user) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(UserMapper.class).updateUser(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    public User selectUserByStuNumber(User user) {
+        User userRes = null;
+        try {
+            userRes = getSqlSession().getMapper(UserMapper.class).selectUserByStuNumber(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userRes;
+    }
+
+    public User selectUserByUsername(User user) {
+        User userRes = null;
+        try {
+            userRes = getSqlSession().getMapper(UserMapper.class).selectUserByUsername(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userRes;
+    }
+
+    @Override
+    public int frozenUser(User user) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(UserMapper.class).frozenUser(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
     }
 
 
-//    @Override
-//    public int addUser(User user) {
-//        return getSqlSession().getMapper(UserMapper.class).addUser(user);
-//    }
-//
-//    @Override
-//    public int deleteUserById(int id) {
-//        return getSqlSession().getMapper(UserMapper.class).deleteUserById(id);
-//    }
-//
-//    @Override
-//    public int updateUser(User user) {
-//        return getSqlSession().getMapper(UserMapper.class).updateUser(user);
-//    }
-//
-//    @Override
-//    public User queryUserById(int id) {
-//        return getSqlSession().getMapper(UserMapper.class).queryUserById(id);
-//    }
-//
-//    @Override
-//    public List<User> queryAllUser() {
-//        return getSqlSession().getMapper(UserMapper.class).queryAllUser();
-//    }
 }

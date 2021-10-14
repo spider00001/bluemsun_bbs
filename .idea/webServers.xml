@@ -2,8 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="f56f0506-1e24-4df4-8a5f-71be33afcf5b" name="TEST" url="http://59.110.32.130:8080/">
-        <fileTransfer accessType="SFTP" host="59.110.32.130" port="22" sshConfigId="e2a539ec-9c15-4607-9a80-eca8d5fa0943" sshConfig="TEST">
+      <webServer id="13f880e0-b907-44cb-a9e2-370e7e6dd2e3" name="bs_bbs" url="http://59.110.32.130:8080">
+        <fileTransfer rootFolder="/usr/local/tomcat/webapps" accessType="SFTP" host="59.110.32.130" port="22" sshConfigId="e2a539ec-9c15-4607-9a80-eca8d5fa0943" sshConfig="TEST">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="TEST" deleteMissingItems="true" createEmptyFolders="true" remoteFilesAllowedToDisappearOnAutoupload="false" autoUploadExternalChanges="true">
+  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="bs_bbs" deleteMissingItems="true" createEmptyFolders="true" remoteFilesAllowedToDisappearOnAutoupload="false" autoUploadExternalChanges="true">
     <serverData>
-      <paths name="TEST">
+      <paths name="bs_bbs">
         <serverdata>
           <mappings>
-            <mapping deploy="/usr/local/tomcat/webapps" local="$PROJECT_DIR$/out/artifacts/bluemsun_bbs_war_exploded" web="/" />
+            <mapping deploy="/bluemsun_bbs_war" local="$PROJECT_DIR$/out/artifacts/bluemsun_bbs_war_exploded" web="/" />
           </mappings>
         </serverdata>
       </paths>
     </serverData>
-    <option name="myAutoUpload" value="ALWAYS" />
+    <option name="myAutoUpload" value="ON_EXPLICIT_SAVE" />
   </component>
 </project>

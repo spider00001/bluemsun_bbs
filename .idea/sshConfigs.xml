@@ -5,6 +5,9 @@
       <sshConfig authType="PASSWORD" connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="59.110.32.130" id="e2a539ec-9c15-4607-9a80-eca8d5fa0943" port="22" customName="TEST" nameFormat="CUSTOM" username="root">
         <option name="customName" value="TEST" />
       </sshConfig>
+      <sshConfig authType="PASSWORD" connectionConfig="{&quot;serverAliveInterval&quot;:300}" id="ed99957e-1d38-4833-b15e-48c0bcf0b32a" customName="bs_bbs" nameFormat="CUSTOM">
+        <option name="customName" value="bs_bbs" />
+      </sshConfig>
     </configs>
   </component>
 </project>
