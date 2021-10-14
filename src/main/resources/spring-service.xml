@@ -20,11 +20,6 @@
         <constructor-arg index="0" ref="sqlSessionFactory"/>
     </bean>
 
-    <!--    将所有业务注入到spring ；配置、注解皆可-->
-    <bean id="userService" class="com.bluemsun.service.UserServiceImpl">
-<!--        <property name="userMapper" ref="userMapper"/>-->
-    </bean>
-
     <!--声明式事务配置-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <!--注入数据源-->
@@ -49,5 +44,9 @@
 <!--        <aop:pointcut id="txPointcut" expression="execution(* com.bluemsun.dao.*.*(..))"/>-->
 <!--        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>-->
 <!--    </aop:config>-->
+
+    <!--    将所有业务注入到spring ；配置、注解皆可-->
+    <bean id="userService" class="com.bluemsun.service.impl.UserServiceImpl"/>
+    <bean id="managerService" class="com.bluemsun.service.impl.ManagerServiceImpl"/>
 
 </beans>

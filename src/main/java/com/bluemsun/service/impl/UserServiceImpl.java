@@ -1,22 +1,24 @@
-package com.bluemsun.service;
+package com.bluemsun.service.impl;
 
 import com.bluemsun.dao.UserMapper;
 import com.bluemsun.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.bluemsun.service.UserService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserMapper userMapper;
+    private final UserMapper userMapper;
 
-    public void setUserMapper(UserMapper userMapper) {
+    public UserServiceImpl(UserMapper userMapper) {
         this.userMapper = userMapper;
     }
+
+//    public void setUserMapper(UserMapper userMapper) {
+//        this.userMapper = userMapper;
+//    }
+
 
     @Override
     public int addUser(User user) {

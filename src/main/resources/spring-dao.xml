@@ -51,9 +51,14 @@
 <!--        <property name="basePackage" value="com.bluemsun.dao"/>-->
 <!--    </bean>-->
 
-    <bean id="userMapper" class="com.bluemsun.dao.UserMapperImpl">
+    <bean id="userMapper" class="com.bluemsun.dao.impl.UserMapperImpl">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
+
+    <bean id="managerMapper" class="com.bluemsun.dao.impl.ManagerMapperImpl">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+
 
 
 </beans>

@@ -1,9 +1,8 @@
-package com.bluemsun.dao;
+package com.bluemsun.dao.impl;
 
+import com.bluemsun.dao.UserMapper;
 import com.bluemsun.entity.User;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
-
-import java.util.List;
 
 public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
 
@@ -29,6 +28,7 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
         return row;
     }
 
+    @Override
     public int updateUser(User user) {
         int row = 0;
         try {
@@ -39,6 +39,7 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
         return row;
     }
 
+    @Override
     public User selectUserByStuNumber(User user) {
         User userRes = null;
         try {
@@ -49,6 +50,7 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
         return userRes;
     }
 
+    @Override
     public User selectUserByUsername(User user) {
         User userRes = null;
         try {
