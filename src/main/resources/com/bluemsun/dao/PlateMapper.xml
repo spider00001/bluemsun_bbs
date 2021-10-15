@@ -13,5 +13,9 @@
         select u.username, p.id, user_id, plate_name, create_time, p.status, blog_num, p.description from bs_bbs.tb_plate p join bs_bbs.tb_user u on p.user_id=u.id order by create_time desc limit #{startIndex},#{pageSize};
     </select>
 
+    <delete id="deletePlate" parameterType="Plate">
+        delete from tb_plate where id=#{id};
+    </delete>
+
 
 </mapper>

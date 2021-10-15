@@ -2,6 +2,7 @@ package com.bluemsun.service.manager.Impl;
 
 import com.bluemsun.dao.PlateMapper;
 import com.bluemsun.entity.Page;
+import com.bluemsun.entity.Plate;
 import com.bluemsun.service.manager.ManagePlateService;
 
 import java.util.HashMap;
@@ -30,6 +31,19 @@ public class ManagePlateServiceImpl implements ManagePlateService {
             map.put("blogList",page.getList());
         } else {
             map.put("mag","板块分页失败");
+            map.put("status",2);
+        }
+        return map;
+    }
+
+    public Map deletePlate(Plate plate) {
+        int row = plateMapper.deletePlate(plate);
+        Map<String,Object> map = new HashMap<String,Object>();
+        if (row > 0) {
+            map.put("msg","删除板块成功");
+            map.put("status",1);
+        } else {
+            map.put("msg","删除板块失败");
             map.put("status",2);
         }
         return map;

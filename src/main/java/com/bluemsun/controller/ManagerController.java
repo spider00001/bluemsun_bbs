@@ -2,6 +2,7 @@ package com.bluemsun.controller;
 
 import com.bluemsun.entity.Blog;
 import com.bluemsun.entity.Manager;
+import com.bluemsun.entity.Plate;
 import com.bluemsun.entity.User;
 import com.bluemsun.service.manager.ManageBlogService;
 import com.bluemsun.service.manager.ManagePlateService;
@@ -105,6 +106,10 @@ public class ManagerController extends HttpServlet {
     }
 
     //删除板块
+    @PostMapping("/deletePlate")
+    public Map deletePlate(@RequestBody Plate plate) {
+        return managePlateService.deletePlate(plate);
+    }
 
     //置顶板块
 

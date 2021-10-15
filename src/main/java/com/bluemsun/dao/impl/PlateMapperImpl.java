@@ -30,5 +30,16 @@ public class PlateMapperImpl extends SqlSessionDaoSupport implements PlateMapper
         return plateList;
     }
 
+    @Override
+    public int deletePlate(Plate plate) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(PlateMapper.class).deletePlate(plate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
 
 }

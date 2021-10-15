@@ -10,4 +10,6 @@ public interface PlateMapper {
     int getPlateCount();
 
     List<Plate> getPlatesLimit(Map map);
+
+    int deletePlate(Plate plate);
 }

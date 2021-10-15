@@ -42,10 +42,10 @@ public class ManageBlogServiceImpl implements ManageBlogService {
         int row = blogMapper.deleteBlog(blog);
         Map<String,Object> map = new HashMap<String,Object>();
         if (row > 0) {
-            map.put("msg","删除成功");
+            map.put("msg","删除帖子成功");
             map.put("status",1);
         } else {
-            map.put("msg","删除失败");
+            map.put("msg","删除帖子失败");
             map.put("status",2);
         }
         return map;
