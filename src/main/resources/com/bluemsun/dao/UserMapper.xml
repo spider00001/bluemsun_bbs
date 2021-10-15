@@ -17,13 +17,13 @@
         update bs_bbs.tb_user set username=#{username},password=#{password},sex=#{sex},description=#{description},head_portrait=#{headPortrait} where id=#{id};
     </update>
 
-<!--    <select id="selectUserByStuNumber" parameterType="User" resultType="User">-->
-<!--        select * from bs_bbs.tb_user where stu_number=#{stuNumber};-->
-<!--    </select>-->
+    <select id="getUserCount" resultType="int">
+        select count(*) from bs_bbs.tb_user;
+    </select>
 
-<!--    <select id="selectUserByUsername" parameterType="User" resultType="User">-->
-<!--        select * from bs_bbs.tb_user where username=#{username};-->
-<!--    </select>-->
+    <select id="getUsersLimit" parameterType="map" resultType="User">
+        select id, username, head_portrait, status, stu_number from bs_bbs.tb_user order by id desc limit #{startIndex},#{pageSize};
+    </select>
 
     <select id="selectUser" parameterType="User" resultType="User">
         select * from bs_bbs.tb_user
@@ -41,10 +41,6 @@
             </choose>
         </where>
 
-    </select>
-
-    <select id="selectUsers" resultType="User">
-        select id,username,stu_number,status,head_portrait from bs_bbs.tb_user;
     </select>
 
     <update id="frozenUser" parameterType="User">

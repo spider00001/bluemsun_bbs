@@ -44,6 +44,28 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
     }
 
     @Override
+    public int getUserCount() {
+        int count = 0;
+        try {
+            count = getSqlSession().getMapper(UserMapper.class).getUserCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    @Override
+    public List<User> getUsersLimit(Map map) {
+        List<User> userList = null;
+        try {
+            userList = getSqlSession().getMapper(UserMapper.class).getUsersLimit(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userList;
+    }
+
+    @Override
     public User selectUserByStuNumber(User user) {
         User userRes = null;
         try {

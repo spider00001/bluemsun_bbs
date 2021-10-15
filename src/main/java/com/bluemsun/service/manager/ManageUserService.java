@@ -9,7 +9,7 @@ public interface ManageUserService {
 
     Map<String,Object> managerLogin(Manager manager);
 
-    Map<String,Object> selectUsers();
+    Map<String,Object> getUsersPage(int pageNum, int pageSize);
 
     Map<String,Object> checkUser(User user);
 

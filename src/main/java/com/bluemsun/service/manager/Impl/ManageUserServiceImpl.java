@@ -3,6 +3,7 @@ package com.bluemsun.service.manager.Impl;
 import com.bluemsun.dao.ManagerMapper;
 import com.bluemsun.dao.UserMapper;
 import com.bluemsun.entity.Manager;
+import com.bluemsun.entity.Page;
 import com.bluemsun.entity.User;
 import com.bluemsun.service.manager.ManageUserService;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class ManageUserServiceImpl implements ManageUserService {
         this.userMapper = userMapper;
     }
 
+    //管理员登录（暂时先放到这里....）
     @Override
     public Map<String,Object> managerLogin(Manager manager) {
         Manager managerRes = managerMapper.selectManagerByAccountNumber(manager);
@@ -43,16 +45,22 @@ public class ManageUserServiceImpl implements ManageUserService {
         return map;
     }
 
+    //查看用户分页
     @Override
-    public Map<String,Object> selectUsers() {
-        List<User> userList = userMapper.selectUsers();
+    public Map<String,Object> getUsersPage(int pageNum, int pageSize) {
+        int totalRecord = userMapper.getUserCount();
+        Page page = new Page(pageNum,pageSize,totalRecord);
+        Map<String,Integer> map1 = new HashMap<String,Integer>();
+        map1.put("startIndex",page.getStartIndex());
+        map1.put("pageSize",pageSize);
+        page.setList(userMapper.getUsersLimit(map1));
         Map<String,Object> map = new HashMap<String,Object>();
-        if (userList != null) {
-            map.put("msg","查看成功");
+        if (page.getList() != null) {
+            map.put("mag","用户分页成功");
             map.put("status",1);
-            map.put("userList",userList);
+            map.put("userList",page.getList());
         } else {
-            map.put("msg","查看失败");
+            map.put("mag","用户分页失败");
             map.put("status",2);
         }
         return map;
@@ -75,6 +83,7 @@ public class ManageUserServiceImpl implements ManageUserService {
         return map;
     }
 
+    //冻结用户
     @Override
     public Map<String,Object> frozenUser(User user) {
         int row =  userMapper.frozenUser(user);
@@ -89,6 +98,7 @@ public class ManageUserServiceImpl implements ManageUserService {
         return map;
     }
 
+    //解冻用户
     @Override
     public Map<String,Object> unfreezeUser(User user) {
         int row = userMapper.unfreezeUser(user);
@@ -103,6 +113,7 @@ public class ManageUserServiceImpl implements ManageUserService {
         return map;
     }
 
+    //删除用户
     @Override
     public Map<String, Object> deleteUser(User user) {
         int row = userMapper.deleteUser(user);

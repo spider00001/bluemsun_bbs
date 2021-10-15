@@ -15,6 +15,10 @@ public interface UserMapper {
 
     int updateUser(User user);
 
+    int getUserCount();
+
+    List<User> getUsersLimit(Map map);
+
     User selectUserByStuNumber(User user);
 
     User selectUserByUsername(User user);
@@ -28,7 +32,5 @@ public interface UserMapper {
     int unfreezeUser(User user);
 
     Map viewUserInformation(User user);
-
-
 
 }

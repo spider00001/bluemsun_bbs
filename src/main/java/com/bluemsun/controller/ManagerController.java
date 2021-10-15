@@ -40,9 +40,9 @@ public class ManagerController extends HttpServlet {
      *
     */
     //获取所有用户（未分页。。。）
-    @PostMapping("/manageUsers")
-    public Map<String,Object> manageUsers() {
-        return managerService.selectUsers();
+    @GetMapping("/manageUsers")
+    public Map<String,Object> manageUsers(int pageNum, int pageSize) {
+        return managerService.getUsersPage(pageNum,pageSize);
     }
 
     //查看单个用户信息
@@ -72,21 +72,20 @@ public class ManagerController extends HttpServlet {
     /**
      * 帖子管理模块
      *
-     * @return
      */
-
     //分页查看博客
     @GetMapping("/manageBlog")
     public Map getBlogs(int pageNum, int pageSize) {
         return blogService.getBlogsPage(pageNum,pageSize);
     }
 
-    //删除博客
+    //查看帖子详情
+
+
+    //删除博客(帖子详情页内)
     @PostMapping("/deleteBlog")
     public Map deleteBlog(@RequestBody Blog blog) {
         return blogService.deleteBlog(blog);
     }
-
-
 
 }
