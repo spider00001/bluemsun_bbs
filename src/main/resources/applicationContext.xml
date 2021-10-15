@@ -8,8 +8,8 @@
     <import resource="spring-service.xml"/>
     <import resource="spring-mvc.xml"/>
 
-    <bean id="User" class="com.bluemsun.entity.User"/>
-    <bean id="Manager" class="com.bluemsun.entity.Manager"/>
+    <bean id="user" class="com.bluemsun.entity.User"/>
+    <bean id="manager" class="com.bluemsun.entity.Manager"/>
 
 <!--    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >-->
 <!--        <property name="prefix" value="/WEB-INF/jsp/" />-->

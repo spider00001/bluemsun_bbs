@@ -5,9 +5,8 @@
 
 <mapper namespace="com.bluemsun.dao.ManagerMapper">
     
-    <select id="selectManagerByAccountNumber" parameterType="Manager" resultType="Manager">
+    <select id="selectManagerByAccountNumber" parameterType="manager" resultType="manager">
         select * from bs_bbs.tb_manager where account_number=#{accountNumber};
     </select>
-
 
 </mapper>

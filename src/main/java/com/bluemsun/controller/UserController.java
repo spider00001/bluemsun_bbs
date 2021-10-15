@@ -23,7 +23,7 @@ public class UserController extends HttpServlet {
     @PostMapping("/register")
     public Map register(@RequestBody User user, HttpServletRequest req) {
         int res = userService.addUser(user);
-        Map map = new HashMap();
+        Map<String,Object> map = new HashMap<String,Object>();
         if (res > 0) {
             //密码设为null，为安全性考虑
             user.setPassword(null);
@@ -42,7 +42,7 @@ public class UserController extends HttpServlet {
     @PostMapping("/login")
     public Map login(@RequestBody User user, HttpServletRequest req) {
         User userRes = userService.selectUserByStuNumber(user);
-        Map map = new HashMap();
+        Map<String,Object> map = new HashMap<String,Object>();
         if (userRes != null) {
             if (userRes.getPassword().equals(user.getPassword())) {
                 //密码设为null，为安全性考虑

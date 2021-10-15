@@ -18,15 +18,23 @@
     </update>
 
     <select id="selectUserByStuNumber" parameterType="User" resultType="User">
-        select * from tb_user where stu_number=#{stuNumber};
+        select * from bs_bbs.tb_user where stu_number=#{stuNumber};
     </select>
 
     <select id="selectUserByUsername" parameterType="User" resultType="User">
-        select * from tb_user where username=#{username};
+        select * from bs_bbs.tb_user where username=#{username};
+    </select>
+
+    <select id="selectUsers" resultType="User">
+        select id,username,stu_number,status,head_portrait from bs_bbs.tb_user;
     </select>
 
     <update id="frozenUser" parameterType="User">
         update bs_bbs.tb_user set status=1 where id=#{id};
+    </update>
+
+    <update id="unfreezeUser" parameterType="User">
+        update bs_bbs.tb_user set status=0 where id=#{id};
     </update>
 
 </mapper>

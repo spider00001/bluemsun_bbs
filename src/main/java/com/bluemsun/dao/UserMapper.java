@@ -3,6 +3,8 @@ package com.bluemsun.dao;
 import com.bluemsun.entity.User;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserMapper {
 
@@ -16,6 +18,11 @@ public interface UserMapper {
 
     User selectUserByUsername(User user);
 
+    List<User> selectUsers();
+
     int frozenUser(User user);
+
+    int unfreezeUser(User user);
+
 
 }

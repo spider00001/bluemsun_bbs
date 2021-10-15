@@ -4,6 +4,8 @@ import com.bluemsun.dao.UserMapper;
 import com.bluemsun.entity.User;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
+import java.util.List;
+
 public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
 
     @Override
@@ -66,6 +68,28 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
         int row = 0;
         try {
             row = getSqlSession().getMapper(UserMapper.class).frozenUser(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
+    public List<User> selectUsers() {
+        List<User> userList = null;
+        try {
+            userList = getSqlSession().getMapper(UserMapper.class).selectUsers();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userList;
+    }
+
+    @Override
+    public int unfreezeUser(User user) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(UserMapper.class).unfreezeUser(user);
         } catch (Exception e) {
             e.printStackTrace();
         }
