@@ -43,7 +43,7 @@ public class ManagerController extends HttpServlet {
      *用户管理模块
      *
     */
-    //获取所有用户（未分页。。。）
+    //获取所有用户
     @GetMapping("/manageUsers")
     public Map<String,Object> getUsers(int pageNum, int pageSize) {
         return managerService.getUsersPage(pageNum,pageSize);
@@ -78,7 +78,7 @@ public class ManagerController extends HttpServlet {
      * 帖子管理模块
      *
      */
-    //分页查看博客
+    //博客分页
     @GetMapping("/manageBlogs")
     public Map getBlogs(int pageNum, int pageSize) {
         return blogService.getBlogsPage(pageNum,pageSize);
@@ -111,7 +111,24 @@ public class ManagerController extends HttpServlet {
         return managePlateService.deletePlate(plate);
     }
 
-    //置顶板块
+    //新增置顶板块
+    @PostMapping("/toppingPlate")
+    public Map toppingPlate(@RequestBody Plate plate) {
+        return managePlateService.toppingPlate(plate);
+    }
+
+    //修改置顶板块位置
+    @PostMapping("/modifyPlateTop")
+    public Map modifyPlateTop(@RequestBody Plate plate) {
+        return managePlateService.modifyPlateTop(plate);
+    }
+
+    //取消置顶板块
+    @PostMapping("/cancelToppingPlate")
+    public Map cancelToppingPlate(@RequestBody Plate plate) {
+        return managePlateService.cancelToppingPlate(plate);
+    }
+
 
 
     /**

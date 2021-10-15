@@ -10,4 +10,9 @@ public interface ManagePlateService {
 
     Map deletePlate(Plate plate);
 
+    Map modifyPlateTop(Plate plate);
+
+    Map toppingPlate(Plate plate);
+    Map cancelToppingPlate(Plate plate);
+
 }

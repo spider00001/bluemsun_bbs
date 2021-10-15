@@ -36,6 +36,7 @@ public class ManagePlateServiceImpl implements ManagePlateService {
         return map;
     }
 
+    //删除板块
     public Map deletePlate(Plate plate) {
         int row = plateMapper.deletePlate(plate);
         Map<String,Object> map = new HashMap<String,Object>();
@@ -48,4 +49,52 @@ public class ManagePlateServiceImpl implements ManagePlateService {
         }
         return map;
     }
+
+    //修改置顶位置
+    @Override
+    public Map modifyPlateTop(Plate plate) {
+        int row = plateMapper.modifyPlateTop(plate);
+        Map<String,Object> map = new HashMap<String,Object>();
+        if (row > 0) {
+            map.put("msg","修改位置成功");
+            map.put("status",1);
+        } else {
+            map.put("msg","修改位置失败,该位置已有板块");
+            map.put("status",2);
+        }
+        return map;
+    }
+
+    //新增置顶板块
+    @Override
+    public Map toppingPlate(Plate plate) {
+        int row = plateMapper.toppingPlate(plate);
+        Map<String,Object> map = new HashMap<String,Object>();
+        if (row > 0) {
+            map.put("msg","置顶板块成功");
+            map.put("status",1);
+        } else {
+            map.put("msg","置顶板块失败,该位置已有板块");
+            map.put("status",2);
+        }
+        return map;
+    }
+
+    @Override
+    public Map cancelToppingPlate(Plate plate) {
+        int row = plateMapper.cancelToppingPlate(plate);
+        Map<String,Object> map = new HashMap<String,Object>();
+        if (row > 0) {
+            map.put("msg","取消置顶成功");
+            map.put("status",1);
+        } else {
+            map.put("msg","取消置顶失败");
+            map.put("status",2);
+        }
+        return map;
+    }
+
+    //取消置顶
+
+
 }

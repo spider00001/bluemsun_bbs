@@ -13,6 +13,7 @@ public class Plate {
     private int status;
     private int blogNum;
     private String description;
+    private int top;
 
     public Plate() {
     }
@@ -90,6 +91,14 @@ public class Plate {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public int getTop() {
+        return top;
+    }
+
+    public void setTop(int top) {
+        this.top = top;
     }
 
     @Override

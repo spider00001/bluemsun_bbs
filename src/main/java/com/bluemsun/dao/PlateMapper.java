@@ -12,4 +12,12 @@ public interface PlateMapper {
     List<Plate> getPlatesLimit(Map map);
 
     int deletePlate(Plate plate);
+
+    int toppingPlate(Plate plate);
+
+    int modifyPlateTop(Plate plate);
+
+    int cancelToppingPlate(Plate plate);
+
+    Plate isPlateTopped(Plate plate);
 }

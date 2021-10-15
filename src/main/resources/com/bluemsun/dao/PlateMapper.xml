@@ -16,6 +16,22 @@
     <delete id="deletePlate" parameterType="Plate">
         delete from tb_plate where id=#{id};
     </delete>
+    
+    <insert id="toppingPlate" parameterType="Plate">
+        insert into bs_bbs.tb_home_plate(plate_id, top) VALUES (#{id},#{top})
+    </insert>
+
+    <update id="modifyPlateTop" parameterType="Plate">
+        update bs_bbs.tb_home_plate set top=#{top} where plate_id=#{id};
+    </update>
+    
+    <select id="isPlateTopped" parameterType="Plate">
+        select * from tb_home_plate where plate_id=#{id};
+    </select>
+
+    <delete id="cancelToppingPlate" parameterType="Plate">
+        delete from bs_bbs.tb_home_plate where plate_id=#{id};
+    </delete>
 
 
 </mapper>
