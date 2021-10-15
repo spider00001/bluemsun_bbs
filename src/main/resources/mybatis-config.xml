@@ -17,6 +17,7 @@
         <mapper resource="com/bluemsun/dao/UserMapper.xml"/>
         <mapper resource="com/bluemsun/dao/ManagerMapper.xml"/>
         <mapper resource="com/bluemsun/dao/BlogMapper.xml"/>
+        <mapper resource="com/bluemsun/dao/PlateMapper.xml"/>
     </mappers>
 
 </configuration>

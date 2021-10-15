@@ -2,7 +2,6 @@ package com.bluemsun.service.manager;
 
 import com.bluemsun.entity.Blog;
 
-import java.sql.Blob;
 import java.util.Map;
 
 public interface ManageBlogService {

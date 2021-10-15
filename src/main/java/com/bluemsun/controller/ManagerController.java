@@ -4,6 +4,7 @@ import com.bluemsun.entity.Blog;
 import com.bluemsun.entity.Manager;
 import com.bluemsun.entity.User;
 import com.bluemsun.service.manager.ManageBlogService;
+import com.bluemsun.service.manager.ManagePlateService;
 import com.bluemsun.service.manager.ManageUserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,10 +19,12 @@ public class ManagerController extends HttpServlet {
 
     private final ManageUserService managerService;
     private final ManageBlogService blogService;
+    private final ManagePlateService managePlateService;
 
-    public ManagerController(ManageUserService managerService, ManageBlogService blogService) {
+    public ManagerController(ManageUserService managerService, ManageBlogService blogService,ManagePlateService managePlateService) {
         this.managerService = managerService;
         this.blogService = blogService;
+        this.managePlateService = managePlateService;
     }
 
 
@@ -41,7 +44,7 @@ public class ManagerController extends HttpServlet {
     */
     //获取所有用户（未分页。。。）
     @GetMapping("/manageUsers")
-    public Map<String,Object> manageUsers(int pageNum, int pageSize) {
+    public Map<String,Object> getUsers(int pageNum, int pageSize) {
         return managerService.getUsersPage(pageNum,pageSize);
     }
 
@@ -69,17 +72,18 @@ public class ManagerController extends HttpServlet {
         return managerService.deleteUser(user);
     }
 
+
     /**
      * 帖子管理模块
      *
      */
     //分页查看博客
-    @GetMapping("/manageBlog")
+    @GetMapping("/manageBlogs")
     public Map getBlogs(int pageNum, int pageSize) {
         return blogService.getBlogsPage(pageNum,pageSize);
     }
 
-    //查看帖子详情
+    //查看博客详情
 
 
     //删除博客(帖子详情页内)
@@ -87,5 +91,42 @@ public class ManagerController extends HttpServlet {
     public Map deleteBlog(@RequestBody Blog blog) {
         return blogService.deleteBlog(blog);
     }
+
+
+
+    /**
+     * 板块管理模块
+     *
+     */
+    //板块分页
+    @GetMapping("/managePlates")
+    public Map getPlates(int pageNum, int pageSize) {
+        return managePlateService.getPlatePage(pageNum,pageSize);
+    }
+
+    //删除板块
+
+    //置顶板块
+
+
+    /**
+     * 板块申请管理模块
+     *
+     */
+    //申请分页(分类查看:全部、通过、不通过)
+
+    //申请通过
+
+    //申请不通过
+
+    /**
+     * 公告管理模块
+     *
+     */
+    //公告分页
+
+    //删除公告
+
+    //增加公告
 
 }

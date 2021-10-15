@@ -11,15 +11,15 @@
     <bean id="user" class="com.bluemsun.entity.User"/>
     <bean id="manager" class="com.bluemsun.entity.Manager"/>
     <bean id="page" class="com.bluemsun.entity.Page"/>
+    <bean id="plate" class="com.bluemsun.entity.Plate"/>
+    <bean id="blog" class="com.bluemsun.entity.Blog"/>
+    <bean id="plateNotice" class="com.bluemsun.entity.PlateNotice"/>
+    <bean id="plateApplication" class="com.bluemsun.entity.PlateApplication"/>
+    <bean id="managerNotice" class="com.bluemsun.entity.ManagerNotice"/>
 
-<!--    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >-->
-<!--        <property name="prefix" value="/WEB-INF/jsp/" />-->
-<!--        <property name="suffix" value=".jsp" />-->
-<!--        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />-->
-<!--    </bean>-->
+
 
 <!--    <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>-->
-
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="900000" />
         <property name="maxInMemorySize" value="900000" />

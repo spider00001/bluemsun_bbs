@@ -8,6 +8,7 @@ public class Plate {
     private int id;
     private String plateName;
     private int userId;
+    private String username;
     private Timestamp createTime;
     private int status;
     private int blogNum;
@@ -81,6 +82,14 @@ public class Plate {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

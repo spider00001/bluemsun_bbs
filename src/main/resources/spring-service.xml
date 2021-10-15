@@ -49,5 +49,5 @@
     <bean id="userService" class="com.bluemsun.service.user.Impl.UserServiceImpl"/>
     <bean id="managerService" class="com.bluemsun.service.manager.Impl.ManageUserServiceImpl"/>
     <bean id="blogService" class="com.bluemsun.service.manager.Impl.ManageBlogServiceImpl"/>
-
+    <bean id="managePlateService" class="com.bluemsun.service.manager.Impl.ManagePlateServiceImpl"/>
 </beans>
