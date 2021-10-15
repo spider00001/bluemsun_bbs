@@ -9,4 +9,5 @@
         select * from bs_bbs.tb_manager where account_number=#{accountNumber};
     </select>
 
+
 </mapper>

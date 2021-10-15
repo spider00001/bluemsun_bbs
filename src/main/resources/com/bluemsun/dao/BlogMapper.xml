@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bluemsun.dao.BolgMapper">
+
+    <select id="selectBlogsByUser" parameterType="User" resultType="Blog">
+        select * from bs_bbs.tb_blog where user_id=#{id};
+    </select>
+
+</mapper>

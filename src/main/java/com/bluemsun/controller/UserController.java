@@ -1,7 +1,7 @@
 package com.bluemsun.controller;
 
 import com.bluemsun.entity.User;
-import com.bluemsun.service.UserService;
+import com.bluemsun.service.user.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServlet;
@@ -41,7 +41,6 @@ public class UserController extends HttpServlet {
 
     @PostMapping("/login")
     public Map login(@RequestBody User user, HttpServletRequest req) {
-//        User userRes = userService.selectUserByStuNumber(user);
         User userRes = userService.selectUser(user);
         Map<String,Object> map = new HashMap<String,Object>();
         if (userRes != null) {

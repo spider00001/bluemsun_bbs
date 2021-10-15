@@ -1,4 +1,4 @@
-package com.bluemsun.service;
+package com.bluemsun.service.user;
 
 import com.bluemsun.entity.User;
 import org.apache.ibatis.annotations.Param;
