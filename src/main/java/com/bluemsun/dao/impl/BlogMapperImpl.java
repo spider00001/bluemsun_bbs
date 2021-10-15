@@ -21,8 +21,8 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
     }
 
     @Override
-    public List<Blog> selectBlogsByUser(User user) {
-        return getSqlSession().getMapper(BlogMapper.class).selectBlogsByUser(user);
+    public int deleteBlog(Blog blog) {
+        return getSqlSession().getMapper(BlogMapper.class).deleteBlog(blog);
     }
 
 }

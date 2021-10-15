@@ -12,9 +12,9 @@ public interface BlogMapper {
 
     //全部
     int getBlogCount();
-
+    //获取所有用户博客list
     List<Blog> getBlogsLimit(Map map);
-
-    List<Blog> selectBlogsByUser(User user);
+    //删除一篇博客
+    int deleteBlog(Blog blog);
 
 }

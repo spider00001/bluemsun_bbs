@@ -1,5 +1,6 @@
 package com.bluemsun.controller;
 
+import com.bluemsun.entity.Blog;
 import com.bluemsun.entity.Manager;
 import com.bluemsun.entity.User;
 import com.bluemsun.service.manager.ManageBlogService;
@@ -79,5 +80,13 @@ public class ManagerController extends HttpServlet {
     public Map getBlogs(int pageNum, int pageSize) {
         return blogService.getBlogsPage(pageNum,pageSize);
     }
+
+    //删除博客
+    @PostMapping("/deleteBlog")
+    public Map deleteBlog(@RequestBody Blog blog) {
+        return blogService.deleteBlog(blog);
+    }
+
+
 
 }
