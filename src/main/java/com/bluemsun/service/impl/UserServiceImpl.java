@@ -35,14 +35,21 @@ public class UserServiceImpl implements UserService {
         return userMapper.updateUser(user);
     }
 
+//    @Override
+//    public User selectUserByStuNumber(User user) {
+//        return userMapper.selectUserByStuNumber(user);
+//    }
+//
+//    @Override
+//    public User selectUserByUsername(User user) {
+//        return userMapper.selectUserByUsername(user);
+//    }
+
+    //username stuNumber id 不为都null
     @Override
-    public User selectUserByStuNumber(User user) {
-        return userMapper.selectUserByStuNumber(user);
+    public User selectUser(User user) {
+        return userMapper.selectUser(user);
     }
 
-    @Override
-    public User selectUserByUsername(User user) {
-        return userMapper.selectUserByUsername(user);
-    }
 
 }

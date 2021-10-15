@@ -4,7 +4,9 @@ import com.bluemsun.dao.UserMapper;
 import com.bluemsun.entity.User;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
 
@@ -96,5 +98,26 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
         return row;
     }
 
+    @Override
+    public Map viewUserInformation(User user) {
+        Map map = new HashMap();
+        try {
+            map = getSqlSession().getMapper(UserMapper.class).viewUserInformation(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
+
+    @Override
+    public User selectUser(User user) {
+        User userRes = null;
+        try {
+            userRes = getSqlSession().getMapper(UserMapper.class).selectUser(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userRes;
+    }
 
 }

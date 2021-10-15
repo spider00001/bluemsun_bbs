@@ -41,7 +41,8 @@ public class UserController extends HttpServlet {
 
     @PostMapping("/login")
     public Map login(@RequestBody User user, HttpServletRequest req) {
-        User userRes = userService.selectUserByStuNumber(user);
+//        User userRes = userService.selectUserByStuNumber(user);
+        User userRes = userService.selectUser(user);
         Map<String,Object> map = new HashMap<String,Object>();
         if (userRes != null) {
             if (userRes.getPassword().equals(user.getPassword())) {

@@ -13,10 +13,11 @@ public interface UserService {
 
     int updateUser(User user);
 
-    User selectUserByStuNumber(User user);
+//    User selectUserByStuNumber(User user);
+//
+//    User selectUserByUsername(User user);
 
-    User selectUserByUsername(User user);
-
+    User selectUser(User user);
 
 
 }

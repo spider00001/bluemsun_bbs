@@ -4,6 +4,7 @@ import com.bluemsun.entity.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface UserMapper {
@@ -18,11 +19,16 @@ public interface UserMapper {
 
     User selectUserByUsername(User user);
 
+    User selectUser(User user);
+
     List<User> selectUsers();
 
     int frozenUser(User user);
 
     int unfreezeUser(User user);
+
+    Map viewUserInformation(User user);
+
 
 
 }

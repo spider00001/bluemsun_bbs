@@ -17,12 +17,30 @@
         update bs_bbs.tb_user set username=#{username},password=#{password},sex=#{sex},description=#{description},head_portrait=#{headPortrait} where id=#{id};
     </update>
 
-    <select id="selectUserByStuNumber" parameterType="User" resultType="User">
-        select * from bs_bbs.tb_user where stu_number=#{stuNumber};
-    </select>
+<!--    <select id="selectUserByStuNumber" parameterType="User" resultType="User">-->
+<!--        select * from bs_bbs.tb_user where stu_number=#{stuNumber};-->
+<!--    </select>-->
 
-    <select id="selectUserByUsername" parameterType="User" resultType="User">
-        select * from bs_bbs.tb_user where username=#{username};
+<!--    <select id="selectUserByUsername" parameterType="User" resultType="User">-->
+<!--        select * from bs_bbs.tb_user where username=#{username};-->
+<!--    </select>-->
+
+    <select id="selectUser" parameterType="User" resultType="User">
+        select * from bs_bbs.tb_user
+        <where>
+            <choose>
+                <when test="username != null">
+                    username=#{username}
+                </when>
+                <when test="stuNumber != null">
+                    and stu_number=#{stuNumber}
+                </when>
+                <when test="id != null">
+                    and id=#{id}
+                </when>
+            </choose>
+        </where>
+
     </select>
 
     <select id="selectUsers" resultType="User">
