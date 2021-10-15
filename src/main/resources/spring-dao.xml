@@ -58,6 +58,9 @@
     <bean id="managerMapper" class="com.bluemsun.dao.impl.ManagerMapperImpl">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
+    <bean id="blogMapper" class="com.bluemsun.dao.impl.BlogMapperImpl">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
 
 
 

@@ -10,6 +10,7 @@
 
     <bean id="user" class="com.bluemsun.entity.User"/>
     <bean id="manager" class="com.bluemsun.entity.Manager"/>
+    <bean id="page" class="com.bluemsun.entity.Page"/>
 
 <!--    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >-->
 <!--        <property name="prefix" value="/WEB-INF/jsp/" />-->

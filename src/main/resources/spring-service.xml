@@ -48,5 +48,6 @@
     <!--    将所有业务注入到spring ；配置、注解皆可-->
     <bean id="userService" class="com.bluemsun.service.user.Impl.UserServiceImpl"/>
     <bean id="managerService" class="com.bluemsun.service.manager.Impl.ManageUserServiceImpl"/>
+    <bean id="blogService" class="com.bluemsun.service.manager.Impl.ManageBlogServiceImpl"/>
 
 </beans>

@@ -2,6 +2,7 @@ package com.bluemsun.controller;
 
 import com.bluemsun.entity.Manager;
 import com.bluemsun.entity.User;
+import com.bluemsun.service.manager.ManageBlogService;
 import com.bluemsun.service.manager.ManageUserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,10 +16,13 @@ import java.util.Map;
 public class ManagerController extends HttpServlet {
 
     private final ManageUserService managerService;
+    private final ManageBlogService blogService;
 
-    public ManagerController(ManageUserService managerService) {
+    public ManagerController(ManageUserService managerService, ManageBlogService blogService) {
         this.managerService = managerService;
+        this.blogService = blogService;
     }
+
 
     //登录
     @PostMapping("/login")
@@ -30,7 +34,11 @@ public class ManagerController extends HttpServlet {
         return map;
     }
 
-    //用户管理首页
+    /**
+     *用户管理模块
+     *
+    */
+    //获取所有用户（未分页。。。）
     @PostMapping("/manageUsers")
     public Map<String,Object> manageUsers() {
         return managerService.selectUsers();
@@ -60,5 +68,16 @@ public class ManagerController extends HttpServlet {
         return managerService.deleteUser(user);
     }
 
+    /**
+     * 帖子管理模块
+     *
+     * @return
+     */
+
+    //分页查看博客
+    @GetMapping("/manageBlog")
+    public Map getBlogs(int pageNum, int pageSize) {
+        return blogService.getBlogsPage(pageNum,pageSize);
+    }
 
 }
