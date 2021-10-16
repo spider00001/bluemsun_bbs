@@ -56,11 +56,11 @@ public class ManageUserServiceImpl implements ManageUserService {
         page.setList(userMapper.getUsersLimit(map1));
         Map<String,Object> map = new HashMap<String,Object>();
         if (page.getList() != null) {
-            map.put("mag","用户分页成功");
+            map.put("msg","用户分页成功");
             map.put("status",1);
             map.put("userList",page.getList());
         } else {
-            map.put("mag","用户分页失败");
+            map.put("msg","用户分页失败");
             map.put("status",2);
         }
         return map;

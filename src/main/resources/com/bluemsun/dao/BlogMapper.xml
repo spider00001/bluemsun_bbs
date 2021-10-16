@@ -22,11 +22,11 @@
     </insert>
 
     <update id="modifyBlogTop" parameterType="Blog">
-        update bs_bbs.tb_home_blog set top=#{top} where id=#{id};
+        update bs_bbs.tb_home_blog set top=#{top} where blog_id=#{id};
     </update>
 
     <delete id="cancelToppingBlog" parameterType="Blog">
-        delete from bs_bbs.tb_home_blog where id=#{id};
+        delete from bs_bbs.tb_home_blog where blog_id=#{id};
     </delete>
 
 </mapper>

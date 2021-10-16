@@ -26,7 +26,7 @@ public class ManageBlogServiceImpl implements ManageBlogService {
         page.setList(blogMapper.getBlogsLimit(map1));
         Map<String,Object> map = new HashMap<String,Object>();
         if (page.getList() != null) {
-            map.put("mag","帖子分页成功");
+            map.put("msg","帖子分页成功");
             map.put("status",1);
             map.put("list",page.getList());
         } else {

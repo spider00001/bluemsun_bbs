@@ -27,11 +27,11 @@ public class ManageManagerNoticeServiceImpl implements ManageManagerNoticeServic
         page.setList(managerNoticeMapper.getManagerNoticeLimit(map1));
         Map<String,Object> map = new HashMap<String,Object>();
         if (page.getList() != null) {
-            map.put("mag","管理员公告分页成功");
+            map.put("msg","管理员公告分页成功");
             map.put("status",1);
             map.put("list",page.getList());
         } else {
-            map.put("mag","管理员公告分页失败");
+            map.put("msg","管理员公告分页失败");
             map.put("status",2);
         }
         return map;

@@ -44,7 +44,7 @@ public class ManagerController extends HttpServlet {
      *
     */
     //获取所有用户
-    @GetMapping("/manageUsers")
+    @GetMapping("/getUsers")
     public Map<String,Object> getUsers(int pageNum, int pageSize) {
         return managerService.getUsersPage(pageNum,pageSize);
     }
@@ -79,7 +79,7 @@ public class ManagerController extends HttpServlet {
      *
      */
     //博客分页
-    @GetMapping("/manageBlogs")
+    @GetMapping("/getBlogs")
     public Map getBlogs(int pageNum, int pageSize) {
         return manageBlogService.getBlogsPage(pageNum,pageSize);
     }

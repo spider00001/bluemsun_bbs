@@ -26,11 +26,11 @@ public class ManagePlateServiceImpl implements ManagePlateService {
         page.setList(plateMapper.getPlatesLimit(map1));
         Map<String,Object> map = new HashMap<String,Object>();
         if (page.getList() != null) {
-            map.put("mag","板块分页成功");
+            map.put("msg","板块分页成功");
             map.put("status",1);
             map.put("list",page.getList());
         } else {
-            map.put("mag","板块分页失败");
+            map.put("msg","板块分页失败");
             map.put("status",2);
         }
         return map;
