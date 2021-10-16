@@ -28,7 +28,7 @@ public class ManagePlateServiceImpl implements ManagePlateService {
         if (page.getList() != null) {
             map.put("mag","板块分页成功");
             map.put("status",1);
-            map.put("blogList",page.getList());
+            map.put("list",page.getList());
         } else {
             map.put("mag","板块分页失败");
             map.put("status",2);

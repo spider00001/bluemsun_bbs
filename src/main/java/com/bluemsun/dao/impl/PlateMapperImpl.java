@@ -31,12 +31,35 @@ public class PlateMapperImpl extends SqlSessionDaoSupport implements PlateMapper
         return plateList;
     }
 
+    @Override
+    public int addPlate(Plate plate) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(PlateMapper.class).addPlate(plate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
     //删除板块
     @Override
     public int deletePlate(Plate plate) {
         int row = 0;
         try {
             row = getSqlSession().getMapper(PlateMapper.class).deletePlate(plate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    //查找板块
+    @Override
+    public int selectPlate(Plate plate) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(PlateMapper.class).selectPlate(plate);
         } catch (Exception e) {
             e.printStackTrace();
         }

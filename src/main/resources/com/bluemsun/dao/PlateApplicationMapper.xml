@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bluemsun.dao.PlateApplicationMapper">
+
+    <select id="getPlateApplicationCount" resultType="int">
+        select count(*) from tb_plate_application order by create_time desc;
+    </select>
+
+    <select id="getPlateApplicationsLimit" parameterType="map" resultType="PlateApplication">
+        select pa.id, pa.plate_name, pa.user_id, pa.create_time, pa.status, u.username from tb_plate_application pa join tb_user u on pa.user_id = u.id order by create_time desc limit #{startIndex},#{pageSize};
+    </select>
+
+    <select id="getPlateApplicationClassifiedCount" parameterType="int" resultType="int">
+        select count(*) from tb_plate_application where status=#{status};
+    </select>
+
+    <select id="getPlateApplicationsClassifiedLimit" parameterType="map" resultType="PlateApplication">
+        select pa.id, pa.plate_name, pa.user_id, pa.create_time, pa.status, u.username from tb_plate_application pa join tb_user u on pa.user_id = u.id where pa.status=#{status} order by create_time desc limit #{startIndex},#{pageSize};
+    </select>
+
+    <select id="checkPlateApplication" parameterType="PlateApplication" resultType="PlateApplication">
+        select * from bs_bbs.tb_plate_application where id=#{id};
+    </select>
+
+    <select id="selectPlateApplication" parameterType="PlateApplication" resultType="PlateApplication">
+        select * from bs_bbs.tb_plate_application where id=#{id};
+    </select>
+
+    <update id="passPlateApplication" parameterType="PlateApplication">
+        update bs_bbs.tb_plate_application set status=1 where id=#{id};
+    </update>
+
+    <update id="overrulePlateApplication" parameterType="PlateApplication">
+        update bs_bbs.tb_plate_application set status=2 where id=#{id};
+    </update>
+
+
+</mapper>

@@ -11,7 +11,14 @@ public interface PlateMapper {
 
     List<Plate> getPlatesLimit(Map map);
 
+    //增加板块
+    int addPlate(Plate plate);
+
+    //删除板块
     int deletePlate(Plate plate);
+
+    //查找板块(sql语句还没写)
+    int selectPlate(Plate plate);
 
     //新增置顶板块
     int toppingPlate(Plate plate);

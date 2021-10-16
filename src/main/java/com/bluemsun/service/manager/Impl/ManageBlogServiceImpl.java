@@ -10,7 +10,6 @@ import java.util.Map;
 
 public class ManageBlogServiceImpl implements ManageBlogService {
 
-
     private final BlogMapper blogMapper;
 
     public ManageBlogServiceImpl(BlogMapper blogMapper) {
@@ -29,7 +28,7 @@ public class ManageBlogServiceImpl implements ManageBlogService {
         if (page.getList() != null) {
             map.put("mag","帖子分页成功");
             map.put("status",1);
-            map.put("blogList",page.getList());
+            map.put("list",page.getList());
         } else {
             map.put("mag","帖子分页失败");
             map.put("status",2);

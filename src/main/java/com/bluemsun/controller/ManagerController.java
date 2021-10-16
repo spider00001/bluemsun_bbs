@@ -1,10 +1,8 @@
 package com.bluemsun.controller;
 
-import com.bluemsun.entity.Blog;
-import com.bluemsun.entity.Manager;
-import com.bluemsun.entity.Plate;
-import com.bluemsun.entity.User;
+import com.bluemsun.entity.*;
 import com.bluemsun.service.manager.ManageBlogService;
+import com.bluemsun.service.manager.ManagePlateApplicationService;
 import com.bluemsun.service.manager.ManagePlateService;
 import com.bluemsun.service.manager.ManageUserService;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +19,13 @@ public class ManagerController extends HttpServlet {
     private final ManageUserService managerService;
     private final ManageBlogService manageBlogService;
     private final ManagePlateService managePlateService;
+    private final ManagePlateApplicationService managePlateApplicationService;
 
-    public ManagerController(ManageUserService managerService, ManageBlogService manageBlogService,ManagePlateService managePlateService) {
+    public ManagerController(ManageUserService managerService, ManageBlogService manageBlogService,ManagePlateService managePlateService,ManagePlateApplicationService managePlateApplicationService) {
         this.managerService = managerService;
         this.manageBlogService = manageBlogService;
         this.managePlateService = managePlateService;
+        this.managePlateApplicationService = managePlateApplicationService;
     }
 
 
@@ -38,6 +38,7 @@ public class ManagerController extends HttpServlet {
         }
         return map;
     }
+
 
     /**
      *用户管理模块
@@ -111,14 +112,12 @@ public class ManagerController extends HttpServlet {
     }
 
 
-
-
     /**
      * 板块管理模块
      *
      */
     //板块分页
-    @GetMapping("/managePlates")
+    @GetMapping("/getPlates")
     public Map getPlates(int pageNum, int pageSize) {
         return managePlateService.getPlatePage(pageNum,pageSize);
     }
@@ -164,17 +163,42 @@ public class ManagerController extends HttpServlet {
      * 板块申请管理模块
      *
      */
-    //申请分页(分类查看:全部、通过、不通过)
+    //申请分页(分类查看:全部)
+    @GetMapping("/getPlateApplication")
+    public Map getPlateApplication(int pageNum, int pageSize) {
+        return managePlateApplicationService.getPlateApplicationPage(pageNum,pageSize);
+    }
 
-    //申请通过
+    //申请分页(分类查看:未审核/通过/不通过)
+    @GetMapping("/getPlateApplicationClassified")
+    public Map getPlateApplication(int pageNum, int pageSize,int status) {
+        return managePlateApplicationService.getPlateApplicationClassifiedPage(pageNum,pageSize,status);
+    }
+
+    //查看申请详情
+    @PostMapping("/checkPlateApplication")
+    public Map checkPlateApplication(@RequestBody PlateApplication plateApplication) {
+        return managePlateApplicationService.checkPlateApplication(plateApplication);
+    }
+
+    //申请通过(通过并为该用户创建一个板块)
+    @PostMapping("/passPlateApplication")
+    public Map passPlateApplication(@RequestBody PlateApplication plateApplication) {
+        return managePlateApplicationService.passPlateApplication(plateApplication);
+    }
 
     //申请不通过
+    @PostMapping("/overrulePlateApplication")
+    public Map overrulePlateApplication(@RequestBody PlateApplication plateApplication) {
+        return managePlateApplicationService.overrulePlateApplication(plateApplication);
+    }
 
     /**
      * 公告管理模块
      *
      */
     //公告分页
+
 
     //删除公告
 
