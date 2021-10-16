@@ -11,4 +11,10 @@ public interface ManageBlogService {
 
     Map deleteBlog(Blog blog);
 
+    Map toppingBlog(Blog blog);
+
+    Map modifyBlogTop(Blog blog);
+
+    Map cancelToppingBlog(Blog blog);
+
 }

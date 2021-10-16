@@ -19,12 +19,12 @@ import java.util.Map;
 public class ManagerController extends HttpServlet {
 
     private final ManageUserService managerService;
-    private final ManageBlogService blogService;
+    private final ManageBlogService manageBlogService;
     private final ManagePlateService managePlateService;
 
-    public ManagerController(ManageUserService managerService, ManageBlogService blogService,ManagePlateService managePlateService) {
+    public ManagerController(ManageUserService managerService, ManageBlogService manageBlogService,ManagePlateService managePlateService) {
         this.managerService = managerService;
-        this.blogService = blogService;
+        this.manageBlogService = manageBlogService;
         this.managePlateService = managePlateService;
     }
 
@@ -81,17 +81,35 @@ public class ManagerController extends HttpServlet {
     //博客分页
     @GetMapping("/manageBlogs")
     public Map getBlogs(int pageNum, int pageSize) {
-        return blogService.getBlogsPage(pageNum,pageSize);
+        return manageBlogService.getBlogsPage(pageNum,pageSize);
     }
 
     //查看博客详情
 
-
     //删除博客(帖子详情页内)
     @PostMapping("/deleteBlog")
     public Map deleteBlog(@RequestBody Blog blog) {
-        return blogService.deleteBlog(blog);
+        return manageBlogService.deleteBlog(blog);
     }
+
+    //新增置顶博客
+    @PostMapping("/toppingBlog")
+    public Map ToppingBlog(@RequestBody Blog blog) {
+        return manageBlogService.toppingBlog(blog);
+    }
+
+    //修改置顶博客位置
+    @PostMapping("/modifyBlogTop")
+    public Map modifyBlogTop(@RequestBody Blog blog) {
+        return manageBlogService.modifyBlogTop(blog);
+    }
+
+    //取消置顶博客
+    @PostMapping("/cancelToppingBlog")
+    public Map cancelToppingBlog(@RequestBody Blog blog) {
+        return manageBlogService.cancelToppingBlog(blog);
+    }
+
 
 
 
@@ -128,6 +146,11 @@ public class ManagerController extends HttpServlet {
     public Map cancelToppingPlate(@RequestBody Plate plate) {
         return managePlateService.cancelToppingPlate(plate);
     }
+
+    //冻结板块
+
+
+    //解冻板块
 
 
 

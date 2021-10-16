@@ -50,4 +50,49 @@ public class ManageBlogServiceImpl implements ManageBlogService {
         }
         return map;
     }
+
+    //新增置顶博客
+    @Override
+    public Map toppingBlog(Blog blog) {
+        int row = blogMapper.toppingBlog(blog);
+        Map<String,Object> map = new HashMap<String,Object>();
+        if (row > 0) {
+            map.put("msg","置顶博客成功");
+            map.put("status",1);
+        } else {
+            map.put("msg","置顶博客失败,该位置已有板块");
+            map.put("status",2);
+        }
+        return map;
+    }
+
+    //修改博客置顶位置
+    @Override
+    public Map modifyBlogTop(Blog blog) {
+        int row = blogMapper.modifyBlogTop(blog);
+        Map<String,Object> map = new HashMap<String,Object>();
+        if (row > 0) {
+            map.put("msg","修改位置成功");
+            map.put("status",1);
+        } else {
+            map.put("msg","修改位置失败,该位置已有博客");
+            map.put("status",2);
+        }
+        return map;
+    }
+
+    //取消博客置顶
+    @Override
+    public Map cancelToppingBlog(Blog blog) {
+        int row = blogMapper.cancelToppingBlog(blog);
+        Map<String,Object> map = new HashMap<String,Object>();
+        if (row > 0) {
+            map.put("msg","取消博客置顶成功");
+            map.put("status",1);
+        } else {
+            map.put("msg","取消博客置顶失败");
+            map.put("status",2);
+        }
+        return map;
+    }
 }

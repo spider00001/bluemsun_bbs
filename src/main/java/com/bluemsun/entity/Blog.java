@@ -15,6 +15,7 @@ public class Blog {
     private String storagePath;//文章存储路径
     private int releaseForm;//发布形式(0:公开 1:私密)
     private int likesNum;//点赞数
+    private int top;
 
     public Blog() {
     }
@@ -101,6 +102,14 @@ public class Blog {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public int getTop() {
+        return top;
+    }
+
+    public void setTop(int top) {
+        this.top = top;
     }
 
     @Override

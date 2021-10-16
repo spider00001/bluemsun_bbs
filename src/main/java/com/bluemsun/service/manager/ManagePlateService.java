@@ -13,6 +13,7 @@ public interface ManagePlateService {
     Map modifyPlateTop(Plate plate);
 
     Map toppingPlate(Plate plate);
+
     Map cancelToppingPlate(Plate plate);
 
 }

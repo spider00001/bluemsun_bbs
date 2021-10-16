@@ -17,4 +17,16 @@
         delete from bs_bbs.tb_blog where id=#{id};
     </delete>
 
+    <insert id="toppingBlog" parameterType="Blog">
+        insert into bs_bbs.tb_home_blog(blog_id, top) VALUES (#{id},#{top});
+    </insert>
+
+    <update id="modifyBlogTop" parameterType="Blog">
+        update bs_bbs.tb_home_blog set top=#{top} where id=#{id};
+    </update>
+
+    <delete id="cancelToppingBlog" parameterType="Blog">
+        delete from bs_bbs.tb_home_blog where id=#{id};
+    </delete>
+
 </mapper>

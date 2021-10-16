@@ -24,14 +24,14 @@
     <update id="modifyPlateTop" parameterType="Plate">
         update bs_bbs.tb_home_plate set top=#{top} where plate_id=#{id};
     </update>
-    
-    <select id="isPlateTopped" parameterType="Plate">
-        select * from tb_home_plate where plate_id=#{id};
-    </select>
 
     <delete id="cancelToppingPlate" parameterType="Plate">
         delete from bs_bbs.tb_home_plate where plate_id=#{id};
     </delete>
+
+    <select id="isPlateTopped" parameterType="Plate">
+        select * from tb_home_plate where plate_id=#{id};
+    </select>
 
 
 </mapper>

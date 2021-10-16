@@ -1,6 +1,7 @@
 package com.bluemsun.dao.impl;
 
 import com.bluemsun.dao.BlogMapper;
+import com.bluemsun.dao.PlateMapper;
 import com.bluemsun.entity.Blog;
 import com.bluemsun.entity.User;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
@@ -24,5 +25,39 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
     public int deleteBlog(Blog blog) {
         return getSqlSession().getMapper(BlogMapper.class).deleteBlog(blog);
     }
+
+    @Override
+    public int toppingBlog(Blog blog) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(BlogMapper.class).toppingBlog(blog);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
+    public int modifyBlogTop(Blog blog) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(BlogMapper.class).modifyBlogTop(blog);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
+    public int cancelToppingBlog(Blog blog) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(BlogMapper.class).cancelToppingBlog(blog);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
 
 }
