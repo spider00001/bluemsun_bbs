@@ -19,6 +19,7 @@
         <mapper resource="com/bluemsun/dao/BlogMapper.xml"/>
         <mapper resource="com/bluemsun/dao/PlateMapper.xml"/>
         <mapper resource="com/bluemsun/dao/PlateApplicationMapper.xml"/>
+        <mapper resource="com/bluemsun/dao/ManagerNoticeMapper.xml"/>
     </mappers>
 
 </configuration>

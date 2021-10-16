@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bluemsun.dao.ManagerNoticeMapper">
+
+    <select id="getManagerNoticeCount" resultType="int">
+        select count(*) from bs_bbs.tb_notice_manager;
+    </select>
+
+    <select id="getManagerNoticeLimit" parameterType="map" resultType="ManagerNotice">
+        select * from tb_notice_manager order by create_time desc limit #{startIndex},#{pageSize};;
+    </select>
+
+    <insert id="addManagerNotice" parameterType="ManagerNotice">
+        insert into bs_bbs.tb_notice_manager(content, create_time, title) values (#{content},#{createTime},#{title});
+    </insert>
+
+    <delete id="deleteManagerNotice" parameterType="ManagerNotice">
+        delete from bs_bbs.tb_notice_manager where id=#{id};
+    </delete>
+
+</mapper>

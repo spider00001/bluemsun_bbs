@@ -8,17 +8,15 @@ public class ManagerNotice {
     private int id;
     private String content;
     private Timestamp createTime;
-    private int form;
     private String title;
 
     public ManagerNotice() {
     }
 
-    public ManagerNotice(int id, String content, Timestamp createTime, int form, String title) {
+    public ManagerNotice(int id, String content, Timestamp createTime, String title) {
         this.id = id;
         this.content = content;
         this.createTime = createTime;
-        this.form = form;
         this.title = title;
     }
 
@@ -47,14 +45,6 @@ public class ManagerNotice {
         this.createTime = createTime;
     }
 
-    public int getForm() {
-        return form;
-    }
-
-    public void setForm(int form) {
-        this.form = form;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -69,7 +59,6 @@ public class ManagerNotice {
                 "id=" + id +
                 ", content='" + content + '\'' +
                 ", createTime=" + createTime +
-                ", form=" + form +
                 ", title='" + title + '\'' +
                 '}';
     }

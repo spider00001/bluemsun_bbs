@@ -1,10 +1,7 @@
 package com.bluemsun.controller;
 
 import com.bluemsun.entity.*;
-import com.bluemsun.service.manager.ManageBlogService;
-import com.bluemsun.service.manager.ManagePlateApplicationService;
-import com.bluemsun.service.manager.ManagePlateService;
-import com.bluemsun.service.manager.ManageUserService;
+import com.bluemsun.service.manager.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServlet;
@@ -20,12 +17,14 @@ public class ManagerController extends HttpServlet {
     private final ManageBlogService manageBlogService;
     private final ManagePlateService managePlateService;
     private final ManagePlateApplicationService managePlateApplicationService;
+    private final ManageManagerNoticeService manageManagerNoticeService;
 
-    public ManagerController(ManageUserService managerService, ManageBlogService manageBlogService,ManagePlateService managePlateService,ManagePlateApplicationService managePlateApplicationService) {
+    public ManagerController(ManageUserService managerService, ManageBlogService manageBlogService, ManagePlateService managePlateService, ManagePlateApplicationService managePlateApplicationService, ManageManagerNoticeService manageManagerNoticeService) {
         this.managerService = managerService;
         this.manageBlogService = manageBlogService;
         this.managePlateService = managePlateService;
         this.managePlateApplicationService = managePlateApplicationService;
+        this.manageManagerNoticeService = manageManagerNoticeService;
     }
 
 
@@ -198,10 +197,21 @@ public class ManagerController extends HttpServlet {
      *
      */
     //公告分页
+    @GetMapping("/getManagerNotice")
+    public Map getManagerNotice(int pageNum,int pageSize) {
+        return manageManagerNoticeService.getManagerNoticePage(pageNum,pageSize);
+    }
 
+    //发布公告
+    @PostMapping("/addManagerNotice")
+    public Map addManagerNotice(@RequestBody ManagerNotice managerNotice) {
+        return manageManagerNoticeService.addManagerNotice(managerNotice);
+    }
 
     //删除公告
-
-    //增加公告
+    @PostMapping("/deleteManagerNotice")
+    public Map deleteManagerNotice(@RequestBody ManagerNotice managerNotice) {
+        return manageManagerNoticeService.deleteManagerNotice(managerNotice);
+    }
 
 }

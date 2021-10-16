@@ -67,7 +67,9 @@
     <bean id="plateApplicationMapper" class="com.bluemsun.dao.impl.PlateApplicationMapperImpl">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
-
+    <bean id="managerNoticeMapper" class="com.bluemsun.dao.impl.ManagerNoticeMapperImpl">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
 
 
 

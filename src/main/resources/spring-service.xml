@@ -51,5 +51,5 @@
     <bean id="manageBlogService" class="com.bluemsun.service.manager.Impl.ManageBlogServiceImpl"/>
     <bean id="managePlateService" class="com.bluemsun.service.manager.Impl.ManagePlateServiceImpl"/>
     <bean id="managePlateApplicationService" class="com.bluemsun.service.manager.Impl.ManagePlateApplicationServiceImpl"/>
-
+    <bean id="manageManagerNoticeService" class="com.bluemsun.service.manager.Impl.ManageManagerNoticeServiceImpl"/>
 </beans>
