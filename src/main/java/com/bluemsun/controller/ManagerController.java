@@ -148,10 +148,16 @@ public class ManagerController extends HttpServlet {
     }
 
     //冻结板块
-
+    @PostMapping("/frozenPlate")
+    public Map frozenPlate(@RequestBody Plate plate) {
+        return managePlateService.frozenPlate(plate);
+    }
 
     //解冻板块
-
+    @PostMapping("/unfreezePlate")
+    public Map unfreezePlate(@RequestBody Plate plate) {
+        return managePlateService.unfreezePlate(plate);
+    }
 
 
     /**

@@ -79,6 +79,30 @@ public class PlateMapperImpl extends SqlSessionDaoSupport implements PlateMapper
         return row;
     }
 
+    //冻结板块
+    @Override
+    public int frozenPlate(Plate plate) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(PlateMapper.class).frozenPlate(plate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    //解冻板块
+    @Override
+    public int unfreezePlate(Plate plate) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(PlateMapper.class).unfreezePlate(plate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
     //判断该板块是否已经在首页板块置顶表内
     @Override
     public Plate isPlateTopped(Plate plate) {

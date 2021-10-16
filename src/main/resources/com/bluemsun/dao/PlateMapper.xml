@@ -33,5 +33,12 @@
         select * from tb_home_plate where plate_id=#{id};
     </select>
 
+    <update id="frozenPlate" parameterType="Plate">
+        update bs_bbs.tb_plate set status=1 where id=#{id};
+    </update>
+
+    <update id="unfreezePlate" parameterType="Plate">
+        update bs_bbs.tb_plate set status=0 where id=#{id};
+    </update>
 
 </mapper>
