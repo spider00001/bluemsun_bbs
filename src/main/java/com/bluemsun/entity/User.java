@@ -12,11 +12,13 @@ public class User {
     private String stuNumber;//学号
     private int fansNum;//粉丝数量
     private int followUserNum;//关注数量
+    private String phoneNumber;//手机号
+    private String emailCount;//邮箱
 
     public User() {
     }
 
-    public User(int id, String username, String password, int sex, String headPortrait, int status, String description, String stuNumber, int fansNum, int followUserNum) {
+    public User(int id, String username, String password, int sex, String headPortrait, int status, String description, String stuNumber, int fansNum, int followUserNum, String phoneNumber, String emailCount) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -27,6 +29,8 @@ public class User {
         this.stuNumber = stuNumber;
         this.fansNum = fansNum;
         this.followUserNum = followUserNum;
+        this.phoneNumber = phoneNumber;
+        this.emailCount = emailCount;
     }
 
     public int getId() {
@@ -109,6 +113,22 @@ public class User {
         this.followUserNum = followUserNum;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmailCount() {
+        return emailCount;
+    }
+
+    public void setEmailCount(String emailCount) {
+        this.emailCount = emailCount;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -122,6 +142,8 @@ public class User {
                 ", stuNumber='" + stuNumber + '\'' +
                 ", fansNum=" + fansNum +
                 ", followUserNum=" + followUserNum +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", emailCount='" + emailCount + '\'' +
                 '}';
     }
 }
