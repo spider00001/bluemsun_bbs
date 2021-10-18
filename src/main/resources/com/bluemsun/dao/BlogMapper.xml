@@ -10,12 +10,36 @@
     </select>
     
     <select id="getBlogsLimit" resultType="Blog" parameterType="map">
-        select b.id, user_id, title, create_time, views, storage_path, release_form, likes_num,u.username from bs_bbs.tb_blog b join bs_bbs.tb_user u on b.user_id=u.id order by create_time desc limit #{startIndex},#{pageSize};
+        select b.id, user_id, title, create_time, views, content likes_num,u.username
+        from bs_bbs.tb_blog b
+        join bs_bbs.tb_user u on b.user_id=u.id
+        order by create_time desc limit #{startIndex},#{pageSize};
+    </select>
+
+    <select id="getBlogOfPlateCount" parameterType="int" resultType="int">
+        select count(*) from bs_bbs.tb_plate_blog where plate_id=#{id};
+    </select>
+
+    <select id="getBlogsOfPlateLimit" parameterType="map" resultType="Plate">
+        select tb.id, title, create_time, views, content, likes_num, username, head_portrait
+        from  tb_blog tb
+        inner join tb_plate_blog tpb on tb.id = tpb.blog_id
+        join tb_user tu on tu.id = tb.user_id
+        where tpb.plate_id=#{id}
+        order by tb.create_time desc limit #{startIndex},#{pageSize};
     </select>
 
     <delete id="deleteBlog" parameterType="Blog">
         delete from bs_bbs.tb_blog where id=#{id};
     </delete>
+
+    <select id="getBlogsHomeTop" resultType="Blog">
+        select top, tb.id, title, username, create_time, head_portrait
+        from tb_home_blog thb
+        inner join bs_bbs.tb_blog tb on thb.blog_id=tb.id
+        join tb_user tu on tu.id = tb.user_id
+        order by top;
+    </select>
 
     <insert id="toppingBlog" parameterType="Blog">
         insert into bs_bbs.tb_home_blog(blog_id, top) VALUES (#{id},#{top});

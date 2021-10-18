@@ -12,7 +12,7 @@ public class Blog {
     private String title;//标题
     private Timestamp createTime;//创建时间(最后一次修改时间)
     private int views;//浏览量
-    private String storagePath;//文章存储路径
+    private String content;//文章
     private int releaseForm;//发布形式(0:公开 1:私密)
     private int likesNum;//点赞数
     private int top;
@@ -20,15 +20,17 @@ public class Blog {
     public Blog() {
     }
 
-    public Blog(int id, int userId, String title, Timestamp createTime, int views, String storagePath, int releaseForm, int likesNum) {
+    public Blog(int id, int userId, String username, String title, Timestamp createTime, int views, String content, int releaseForm, int likesNum, int top) {
         this.id = id;
         this.userId = userId;
+        this.username = username;
         this.title = title;
         this.createTime = createTime;
         this.views = views;
-        this.storagePath = storagePath;
+        this.content = content;
         this.releaseForm = releaseForm;
         this.likesNum = likesNum;
+        this.top = top;
     }
 
     public int getId() {
@@ -47,6 +49,14 @@ public class Blog {
         this.userId = userId;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -55,7 +65,6 @@ public class Blog {
         this.title = title;
     }
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     public Timestamp getCreateTime() {
         return createTime;
     }
@@ -72,12 +81,12 @@ public class Blog {
         this.views = views;
     }
 
-    public String getStoragePath() {
-        return storagePath;
+    public String getContent() {
+        return content;
     }
 
-    public void setStoragePath(String storagePath) {
-        this.storagePath = storagePath;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public int getReleaseForm() {
@@ -96,14 +105,6 @@ public class Blog {
         this.likesNum = likesNum;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public int getTop() {
         return top;
     }
@@ -117,12 +118,14 @@ public class Blog {
         return "Blog{" +
                 "id=" + id +
                 ", userId=" + userId +
+                ", username='" + username + '\'' +
                 ", title='" + title + '\'' +
                 ", createTime=" + createTime +
                 ", views=" + views +
-                ", storagePath='" + storagePath + '\'' +
+                ", content='" + content + '\'' +
                 ", releaseForm=" + releaseForm +
                 ", likesNum=" + likesNum +
+                ", top=" + top +
                 '}';
     }
 }

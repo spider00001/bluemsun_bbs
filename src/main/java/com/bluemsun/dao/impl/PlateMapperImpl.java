@@ -32,6 +32,17 @@ public class PlateMapperImpl extends SqlSessionDaoSupport implements PlateMapper
     }
 
     @Override
+    public Plate checkPlate(Plate plate) {
+        Plate plateRes = null;
+        try {
+            plateRes = getSqlSession().getMapper(PlateMapper.class).checkPlate(plate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return plateRes;
+    }
+
+    @Override
     public int addPlate(Plate plate) {
         int row = 0;
         try {
@@ -64,6 +75,17 @@ public class PlateMapperImpl extends SqlSessionDaoSupport implements PlateMapper
             e.printStackTrace();
         }
         return row;
+    }
+
+    @Override
+    public List<Plate> getPlatesOfHome() {
+        List<Plate> plateList = null;
+        try {
+            plateList = getSqlSession().getMapper(PlateMapper.class).getPlatesOfHome();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return plateList;
     }
 
     //新增置顶表内的板块并确定置顶位置

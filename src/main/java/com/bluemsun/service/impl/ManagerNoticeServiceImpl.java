@@ -1,19 +1,19 @@
-package com.bluemsun.service.manager.Impl;
+package com.bluemsun.service.impl;
 
 import com.bluemsun.dao.ManagerNoticeMapper;
 import com.bluemsun.entity.ManagerNotice;
 import com.bluemsun.entity.Page;
-import com.bluemsun.service.manager.ManageManagerNoticeService;
+import com.bluemsun.service.ManagerNoticeService;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ManageManagerNoticeServiceImpl implements ManageManagerNoticeService {
+public class ManagerNoticeServiceImpl implements ManagerNoticeService {
 
     private final ManagerNoticeMapper managerNoticeMapper;
 
-    public ManageManagerNoticeServiceImpl(ManagerNoticeMapper managerNoticeMapper) {
+    public ManagerNoticeServiceImpl(ManagerNoticeMapper managerNoticeMapper) {
         this.managerNoticeMapper = managerNoticeMapper;
     }
 

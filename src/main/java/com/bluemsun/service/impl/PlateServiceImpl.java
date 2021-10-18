@@ -1,18 +1,19 @@
-package com.bluemsun.service.manager.Impl;
+package com.bluemsun.service.impl;
 
 import com.bluemsun.dao.PlateMapper;
 import com.bluemsun.entity.Page;
 import com.bluemsun.entity.Plate;
-import com.bluemsun.service.manager.ManagePlateService;
+import com.bluemsun.service.ManagePlateService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class ManagePlateServiceImpl implements ManagePlateService {
+public class PlateServiceImpl implements ManagePlateService {
 
     private final PlateMapper plateMapper;
 
-    public ManagePlateServiceImpl(PlateMapper plateMapper) {
+    public PlateServiceImpl(PlateMapper plateMapper) {
         this.plateMapper = plateMapper;
     }
 
@@ -31,6 +32,21 @@ public class ManagePlateServiceImpl implements ManagePlateService {
             map.put("list",page.getList());
         } else {
             map.put("msg","板块分页失败");
+            map.put("status",2);
+        }
+        return map;
+    }
+
+    @Override
+    public Map checkPlate(Plate plate) {
+        Plate plateRes = plateMapper.checkPlate(plate);
+        Map<String,Object> map = new HashMap<String,Object>();
+        if (plateRes != null) {
+            map.put("msg","查看板块成功");
+            map.put("status",1);
+            map.put("data",plateRes);
+        } else {
+            map.put("msg","查看板块失败");
             map.put("status",2);
         }
         return map;
@@ -75,6 +91,21 @@ public class ManagePlateServiceImpl implements ManagePlateService {
             map.put("status",1);
         } else {
             map.put("msg","修改位置失败,该位置已有板块");
+            map.put("status",2);
+        }
+        return map;
+    }
+
+    @Override
+    public Map getPlatesOfHome() {
+        List<Plate> plateList = plateMapper.getPlatesOfHome();
+        Map<String,Object> map = new HashMap<String,Object>();
+        if (plateList != null) {
+            map.put("msg","查看置顶板块成功");
+            map.put("status",1);
+            map.put("list",plateList);
+        } else {
+            map.put("msg","查看置顶板块失败");
             map.put("status",2);
         }
         return map;

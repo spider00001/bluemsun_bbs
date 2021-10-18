@@ -1,4 +1,4 @@
-package com.bluemsun.service.manager;
+package com.bluemsun.service;
 
 import com.bluemsun.entity.Plate;
 
@@ -8,11 +8,16 @@ public interface ManagePlateService {
 
     Map getPlatePage(int pageNum, int pageSize);
 
+    //查看板块详情
+    Map checkPlate(Plate plate);
+
     //删除板块
     Map deletePlate(Plate plate);
 
     //修改板块置顶位置
     Map modifyPlateTop(Plate plate);
+
+    Map getPlatesOfHome();
 
     //新增置顶板块
     Map toppingPlate(Plate plate);

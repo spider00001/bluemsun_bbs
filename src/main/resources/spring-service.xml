@@ -46,10 +46,10 @@
 <!--    </aop:config>-->
 
     <!--    将所有业务注入到spring ；配置、注解皆可-->
-    <bean id="userService" class="com.bluemsun.service.user.Impl.UserServiceImpl"/>
-    <bean id="managerService" class="com.bluemsun.service.manager.Impl.ManageUserServiceImpl"/>
-    <bean id="manageBlogService" class="com.bluemsun.service.manager.Impl.ManageBlogServiceImpl"/>
-    <bean id="managePlateService" class="com.bluemsun.service.manager.Impl.ManagePlateServiceImpl"/>
-    <bean id="managePlateApplicationService" class="com.bluemsun.service.manager.Impl.ManagePlateApplicationServiceImpl"/>
-    <bean id="manageManagerNoticeService" class="com.bluemsun.service.manager.Impl.ManageManagerNoticeServiceImpl"/>
+    <bean id="userService" class="com.bluemsun.service.impl.UserServiceImpl"/>
+    <bean id="managerService" class="com.bluemsun.service.impl.UserServiceImpl"/>
+    <bean id="blogService" class="com.bluemsun.service.impl.BlogServiceImpl"/>
+    <bean id="plateService" class="com.bluemsun.service.impl.PlateServiceImpl"/>
+    <bean id="plateApplicationService" class="com.bluemsun.service.impl.PlateApplicationServiceImpl"/>
+    <bean id="managerNoticeService" class="com.bluemsun.service.impl.ManagerNoticeServiceImpl"/>
 </beans>

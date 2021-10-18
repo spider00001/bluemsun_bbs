@@ -1,10 +1,10 @@
-package com.bluemsun.service.manager;
+package com.bluemsun.service;
 
 import com.bluemsun.entity.ManagerNotice;
 
 import java.util.Map;
 
-public interface ManageManagerNoticeService {
+public interface ManagerNoticeService {
 
     //获取管理员公告分页
     Map getManagerNoticePage(int pageNum,int pageSize);

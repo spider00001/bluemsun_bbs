@@ -11,6 +11,9 @@ public interface PlateMapper {
 
     List<Plate> getPlatesLimit(Map map);
 
+    //查看板块详情
+    Plate checkPlate(Plate plate);
+
     //增加板块
     int addPlate(Plate plate);
 
@@ -19,6 +22,9 @@ public interface PlateMapper {
 
     //查找板块(sql语句还没写)
     int selectPlate(Plate plate);
+
+    //查看置顶板块
+    List<Plate> getPlatesOfHome();
 
     //新增置顶板块
     int toppingPlate(Plate plate);

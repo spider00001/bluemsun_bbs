@@ -10,7 +10,11 @@
     </select>
 
     <select id="getPlatesLimit" resultType="Plate" parameterType="map">
-        select u.username, p.id, user_id, plate_name, create_time, p.status, blog_num, p.description from bs_bbs.tb_plate p join bs_bbs.tb_user u on p.user_id=u.id order by create_time desc limit #{startIndex},#{pageSize};
+        select u.username, p.id, user_id, plate_name, create_time, p.status from bs_bbs.tb_plate p join bs_bbs.tb_user u on p.user_id=u.id order by create_time desc limit #{startIndex},#{pageSize};
+    </select>
+
+    <select id="checkPlate" parameterType="Plate" resultType="Plate">
+        select * from bs_bbs.tb_plate where id=#{id};
     </select>
 
     <insert id="addPlate" parameterType="Plate">
@@ -20,6 +24,13 @@
     <delete id="deletePlate" parameterType="Plate">
         delete from tb_plate where id=#{id};
     </delete>
+
+    <select id="getPlatesOfHome" resultType="Plate">
+        select top, tp.id, plate_name
+        from tb_plate_blog tpb
+        inner join tb_plate tp on tpb.plate_id = tp.id
+        order by top;
+    </select>
 
     <insert id="toppingPlate" parameterType="Plate">
         insert into bs_bbs.tb_home_plate(plate_id, top) VALUES (#{id},#{top})

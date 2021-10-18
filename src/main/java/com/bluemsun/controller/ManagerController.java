@@ -1,7 +1,7 @@
 package com.bluemsun.controller;
 
 import com.bluemsun.entity.*;
-import com.bluemsun.service.manager.*;
+import com.bluemsun.service.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServlet;
@@ -13,14 +13,17 @@ import java.util.Map;
 @RequestMapping("/bsmanager")
 public class ManagerController extends HttpServlet {
 
-    private final ManageUserService managerService;
-    private final ManageBlogService manageBlogService;
+    private final UserService userService;
+    private final BlogService manageBlogService;
     private final ManagePlateService managePlateService;
-    private final ManagePlateApplicationService managePlateApplicationService;
-    private final ManageManagerNoticeService manageManagerNoticeService;
+    private final PlateApplicationService managePlateApplicationService;
+    private final ManagerNoticeService manageManagerNoticeService;
 
-    public ManagerController(ManageUserService managerService, ManageBlogService manageBlogService, ManagePlateService managePlateService, ManagePlateApplicationService managePlateApplicationService, ManageManagerNoticeService manageManagerNoticeService) {
-        this.managerService = managerService;
+    //  搜索模块没做.....
+
+
+    public ManagerController(UserService userService, BlogService manageBlogService, ManagePlateService managePlateService, PlateApplicationService managePlateApplicationService, ManagerNoticeService manageManagerNoticeService) {
+        this.userService = userService;
         this.manageBlogService = manageBlogService;
         this.managePlateService = managePlateService;
         this.managePlateApplicationService = managePlateApplicationService;
@@ -31,7 +34,7 @@ public class ManagerController extends HttpServlet {
     //登录
     @PostMapping("/login")
     public Map<String,Object> login(@RequestBody Manager manager, HttpServletRequest req) {
-        Map<String,Object> map = managerService.managerLogin(manager);
+        Map<String,Object> map = userService.managerLogin(manager);
         if (map.get("manager")!= null) {
             req.getSession().setAttribute("manager",map.get("manager"));
         }
@@ -46,31 +49,35 @@ public class ManagerController extends HttpServlet {
     //获取所有用户
     @GetMapping("/getUsers")
     public Map<String,Object> getUsers(int pageNum, int pageSize) {
-        return managerService.getUsersPage(pageNum,pageSize);
+        return userService.getUsersPage(pageNum,pageSize);
     }
 
     //查看单个用户信息
     @PostMapping("/checkUser")
-    public Map<String,Object> checkUser(@RequestBody User user) {
-        return managerService.checkUser(user);
+    public Map<String,Object> checkUser(@RequestBody User user, HttpServletRequest req) {
+        Map<String,Object> map = userService.checkUser(user);
+        if (map.get("user") != null) {
+            req.getSession().setAttribute("user",map.get("user"));
+        }
+        return map;
     }
 
     //用户冻结
     @PostMapping("/frozenUser")
     public Map<String,Object> frozenUser(@RequestBody User user) {
-        return managerService.frozenUser(user);
+        return userService.frozenUser(user);
     }
 
     //用户解封
     @PostMapping("/unfreezeUser")
     public Map<String,Object> unfreezeUser(@RequestBody User user) {
-        return managerService.unfreezeUser(user);
+        return userService.unfreezeUser(user);
     }
 
     //用户删除
     @PostMapping("/deleteUser")
     public Map<String,Object> deleteUser(@RequestBody User user) {
-        return managerService.deleteUser(user);
+        return userService.deleteUser(user);
     }
 
 
@@ -84,7 +91,14 @@ public class ManagerController extends HttpServlet {
         return manageBlogService.getBlogsPage(pageNum,pageSize);
     }
 
+    //板块内博客分页
+    @GetMapping("/getBlogsOfPlate")
+    public Map getBlogsOfPlate(int pageNum,int pageSize,int id) {
+        return manageBlogService.getBlogsOfPlatePage(pageNum,pageSize,id);
+    }
+
     //查看博客详情
+    
 
     //删除博客(帖子详情页内)
     @PostMapping("/deleteBlog")
@@ -119,6 +133,12 @@ public class ManagerController extends HttpServlet {
     @GetMapping("/getPlates")
     public Map getPlates(int pageNum, int pageSize) {
         return managePlateService.getPlatePage(pageNum,pageSize);
+    }
+
+    //查看板块详情
+    @PostMapping("/checkPlate")
+    public Map checkPlate(@RequestBody Plate plate) {
+        return managePlateService.checkPlate(plate);
     }
 
     //删除板块

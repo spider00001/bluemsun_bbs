@@ -1,10 +1,10 @@
-package com.bluemsun.service.manager;
+package com.bluemsun.service;
 
 import com.bluemsun.entity.PlateApplication;
 
 import java.util.Map;
 
-public interface ManagePlateApplicationService {
+public interface PlateApplicationService {
 
     //获取申请分页(不分类)
     Map getPlateApplicationPage(int pageNum, int pageSize);

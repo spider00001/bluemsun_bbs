@@ -1,22 +1,22 @@
-package com.bluemsun.service.manager.Impl;
+package com.bluemsun.service.impl;
 
 import com.bluemsun.dao.PlateApplicationMapper;
 import com.bluemsun.dao.PlateMapper;
 import com.bluemsun.entity.Page;
 import com.bluemsun.entity.Plate;
 import com.bluemsun.entity.PlateApplication;
-import com.bluemsun.service.manager.ManagePlateApplicationService;
+import com.bluemsun.service.PlateApplicationService;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ManagePlateApplicationServiceImpl implements ManagePlateApplicationService {
+public class PlateApplicationServiceImpl implements PlateApplicationService {
 
     private final PlateApplicationMapper plateApplicationMapper;
     private final PlateMapper plateMapper;
 
-    public ManagePlateApplicationServiceImpl(PlateApplicationMapper plateApplicationMapper, PlateMapper plateMapper) {
+    public PlateApplicationServiceImpl(PlateApplicationMapper plateApplicationMapper, PlateMapper plateMapper) {
         this.plateApplicationMapper = plateApplicationMapper;
         this.plateMapper = plateMapper;
     }

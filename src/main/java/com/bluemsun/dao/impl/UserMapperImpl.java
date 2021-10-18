@@ -22,6 +22,17 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
     }
 
     @Override
+    public User userLogin(User user) {
+        User userRes = null;
+        try {
+            userRes = getSqlSession().getMapper(UserMapper.class).userLogin(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userRes;
+    }
+
+    @Override
     public int deleteUser(User user) {
         int row = 0;
         try {
@@ -66,21 +77,10 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
     }
 
     @Override
-    public User selectUserByStuNumber(User user) {
+    public User checkUser(User user) {
         User userRes = null;
         try {
-            userRes = getSqlSession().getMapper(UserMapper.class).selectUserByStuNumber(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return userRes;
-    }
-
-    @Override
-    public User selectUserByUsername(User user) {
-        User userRes = null;
-        try {
-            userRes = getSqlSession().getMapper(UserMapper.class).selectUserByUsername(user);
+            userRes  = getSqlSession().getMapper(UserMapper.class).checkUser(user);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -99,17 +99,6 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
     }
 
     @Override
-    public List<User> selectUsers() {
-        List<User> userList = null;
-        try {
-            userList = getSqlSession().getMapper(UserMapper.class).selectUsers();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return userList;
-    }
-
-    @Override
     public int unfreezeUser(User user) {
         int row = 0;
         try {
@@ -121,15 +110,75 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
     }
 
     @Override
-    public Map viewUserInformation(User user) {
-        Map map = new HashMap();
+    public int getFollowUsersCount(int id) {
+        int count = 0;
         try {
-            map = getSqlSession().getMapper(UserMapper.class).viewUserInformation(user);
+            count = getSqlSession().getMapper(UserMapper.class).getFollowUsersCount(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return map;
+        return count;
     }
+
+    //查看关注列表
+    @Override
+    public List<User> getFollowUsers(Map map) {
+        List<User> userList = null;
+        try {
+            userList = getSqlSession().getMapper(UserMapper.class).getFollowUsers(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userList;
+    }
+
+    @Override
+    public int getFansCount(int id) {
+        int count = 0;
+        try {
+            count = getSqlSession().getMapper(UserMapper.class).getFansCount(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    //查看粉丝列表
+    @Override
+    public List<User> getFans(Map map) {
+        List<User> userList = null;
+        try {
+            userList = getSqlSession().getMapper(UserMapper.class).getFans(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userList;
+    }
+
+    //关注
+    @Override
+    public int followUser(Map map) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(UserMapper.class).followUser(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    //取关
+    @Override
+    public int cancelFollowUser(Map map) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(UserMapper.class).cancelFollowUser(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
 
     @Override
     public User selectUser(User user) {
