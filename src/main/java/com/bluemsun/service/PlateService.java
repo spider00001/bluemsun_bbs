@@ -43,4 +43,7 @@ public interface PlateService {
     //修改板块简介
     Map updatePlateDescription(Plate plate);
 
+    //搜索板块分页
+    Map selectPlatePage(int pageNum, int pageSize, String plateName);
+
 }

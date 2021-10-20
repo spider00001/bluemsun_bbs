@@ -61,4 +61,7 @@ public interface BlogService {
     //取消点赞博客
     Map cancelLikeBlog(Map map);
 
+    //搜索博客分页
+     Map selectBlogPage(int pageNum,int pageSize, String title);
+
 }

@@ -212,5 +212,26 @@ public class PlateServiceImpl implements PlateService {
         return mapRes;
     }
 
+    @Override
+    public Map selectPlatePage(int pageNum, int pageSize, String plateName) {
+        int totalRecord = plateMapper.getSelectPlateCount(plateName);
+        Page page = new Page(pageNum,pageSize,totalRecord);
+        Map<String,Object> map1 = new HashMap<String,Object>();
+        map1.put("startIndex",page.getStartIndex());
+        map1.put("pageSize",pageSize);
+        map1.put("plateName",plateName);
+        page.setList(plateMapper.selectPlateList(map1));
+        Map<String,Object> map = new HashMap<String,Object>();
+        if (page.getList() != null) {
+            map.put("msg","搜索板块分页成功");
+            map.put("status",1);
+            map.put("userList",page.getList());
+        } else {
+            map.put("msg","未搜索到板块");
+            map.put("status",2);
+        }
+        return map;
+    }
+
 
 }

@@ -231,5 +231,27 @@ public class PlateMapperImpl extends SqlSessionDaoSupport implements PlateMapper
         return row;
     }
 
+    @Override
+    public int getSelectPlateCount(String plateName) {
+        int count = 0;
+        try {
+            count = getSqlSession().getMapper(PlateMapper.class).getSelectPlateCount(plateName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    @Override
+    public List<Plate> selectPlateList(Map map) {
+        List<Plate> plateList = null;
+        try {
+            plateList = getSqlSession().getMapper(PlateMapper.class).selectPlateList(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return plateList;
+    }
+
 
 }

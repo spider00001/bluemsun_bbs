@@ -65,4 +65,10 @@ public interface PlateMapper {
     //修改板块简介
     int updatePlateDescription(Plate plate);
 
+    //搜索板块总数
+    int getSelectPlateCount(@Param("plateName") String plateName);
+
+    //搜索板块分页
+    List<Plate> selectPlateList(Map map);
+
 }

@@ -76,4 +76,9 @@ public interface BlogMapper {
     //取消点赞博客
     int cancelLikeBolg(Map map);
 
+    //搜索博客总数
+    int getSelectBlogCount(@Param("title") String title);
+
+    //搜索博客list
+    List<Blog> selectBlogList(Map map);
 }

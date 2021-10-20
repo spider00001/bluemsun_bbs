@@ -117,4 +117,16 @@
     <delete id="cancelLikeBolg" parameterType="map">
         delete from bs_bbs.tb_blog_likes where blog_id=#{blogId} and user_id=#{userId};
     </delete>
+
+    <select id="getSelectBlogCount" resultType="Blog" parameterType="String">
+        select count(*) from bs_bbs.tb_blog where title like concat('%' #{title} '%');
+    </select>
+
+    <select id="selectBlogList" parameterType="map" resultType="Blog">
+        select tb.id, user_id, title, create_time, username from bs_bbs.tb_blog tb
+        inner join bs_bbs.tb_user tu on tb.user_id = tu.id
+        where title like concat('%' #{title} '%') limit #{startIndex},#{pageSize};
+    </select>
+
+
 </mapper>

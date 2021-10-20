@@ -313,4 +313,25 @@ public class BlogServiceImpl implements BlogService {
         }
         return mapRes;
     }
+
+    @Override
+    public Map selectBlogPage(int pageNum, int pageSize, String title) {
+        int totalRecord = blogMapper.getSelectBlogCount(title);
+        Page page = new Page(pageNum,pageSize,totalRecord);
+        Map<String,Object> map1 = new HashMap<String,Object>();
+        map1.put("startIndex",page.getStartIndex());
+        map1.put("pageSize",pageSize);
+        map1.put("title",title);
+        page.setList(blogMapper.selectBlogList(map1));
+        Map<String,Object> map = new HashMap<String,Object>();
+        if (page.getList() != null) {
+            map.put("msg","搜索博客分页成功");
+            map.put("status",1);
+            map.put("userList",page.getList());
+        } else {
+            map.put("msg","未搜索到博客");
+            map.put("status",2);
+        }
+        return map;
+    }
 }

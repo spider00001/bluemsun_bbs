@@ -44,18 +44,25 @@ public class ManagerController extends HttpServlet {
      * 搜索模块(分页):博客,用户,板块
      *
      */
-    //搜索全站用户
+    //搜索全站用户(搜用户名)
+    @GetMapping("/selectUserPage")
+    public Map selectUserPage(int pageNum, int pageSize,String username) {
+        return userService.selectUserPage(pageNum,pageSize,username);
+    }
 
-    //搜索全站板块
+    //搜索全站板块(搜板块名)
+    @GetMapping("/selectPlatePage")
+    public Map selectPlatePage(int pageNum, int pageSize,String plateName) {
+        return plateService.selectPlatePage(pageNum,pageSize,plateName);
+    }
 
-    //搜索全站博客
+    //搜索全站博客(搜博客题目)
+    @GetMapping("selectBlogPage")
+    public Map selectBlogPage(int pageNum, int pageSize,String title) {
+        return blogService.selectBlogPage(pageNum,pageSize,title);
+    }
 
     //搜索全站资源下载的博客
-
-    //搜索板块内博客
-
-    //搜索板块内资源下载的博客
-
 
 
     /**

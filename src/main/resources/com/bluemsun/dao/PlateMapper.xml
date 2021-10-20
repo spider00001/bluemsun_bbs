@@ -83,5 +83,13 @@
     <update id="updatePlateDescription" parameterType="Plate">
         update bs_bbs.tb_plate set description=#{description} where id=#{id};
     </update>
+
+    <select id="getSelectPlateCount" resultType="int" parameterType="String">
+        select count(*) from bs_bbs.tb_user where username like concat('%' #{plateName} '%');
+    </select>
+
+    <select id="selectPlateList" parameterType="map" resultType="Plate">
+        select * from bs_bbs.tb_plate where plate_name like concat('%' #{plateName} '%') limit #{startIndex},#{pageSize};
+    </select>
     
 </mapper>

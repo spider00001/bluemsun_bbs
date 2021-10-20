@@ -46,4 +46,7 @@ public interface UserService {
     //取关
     Map<String,Object> cancelFollowUser(Map map);
 
+    //搜索用户分页
+    Map<String,Object> selectUserPage(int pageNum, int pageSize,String username);
+
 }

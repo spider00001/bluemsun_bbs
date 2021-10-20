@@ -259,4 +259,25 @@ public class UserServiceImpl implements UserService {
         return mapRes;
     }
 
+    @Override
+    public Map<String, Object> selectUserPage(int pageNum, int pageSize, String username) {
+        int totalRecord = userMapper.getSelectUserCount(username);
+        Page page = new Page(pageNum,pageSize,totalRecord);
+        Map<String,Object> map1 = new HashMap<String,Object>();
+        map1.put("startIndex",page.getStartIndex());
+        map1.put("pageSize",pageSize);
+        map1.put("username",username);
+        page.setList(userMapper.selectUserList(map1));
+        Map<String,Object> map = new HashMap<String,Object>();
+        if (page.getList() != null) {
+            map.put("msg","搜索用户分页成功");
+            map.put("status",1);
+            map.put("userList",page.getList());
+        } else {
+            map.put("msg","未搜索到用户");
+            map.put("status",2);
+        }
+        return map;
+    }
+
 }

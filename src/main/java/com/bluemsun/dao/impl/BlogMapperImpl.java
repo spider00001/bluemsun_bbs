@@ -222,5 +222,27 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
         return row;
     }
 
+    @Override
+    public int getSelectBlogCount(String title) {
+        int count = 0;
+        try {
+            count = getSqlSession().getMapper(BlogMapper.class).getSelectBlogCount(title);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    @Override
+    public List<Blog> selectBlogList(Map map) {
+        List<Blog> blogList = null;
+        try {
+            blogList = getSqlSession().getMapper(BlogMapper.class).selectBlogList(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return blogList;
+    }
+
 
 }

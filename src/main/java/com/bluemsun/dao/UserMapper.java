@@ -30,9 +30,6 @@ public interface UserMapper {
     //查看用户详情
     User checkUser(User user);
 
-    //查找用户(模糊查询)
-    User selectUser(User user);
-
     //冻结用户
     int frozenUser(User user);
 
@@ -57,6 +54,10 @@ public interface UserMapper {
     //取关
     int cancelFollowUser(Map map);
 
+    //获取搜索用户list
+    List<User> selectUserList(Map map);
 
+    //搜索出来的用户的总数
+    int getSelectUserCount(@Param("username") String username);
 
 }
