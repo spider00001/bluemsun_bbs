@@ -21,6 +21,14 @@
         select pa.id, pa.plate_name, pa.user_id, pa.create_time, pa.status, u.username from tb_plate_application pa join tb_user u on pa.user_id = u.id where pa.status=#{status} order by create_time desc limit #{startIndex},#{pageSize};
     </select>
 
+    <select id="getMyPlateApplicationCount" parameterType="int" resultType="int">
+        select count(*) from bs_bbs.tb_plate_application where user_id=#{userId};
+    </select>
+
+    <select id="getMyPlateApplicationsLimit" parameterType="map" resultType="PlateApplication">
+        select id, plate_name, create_time, status from bs_bbs.tb_plate_application where user_id=#{userId} order by create_time desc limit #{startIndex},#{pageSize};
+    </select>
+
     <select id="checkPlateApplication" parameterType="PlateApplication" resultType="PlateApplication">
         select * from bs_bbs.tb_plate_application where id=#{id};
     </select>
@@ -36,6 +44,10 @@
     <update id="overrulePlateApplication" parameterType="PlateApplication">
         update bs_bbs.tb_plate_application set status=2 where id=#{id};
     </update>
+
+    <insert id="addPlateApplication" parameterType="PlateApplication">
+        insert into bs_bbs.tb_plate_application (content, plate_name, user_id, create_time) values (#{content},#{plateName},#{userId},#{createTime});
+    </insert>
 
 
 </mapper>

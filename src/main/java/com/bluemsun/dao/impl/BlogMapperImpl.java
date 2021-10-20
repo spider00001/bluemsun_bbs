@@ -2,8 +2,10 @@ package com.bluemsun.dao.impl;
 
 import com.bluemsun.dao.BlogMapper;
 import com.bluemsun.entity.Blog;
+import com.bluemsun.entity.Plate;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +32,16 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
     }
 
     @Override
+    public int getUserBlogCount(int id) {
+        return getSqlSession().getMapper(BlogMapper.class).getUserBlogCount(id);
+    }
+
+    @Override
+    public List<Blog> getUserBlogsLimit(Map map) {
+        return getSqlSession().getMapper(BlogMapper.class).getUserBlogsLimit(map);
+    }
+
+    @Override
     public int deleteBlog(Blog blog) {
         return getSqlSession().getMapper(BlogMapper.class).deleteBlog(blog);
     }
@@ -39,6 +51,8 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
         return getSqlSession().getMapper(BlogMapper.class).getBlogsHomeTop();
     }
 
+
+    //新增首页置顶博客
     @Override
     public int toppingBlog(Blog blog) {
         int row = 0;
@@ -50,6 +64,7 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
         return row;
     }
 
+    //修改首页置顶位置
     @Override
     public int modifyBlogTop(Blog blog) {
         int row = 0;
@@ -61,11 +76,146 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
         return row;
     }
 
+    //取消首页置顶
     @Override
     public int cancelToppingBlog(Blog blog) {
         int row = 0;
         try {
             row = getSqlSession().getMapper(BlogMapper.class).cancelToppingBlog(blog);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    //获取板块置顶博客list
+    @Override
+    public List<Blog> getPlateBlogsHomeTop(Plate plate) {
+        List<Blog> blogList = null;
+        try {
+            blogList = getSqlSession().getMapper(BlogMapper.class).getPlateBlogsHomeTop(plate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return blogList;
+    }
+
+    //新增板块置顶博客
+    @Override
+    public int toppingPlateBlog(Map map) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(BlogMapper.class).toppingPlateBlog(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    //修改板块置顶位置
+    @Override
+    public int modifyPlateBlogTop(Map map) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(BlogMapper.class).modifyPlateBlogTop(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    //取消板块置顶博客
+    @Override
+    public int cancelToppingPlateBlog(Map map) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(BlogMapper.class).cancelToppingPlateBlog(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    //发布博客
+    @Override
+    public int releaseBlog(Map map) {
+        int row = 0;
+        try {
+            map.put("createTime",new Timestamp(System.currentTimeMillis()));
+            row = getSqlSession().getMapper(BlogMapper.class).releaseBlog(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    //查找用户刚发布的博客的id
+    @Override
+    public int selectUserJustReleaseBlogId(int userId) {
+        int id = 0;
+        try {
+            id = getSqlSession().getMapper(BlogMapper.class).selectUserJustReleaseBlogId(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
+
+    //查看博客详情
+    @Override
+    public Blog checkBlog(Blog blog) {
+        Blog blogRes = null;
+        try {
+            blogRes = getSqlSession().getMapper(BlogMapper.class).checkBlog(blog);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return blogRes;
+    }
+
+
+    //博客是否被我赞过
+    @Override
+    public int isBlogLiked(Map map) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(BlogMapper.class).isBlogLiked(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    //编辑博客
+    @Override
+    public int updateBlog(Blog blog) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(BlogMapper.class).updateBlog(blog);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    //点赞博客
+    @Override
+    public int likeBlog(Map map) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(BlogMapper.class).likeBlog(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    //取消点赞博客
+    @Override
+    public int cancelLikeBolg(Map map) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(BlogMapper.class).cancelLikeBolg(map);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -20,6 +20,12 @@ public interface PlateApplicationMapper {
     //获取申请list(分类:未审核/通过/不通过)
     List<PlateApplication> getPlateApplicationsClassifiedLimit(Map map);
 
+    //获取用户申请总数
+    int getMyPlateApplicationCount(@Param("userId") int userId);
+
+    //获取用户申请list
+    List<PlateApplication> getMyPlateApplicationsLimit(Map map);
+
     //查看申请详情
     PlateApplication checkPlateApplication(PlateApplication plateApplication);
 
@@ -31,5 +37,8 @@ public interface PlateApplicationMapper {
 
     //不通过申请
     int overrulePlateApplication(PlateApplication plateApplication);
+
+    //用户申请板块
+    int addPlateApplication(PlateApplication plateApplication);
 
 }

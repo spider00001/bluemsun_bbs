@@ -1,15 +1,24 @@
 package com.bluemsun.dao;
 
 import com.bluemsun.entity.Plate;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
 
 public interface PlateMapper {
 
+    //获取所有板块数量
     int getPlateCount();
 
-    List<Plate> getPlatesLimit(Map map);
+    //获取所有板块list
+    List<Plate> getPlatesLimit(@Param("startIndex") int startIndex,@Param("pageSize") int pageSize);
+
+    //获取未冻结板块数量
+    int getAvailablePlateCount();
+
+    //获取未冻结板块list
+    List<Plate> getAvailablePlatesLimit(@Param("startIndex") int startIndex,@Param("pageSize") int pageSize);
 
     //查看板块详情
     Plate checkPlate(Plate plate);
@@ -43,4 +52,17 @@ public interface PlateMapper {
 
     //判断是否已经在置顶表内（暂时没用....）
     Plate isPlateTopped(Plate plate);
+
+    //在板块内添加博客
+    int releaseBlogInPlate(Map map);
+
+    //修改博客所在板块
+    int updateBlogPlate(Map map);
+
+    //取消选择博客所在板块
+    int deselectPlate(Map map);
+
+    //修改板块简介
+    int updatePlateDescription(Plate plate);
+
 }

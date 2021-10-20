@@ -20,6 +20,9 @@
         <mapper resource="com/bluemsun/dao/PlateMapper.xml"/>
         <mapper resource="com/bluemsun/dao/PlateApplicationMapper.xml"/>
         <mapper resource="com/bluemsun/dao/ManagerNoticeMapper.xml"/>
+        <mapper resource="com/bluemsun/dao/InsideCommentMapper.xml"/>
+        <mapper resource="com/bluemsun/dao/MainCommentMapper.xml"/>
+        <mapper resource="com/bluemsun/dao/PlateNoticeMapper.xml"/>
     </mappers>
 
 </configuration>

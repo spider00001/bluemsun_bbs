@@ -52,4 +52,7 @@
     <bean id="plateService" class="com.bluemsun.service.impl.PlateServiceImpl"/>
     <bean id="plateApplicationService" class="com.bluemsun.service.impl.PlateApplicationServiceImpl"/>
     <bean id="managerNoticeService" class="com.bluemsun.service.impl.ManagerNoticeServiceImpl"/>
+    <bean id="commentService" class="com.bluemsun.service.impl.CommentServiceImpl"/>
+    <bean id="plateNoticeService" class="com.bluemsun.service.impl.PlateNoticeServiceImpl"/>
+
 </beans>

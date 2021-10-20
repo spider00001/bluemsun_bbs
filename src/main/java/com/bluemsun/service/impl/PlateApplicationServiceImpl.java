@@ -63,6 +63,27 @@ public class PlateApplicationServiceImpl implements PlateApplicationService {
     }
 
     @Override
+    public Map getMyPlateApplicationPage(int pageNum, int pageSize, int userId) {
+        int totalRecord = plateApplicationMapper.getMyPlateApplicationCount(userId);
+        Page page = new Page(pageNum,pageSize,totalRecord);
+        Map<String,Integer> map1 = new HashMap<String,Integer>();
+        map1.put("startIndex",page.getStartIndex());
+        map1.put("pageSize",pageSize);
+        map1.put("userId",userId);
+        page.setList(plateApplicationMapper.getMyPlateApplicationsLimit(map1));
+        Map<String,Object> map = new HashMap<String,Object>();
+        if (page.getList() != null) {
+            map.put("mag","用户申请分页成功");
+            map.put("status",1);
+            map.put("list",page.getList());
+        } else {
+            map.put("mag","用户申请分页失败");
+            map.put("status",2);
+        }
+        return map;
+    }
+
+    @Override
     public Map checkPlateApplication(PlateApplication plateApplication) {
         PlateApplication plateApplicationRes = plateApplicationMapper.checkPlateApplication(plateApplication);
         Map<String,Object> map = new HashMap<String,Object>();
@@ -106,6 +127,21 @@ public class PlateApplicationServiceImpl implements PlateApplicationService {
             map.put("status",1);
         } else {
             map.put("msg","不通过申请失败");
+            map.put("status",2);
+        }
+        return map;
+    }
+
+    @Override
+    public Map addPlateApplication(PlateApplication plateApplication) {
+        plateApplication.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        int row = plateApplicationMapper.addPlateApplication(plateApplication);
+        Map<String,Object> map = new HashMap<String,Object>();
+        if (row > 0) {
+            map.put("msg","发送申请成功");
+            map.put("status",1);
+        } else {
+            map.put("msg","发送申请失败");
             map.put("status",2);
         }
         return map;

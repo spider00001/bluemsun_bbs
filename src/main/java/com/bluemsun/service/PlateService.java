@@ -4,9 +4,12 @@ import com.bluemsun.entity.Plate;
 
 import java.util.Map;
 
-public interface ManagePlateService {
+public interface PlateService {
 
+    //获取所有板块分页
     Map getPlatePage(int pageNum, int pageSize);
+
+    Map getAvailablePlatePage(int pageNum, int pageSize);
 
     //查看板块详情
     Map checkPlate(Plate plate);
@@ -30,5 +33,14 @@ public interface ManagePlateService {
 
     //解冻板块
     Map unfreezePlate(Plate plate);
+
+    //修改博客所在板块
+    Map updateBlogPlate(Map map);
+
+    //取消博客所在板块
+    Map deselectPlate(Map map);
+
+    //修改板块简介
+    Map updatePlateDescription(Plate plate);
 
 }

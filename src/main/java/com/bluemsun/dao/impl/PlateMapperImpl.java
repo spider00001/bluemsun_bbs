@@ -2,6 +2,7 @@ package com.bluemsun.dao.impl;
 
 import com.bluemsun.dao.PlateMapper;
 import com.bluemsun.entity.Plate;
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Map;
 
 public class PlateMapperImpl extends SqlSessionDaoSupport implements PlateMapper {
 
+    //获取所有板块数量
     @Override
     public int getPlateCount() {
         int row = 0;
@@ -20,11 +22,36 @@ public class PlateMapperImpl extends SqlSessionDaoSupport implements PlateMapper
         return row;
     }
 
+    //获取所有板块list
     @Override
-    public List<Plate> getPlatesLimit(Map map) {
+    public List<Plate> getPlatesLimit(int startIndex, int pageSize) {
         List<Plate> plateList = null;
         try {
-            plateList = getSqlSession().getMapper(PlateMapper.class).getPlatesLimit(map);
+            plateList = getSqlSession().getMapper(PlateMapper.class).getPlatesLimit(startIndex,pageSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return plateList;
+    }
+
+    //获取所有未冻结的板块数量
+    @Override
+    public int getAvailablePlateCount() {
+        int count = 0;
+        try {
+            count = getSqlSession().getMapper(PlateMapper.class).getAvailablePlateCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    //获取所有未冻结的板块list
+    @Override
+    public List<Plate> getAvailablePlatesLimit(int startIndex,int pageSize) {
+        List<Plate> plateList = null;
+        try {
+            plateList = getSqlSession().getMapper(PlateMapper.class).getAvailablePlatesLimit(startIndex,pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -158,6 +185,50 @@ public class PlateMapperImpl extends SqlSessionDaoSupport implements PlateMapper
             e.printStackTrace();
         }
         return plateRes;
+    }
+
+    @Override
+    public int releaseBlogInPlate(Map map) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(PlateMapper.class).releaseBlogInPlate(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
+    public int updateBlogPlate(Map map) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(PlateMapper.class).updateBlogPlate(map);
+        } catch (Exception e)  {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
+    public int deselectPlate(Map map) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(PlateMapper.class).deselectPlate(map);
+        } catch (Exception e)  {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
+    public int updatePlateDescription(Plate plate) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(PlateMapper.class).updatePlateDescription(plate);
+        } catch (Exception e)  {
+            e.printStackTrace();
+        }
+        return row;
     }
 
 

@@ -10,7 +10,7 @@
     </select>
     
     <select id="getBlogsLimit" resultType="Blog" parameterType="map">
-        select b.id, user_id, title, create_time, views, content likes_num,u.username
+        select b.id, user_id, title, create_time, u.username
         from bs_bbs.tb_blog b
         join bs_bbs.tb_user u on b.user_id=u.id
         order by create_time desc limit #{startIndex},#{pageSize};
@@ -21,12 +21,24 @@
     </select>
 
     <select id="getBlogsOfPlateLimit" parameterType="map" resultType="Plate">
-        select tb.id, title, create_time, views, content, likes_num, username, head_portrait
+        select tb.id, title, create_time, username, head_portrait
         from  tb_blog tb
         inner join tb_plate_blog tpb on tb.id = tpb.blog_id
         join tb_user tu on tu.id = tb.user_id
         where tpb.plate_id=#{id}
         order by tb.create_time desc limit #{startIndex},#{pageSize};
+    </select>
+
+    <select id="getUserBlogCount" resultType="int" parameterType="int">
+        select count(*) from bs_bbs.tb_blog where user_id=#{id};
+    </select>
+
+    <select id="getUserBlogsLimit" resultType="Blog" parameterType="map">
+        select b.id, user_id, title, create_time, u.username
+        from bs_bbs.tb_blog b
+        join bs_bbs.tb_user u on b.user_id=u.id
+        where user_id=#{userId}
+        order by create_time desc limit #{startIndex},#{pageSize};
     </select>
 
     <delete id="deleteBlog" parameterType="Blog">
@@ -53,4 +65,56 @@
         delete from bs_bbs.tb_home_blog where blog_id=#{id};
     </delete>
 
+    <select id="getPlateBlogsHomeTop" resultType="Blog" parameterType="Plate">
+        select top, tb.id, title, username, create_time, head_portrait
+        from bs_bbs.tb_plate_home_blog tphb
+        inner join bs_bbs.tb_blog tb on tphb.blog_id=tb.id
+        join tb_user tu on tu.id = tb.user_id
+        where plate_id=#{id}
+        order by top;
+    </select>
+
+    <insert id="toppingPlateBlog" parameterType="map">
+        insert into bs_bbs.tb_plate_home_blog(plate_id, blog_id, top) VALUES (#{plateId},#{blogId},#{top});
+    </insert>
+
+    <update id="modifyPlateBlogTop" parameterType="map">
+        update bs_bbs.tb_plate_home_blog set top=#{top} where plate_id=#{plateId} and blog_id=#{blogId};
+    </update>
+
+    <delete id="cancelToppingPlateBlog" parameterType="map">
+        delete from bs_bbs.tb_plate_home_blog where plate_id=#{plateId} and blog_id=#{blogId};
+    </delete>
+
+    <insert id="releaseBlog" parameterType="map">
+        insert into bs_bbs.tb_blog (user_id, title, create_time, content) values (#{userId},#{title},#{createTime},#{content});
+    </insert>
+
+    <select id="selectUserJustReleaseBlogId" parameterType="int" resultType="int">
+        select id from bs_bbs.tb_blog where user_id=#{userId} order by create_time desc limit 0,1;
+    </select>
+
+    <select id="checkBlog" parameterType="Blog" resultType="Blog">
+        select * from bs_bbs.tb_blog where id=#{id};
+    </select>
+
+    <update id="updateBlog" parameterType="Blog">
+        update bs_bbs.tb_blog set content=#{content},title=#{title} where id=#{id};
+    </update>
+
+    <delete id="deleteMyBlog" parameterType="Blog">
+        delete from bs_bbs.tb_blog where id=#{id};
+    </delete>
+
+    <select id="isBlogLiked" parameterType="map" resultType="int">
+        select count(*) from bs_bbs.tb_blog_likes where user_id=#{userId} and blog_id=#{blogId};
+    </select>
+
+    <insert id="likeBlog" parameterType="map">
+        insert into bs_bbs.tb_blog_likes(blog_id, user_id) VALUES (#{blogId},#{userId});
+    </insert>
+
+    <delete id="cancelLikeBolg" parameterType="map">
+        delete from bs_bbs.tb_blog_likes where blog_id=#{blogId} and user_id=#{userId};
+    </delete>
 </mapper>

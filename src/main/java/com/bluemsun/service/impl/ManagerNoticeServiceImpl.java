@@ -39,7 +39,6 @@ public class ManagerNoticeServiceImpl implements ManagerNoticeService {
 
     @Override
     public Map addManagerNotice(ManagerNotice managerNotice) {
-        managerNotice.setCreateTime(new Timestamp(System.currentTimeMillis()));
         int row = managerNoticeMapper.addManagerNotice(managerNotice);
         Map<String,Object> map = new HashMap<String,Object>();
         if (row > 0) {

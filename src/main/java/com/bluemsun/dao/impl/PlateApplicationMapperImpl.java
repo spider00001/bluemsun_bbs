@@ -30,6 +30,16 @@ public class PlateApplicationMapperImpl extends SqlSessionDaoSupport implements 
     }
 
     @Override
+    public int getMyPlateApplicationCount(int userId) {
+        return getSqlSession().getMapper(PlateApplicationMapper.class).getMyPlateApplicationCount(userId);
+    }
+
+    @Override
+    public List<PlateApplication> getMyPlateApplicationsLimit(Map map) {
+        return getSqlSession().getMapper(PlateApplicationMapper.class).getMyPlateApplicationsLimit(map);
+    }
+
+    @Override
     public PlateApplication checkPlateApplication(PlateApplication plateApplication) {
         return getSqlSession().getMapper(PlateApplicationMapper.class).checkPlateApplication(plateApplication);
     }
@@ -47,5 +57,10 @@ public class PlateApplicationMapperImpl extends SqlSessionDaoSupport implements 
     @Override
     public int overrulePlateApplication(PlateApplication plateApplication) {
         return getSqlSession().getMapper(PlateApplicationMapper.class).overrulePlateApplication(plateApplication);
+    }
+
+    @Override
+    public int addPlateApplication(PlateApplication plateApplication) {
+        return getSqlSession().getMapper(PlateApplicationMapper.class).addPlateApplication(plateApplication);
     }
 }

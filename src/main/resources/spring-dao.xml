@@ -70,6 +70,15 @@
     <bean id="managerNoticeMapper" class="com.bluemsun.dao.impl.ManagerNoticeMapperImpl">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
+    <bean id="mainCommentMapper" class="com.bluemsun.dao.impl.MainCommentMapperImpl">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+    <bean id="insideCommentMapper" class="com.bluemsun.dao.impl.InsideCommentMapperImpl">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+    <bean id="plateNoticeMapper" class="com.bluemsun.dao.impl.PlateNoticeMapperImpl">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
 
 
 

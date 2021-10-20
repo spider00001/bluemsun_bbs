@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bluemsun.dao.MainCommentMapper">
+
+    <insert id="addMainComment" parameterType="MainComment">
+        insert into bs_bbs.tb_comment_main(content, blog_id, create_time, user_id) VALUES (#{content},#{blogId},#{createTime},#{userId});
+    </insert>
+
+    <delete id="deleteMyMainComment" parameterType="MainComment">
+        delete from bs_bbs.tb_comment_main where id=#{id};
+    </delete>
+
+    <insert id="likesMainComment" parameterType="map">
+        insert into bs_bbs.tb_comment_main_likes(comment_main_id, user_id) VALUES (#{commentMainId},#{userId})
+    </insert>
+
+    <delete id="cancelLikesMainComment" parameterType="map">
+        delete from bs_bbs.tb_comment_main_likes where comment_main_id=#{commentMainId} and user_id=#{userId};
+    </delete>
+
+    <select id="getMainCommentCount" parameterType="int" resultType="int">
+        select count(*) from bs_bbs.tb_comment_main where blog_id=#{blogId};
+    </select>
+
+    <select id="getMainCommentLimit" parameterType="map" resultType="java.util.HashMap">
+        select user_id as userId, tcm.id, content, create_time as createTime, username, head_portrait as headPortrait, likes_num as likesNum
+        from bs_bbs.tb_comment_main tcm
+        inner join bs_bbs.tb_user tu
+        on tcm.user_id = tu.id
+        where blog_id=#{blogId}
+        order by tcm.create_time desc limit #{startIndex},#{pageSize};
+    </select>
+
+</mapper>

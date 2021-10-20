@@ -13,8 +13,20 @@
         select u.username, p.id, user_id, plate_name, create_time, p.status from bs_bbs.tb_plate p join bs_bbs.tb_user u on p.user_id=u.id order by create_time desc limit #{startIndex},#{pageSize};
     </select>
 
+    <select id="getAvailablePlateCount" resultType="int">
+        select count(*) from bs_bbs.tb_plate where status=0;
+    </select>
+    
+    <select id="getAvailablePlatesLimit" resultType="Plate" parameterType="map">
+        select  id, user_id, plate_name, create_time, status from bs_bbs.tb_plate where status=0 order by create_time desc limit #{startIndex},#{pageSize} ;
+    </select>
+
     <select id="checkPlate" parameterType="Plate" resultType="Plate">
-        select * from bs_bbs.tb_plate where id=#{id};
+        select tp.id, plate_name, user_id, create_time, tp.status, blog_num, tp.description, username
+        from bs_bbs.tb_plate tp
+        inner join bs_bbs.tb_user tu
+        on tp.user_id = tu.id
+        where tp.id=#{id};
     </select>
 
     <insert id="addPlate" parameterType="Plate">
@@ -56,4 +68,20 @@
         update bs_bbs.tb_plate set status=0 where id=#{id};
     </update>
 
+    <insert id="releaseBlogInPlate" parameterType="map">
+        insert into bs_bbs.tb_plate_blog(plate_id, blog_id) values (#{plateId},#{blogId})
+    </insert>
+
+    <update id="updateBlogPlate" parameterType="map">
+        update bs_bbs.tb_plate_blog set plate_id=#{plateId} where blog_id=#{blogId};
+    </update>
+    
+    <delete id="deselectPlate" parameterType="map">
+        delete from bs_bbs.tb_plate_blog where blog_id=#{blogId};
+    </delete>
+    
+    <update id="updatePlateDescription" parameterType="Plate">
+        update bs_bbs.tb_plate set description=#{description} where id=#{id};
+    </update>
+    
 </mapper>

@@ -3,13 +3,13 @@ package com.bluemsun.service.impl;
 import com.bluemsun.dao.PlateMapper;
 import com.bluemsun.entity.Page;
 import com.bluemsun.entity.Plate;
-import com.bluemsun.service.ManagePlateService;
+import com.bluemsun.service.PlateService;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PlateServiceImpl implements ManagePlateService {
+public class PlateServiceImpl implements PlateService {
 
     private final PlateMapper plateMapper;
 
@@ -21,10 +21,7 @@ public class PlateServiceImpl implements ManagePlateService {
     public Map getPlatePage(int pageNum, int pageSize) {
         int totalRecord = plateMapper.getPlateCount();
         Page page = new Page(pageNum,pageSize,totalRecord);
-        Map<String,Integer> map1 = new HashMap<String,Integer>();
-        map1.put("startIndex",page.getStartIndex());
-        map1.put("pageSize",pageSize);
-        page.setList(plateMapper.getPlatesLimit(map1));
+        page.setList(plateMapper.getPlatesLimit(page.getStartIndex(),pageSize));
         Map<String,Object> map = new HashMap<String,Object>();
         if (page.getList() != null) {
             map.put("msg","板块分页成功");
@@ -32,6 +29,23 @@ public class PlateServiceImpl implements ManagePlateService {
             map.put("list",page.getList());
         } else {
             map.put("msg","板块分页失败");
+            map.put("status",2);
+        }
+        return map;
+    }
+
+    @Override
+    public Map getAvailablePlatePage(int pageNum, int pageSize) {
+        int totalRecord = plateMapper.getAvailablePlateCount();
+        Page page = new Page(pageNum,pageSize,totalRecord);
+        page.setList(plateMapper.getAvailablePlatesLimit(page.getStartIndex(),pageSize));
+        Map<String,Object> map = new HashMap<String,Object>();
+        if (page.getList() != null) {
+            map.put("msg","未冻结板块分页成功");
+            map.put("status",1);
+            map.put("list",page.getList());
+        } else {
+            map.put("msg","未冻结板块分页失败");
             map.put("status",2);
         }
         return map;
@@ -152,6 +166,50 @@ public class PlateServiceImpl implements ManagePlateService {
             map.put("status",2);
         }
         return map;
+    }
+
+    //修改博客所在板块
+    @Override
+    public Map updateBlogPlate(Map map) {
+        int row = plateMapper.updateBlogPlate(map);
+        Map<String,Object> mapRes = new HashMap<String,Object>();
+        if (row > 0) {
+            mapRes.put("msg","修改博客所在板块成功");
+            mapRes.put("status",1);
+        } else {
+            mapRes.put("msg","修改博客所在板块失败");
+            mapRes.put("status",2);
+        }
+        return mapRes;
+    }
+
+    //取消博客所在板块
+    @Override
+    public Map deselectPlate(Map map) {
+        int row = plateMapper.deselectPlate(map);
+        Map<String,Object> mapRes = new HashMap<String,Object>();
+        if (row > 0) {
+            mapRes.put("msg","取消博客所在板块成功");
+            mapRes.put("status",1);
+        } else {
+            mapRes.put("msg","取消博客所在板块失败");
+            mapRes.put("status",2);
+        }
+        return mapRes;
+    }
+
+    @Override
+    public Map updatePlateDescription(Plate plate) {
+        int row = plateMapper.updatePlateDescription(plate);
+        Map<String,Object> mapRes = new HashMap<String,Object>();
+        if (row > 0) {
+            mapRes.put("msg","修改博客简介成功");
+            mapRes.put("status",1);
+        } else {
+            mapRes.put("msg","修改博客简介失败");
+            mapRes.put("status",2);
+        }
+        return mapRes;
     }
 
 

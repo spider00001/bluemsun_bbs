@@ -16,7 +16,8 @@
     <bean id="plateNotice" class="com.bluemsun.entity.PlateNotice"/>
     <bean id="plateApplication" class="com.bluemsun.entity.PlateApplication"/>
     <bean id="managerNotice" class="com.bluemsun.entity.ManagerNotice"/>
-
+    <bean id="mainComment" class="com.bluemsun.entity.MainComment"/>
+    <bean id="insideComment" class="com.bluemsun.entity.InsideComment"/>
 
 
 <!--    <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>-->

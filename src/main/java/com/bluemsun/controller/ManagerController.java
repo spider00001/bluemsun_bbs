@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -14,20 +15,18 @@ import java.util.Map;
 public class ManagerController extends HttpServlet {
 
     private final UserService userService;
-    private final BlogService manageBlogService;
-    private final ManagePlateService managePlateService;
-    private final PlateApplicationService managePlateApplicationService;
-    private final ManagerNoticeService manageManagerNoticeService;
-
-    //  搜索模块没做.....
+    private final BlogService blogService;
+    private final PlateService plateService;
+    private final PlateApplicationService plateApplicationService;
+    private final ManagerNoticeService managerNoticeService;
 
 
-    public ManagerController(UserService userService, BlogService manageBlogService, ManagePlateService managePlateService, PlateApplicationService managePlateApplicationService, ManagerNoticeService manageManagerNoticeService) {
+    public ManagerController(UserService userService, BlogService blogService, PlateService plateService, PlateApplicationService plateApplicationService, ManagerNoticeService managerNoticeService) {
         this.userService = userService;
-        this.manageBlogService = manageBlogService;
-        this.managePlateService = managePlateService;
-        this.managePlateApplicationService = managePlateApplicationService;
-        this.manageManagerNoticeService = manageManagerNoticeService;
+        this.blogService = blogService;
+        this.plateService = plateService;
+        this.plateApplicationService = plateApplicationService;
+        this.managerNoticeService = managerNoticeService;
     }
 
 
@@ -40,6 +39,23 @@ public class ManagerController extends HttpServlet {
         }
         return map;
     }
+
+    /**
+     * 搜索模块(分页):博客,用户,板块
+     *
+     */
+    //搜索全站用户
+
+    //搜索全站板块
+
+    //搜索全站博客
+
+    //搜索全站资源下载的博客
+
+    //搜索板块内博客
+
+    //搜索板块内资源下载的博客
+
 
 
     /**
@@ -88,40 +104,40 @@ public class ManagerController extends HttpServlet {
     //博客分页
     @GetMapping("/getBlogs")
     public Map getBlogs(int pageNum, int pageSize) {
-        return manageBlogService.getBlogsPage(pageNum,pageSize);
-    }
-
-    //板块内博客分页
-    @GetMapping("/getBlogsOfPlate")
-    public Map getBlogsOfPlate(int pageNum,int pageSize,int id) {
-        return manageBlogService.getBlogsOfPlatePage(pageNum,pageSize,id);
+        return blogService.getBlogsPage(pageNum,pageSize);
     }
 
     //查看博客详情
+    @PostMapping("/checkBlog")
+    public Map checkBlog(@RequestBody Blog blog, HttpServletRequest req) {
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("blog",blog);
+        return blogService.checkBlog(map);
+    }
     
 
-    //删除博客(帖子详情页内)
+    //删除博客
     @PostMapping("/deleteBlog")
     public Map deleteBlog(@RequestBody Blog blog) {
-        return manageBlogService.deleteBlog(blog);
+        return blogService.deleteBlog(blog);
     }
 
     //新增置顶博客
     @PostMapping("/toppingBlog")
     public Map ToppingBlog(@RequestBody Blog blog) {
-        return manageBlogService.toppingBlog(blog);
+        return blogService.toppingBlog(blog);
     }
 
     //修改置顶博客位置
     @PostMapping("/modifyBlogTop")
     public Map modifyBlogTop(@RequestBody Blog blog) {
-        return manageBlogService.modifyBlogTop(blog);
+        return blogService.modifyBlogTop(blog);
     }
 
     //取消置顶博客
     @PostMapping("/cancelToppingBlog")
     public Map cancelToppingBlog(@RequestBody Blog blog) {
-        return manageBlogService.cancelToppingBlog(blog);
+        return blogService.cancelToppingBlog(blog);
     }
 
 
@@ -132,49 +148,55 @@ public class ManagerController extends HttpServlet {
     //板块分页
     @GetMapping("/getPlates")
     public Map getPlates(int pageNum, int pageSize) {
-        return managePlateService.getPlatePage(pageNum,pageSize);
+        return plateService.getPlatePage(pageNum,pageSize);
     }
 
     //查看板块详情
     @PostMapping("/checkPlate")
     public Map checkPlate(@RequestBody Plate plate) {
-        return managePlateService.checkPlate(plate);
+        return plateService.checkPlate(plate);
+    }
+
+    //板块内博客分页
+    @GetMapping("/getBlogsOfPlate")
+    public Map getBlogsOfPlate(int pageNum,int pageSize,int id) {
+        return blogService.getBlogsOfPlatePage(pageNum,pageSize,id);
     }
 
     //删除板块
     @PostMapping("/deletePlate")
     public Map deletePlate(@RequestBody Plate plate) {
-        return managePlateService.deletePlate(plate);
+        return plateService.deletePlate(plate);
     }
 
     //新增置顶板块
     @PostMapping("/toppingPlate")
     public Map toppingPlate(@RequestBody Plate plate) {
-        return managePlateService.toppingPlate(plate);
+        return plateService.toppingPlate(plate);
     }
 
     //修改置顶板块位置
     @PostMapping("/modifyPlateTop")
     public Map modifyPlateTop(@RequestBody Plate plate) {
-        return managePlateService.modifyPlateTop(plate);
+        return plateService.modifyPlateTop(plate);
     }
 
     //取消置顶板块
     @PostMapping("/cancelToppingPlate")
     public Map cancelToppingPlate(@RequestBody Plate plate) {
-        return managePlateService.cancelToppingPlate(plate);
+        return plateService.cancelToppingPlate(plate);
     }
 
     //冻结板块
     @PostMapping("/frozenPlate")
     public Map frozenPlate(@RequestBody Plate plate) {
-        return managePlateService.frozenPlate(plate);
+        return plateService.frozenPlate(plate);
     }
 
     //解冻板块
     @PostMapping("/unfreezePlate")
     public Map unfreezePlate(@RequestBody Plate plate) {
-        return managePlateService.unfreezePlate(plate);
+        return plateService.unfreezePlate(plate);
     }
 
 
@@ -185,31 +207,31 @@ public class ManagerController extends HttpServlet {
     //申请分页(分类查看:全部)
     @GetMapping("/getPlateApplication")
     public Map getPlateApplication(int pageNum, int pageSize) {
-        return managePlateApplicationService.getPlateApplicationPage(pageNum,pageSize);
+        return plateApplicationService.getPlateApplicationPage(pageNum,pageSize);
     }
 
     //申请分页(分类查看:未审核/通过/不通过)
     @GetMapping("/getPlateApplicationClassified")
     public Map getPlateApplication(int pageNum, int pageSize,int status) {
-        return managePlateApplicationService.getPlateApplicationClassifiedPage(pageNum,pageSize,status);
+        return plateApplicationService.getPlateApplicationClassifiedPage(pageNum,pageSize,status);
     }
 
     //查看申请详情
     @PostMapping("/checkPlateApplication")
     public Map checkPlateApplication(@RequestBody PlateApplication plateApplication) {
-        return managePlateApplicationService.checkPlateApplication(plateApplication);
+        return plateApplicationService.checkPlateApplication(plateApplication);
     }
 
     //申请通过(通过并为该用户创建一个板块)
     @PostMapping("/passPlateApplication")
     public Map passPlateApplication(@RequestBody PlateApplication plateApplication) {
-        return managePlateApplicationService.passPlateApplication(plateApplication);
+        return plateApplicationService.passPlateApplication(plateApplication);
     }
 
     //申请不通过
     @PostMapping("/overrulePlateApplication")
     public Map overrulePlateApplication(@RequestBody PlateApplication plateApplication) {
-        return managePlateApplicationService.overrulePlateApplication(plateApplication);
+        return plateApplicationService.overrulePlateApplication(plateApplication);
     }
 
     /**
@@ -219,19 +241,19 @@ public class ManagerController extends HttpServlet {
     //公告分页
     @GetMapping("/getManagerNotice")
     public Map getManagerNotice(int pageNum,int pageSize) {
-        return manageManagerNoticeService.getManagerNoticePage(pageNum,pageSize);
+        return managerNoticeService.getManagerNoticePage(pageNum,pageSize);
     }
 
     //发布公告
     @PostMapping("/addManagerNotice")
     public Map addManagerNotice(@RequestBody ManagerNotice managerNotice) {
-        return manageManagerNoticeService.addManagerNotice(managerNotice);
+        return managerNoticeService.addManagerNotice(managerNotice);
     }
 
     //删除公告
     @PostMapping("/deleteManagerNotice")
     public Map deleteManagerNotice(@RequestBody ManagerNotice managerNotice) {
-        return manageManagerNoticeService.deleteManagerNotice(managerNotice);
+        return managerNoticeService.deleteManagerNotice(managerNotice);
     }
 
 }

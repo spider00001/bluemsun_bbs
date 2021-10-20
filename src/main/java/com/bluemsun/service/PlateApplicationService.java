@@ -12,6 +12,9 @@ public interface PlateApplicationService {
     //获取申请分页(分类:未审核/通过/不通过)
     Map getPlateApplicationClassifiedPage(int pageNum, int pageSize,int status);
 
+    //获取用户申请分页
+    Map getMyPlateApplicationPage(int pageNum, int pageSize,int userId);
+
     //查看申请详情
     Map checkPlateApplication(PlateApplication plateApplication);
 
@@ -20,5 +23,8 @@ public interface PlateApplicationService {
 
     //不通过申请
     Map overrulePlateApplication(PlateApplication plateApplication);
+
+    //申请板块
+    Map addPlateApplication(PlateApplication plateApplication);
 
 }

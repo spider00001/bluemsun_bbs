@@ -18,14 +18,16 @@ public class Plate {
     public Plate() {
     }
 
-    public Plate(int id, String plateName, int userId, Timestamp createTime, int status, int blogNum, String description) {
+    public Plate(int id, String plateName, int userId, String username, Timestamp createTime, int status, int blogNum, String description, int top) {
         this.id = id;
         this.plateName = plateName;
         this.userId = userId;
+        this.username = username;
         this.createTime = createTime;
         this.status = status;
         this.blogNum = blogNum;
         this.description = description;
+        this.top = top;
     }
 
     public int getId() {
@@ -52,11 +54,19 @@ public class Plate {
         this.userId = userId;
     }
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public Timestamp getCreateTime() {
         return createTime;
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
@@ -85,14 +95,6 @@ public class Plate {
         this.description = description;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public int getTop() {
         return top;
     }
@@ -107,10 +109,12 @@ public class Plate {
                 "id=" + id +
                 ", plateName='" + plateName + '\'' +
                 ", userId=" + userId +
+                ", username='" + username + '\'' +
                 ", createTime=" + createTime +
                 ", status=" + status +
                 ", blogNum=" + blogNum +
                 ", description='" + description + '\'' +
+                ", top=" + top +
                 '}';
     }
 }
