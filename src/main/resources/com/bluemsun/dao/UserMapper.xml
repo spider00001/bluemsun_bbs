@@ -100,5 +100,4 @@
         select id, username, head_portrait  from bs_bbs.tb_user where username like concat('%' #{username} '%') limit #{startIndex},#{pageSize};
     </select>
 
-
 </mapper>
