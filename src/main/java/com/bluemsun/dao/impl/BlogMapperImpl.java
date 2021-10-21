@@ -244,5 +244,38 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
         return blogList;
     }
 
+    @Override
+    public int addViews(Blog blog) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(BlogMapper.class).addViews(blog);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
+    public int addLikes(int blogId) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(BlogMapper.class).addLikes(blogId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
+    public int reduceLikes(int blogId) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(BlogMapper.class).reduceLikes(blogId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
 
 }

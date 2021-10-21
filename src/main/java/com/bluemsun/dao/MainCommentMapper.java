@@ -24,7 +24,13 @@ public interface MainCommentMapper {
     //获取博客的所有博客评论数量
     int getMainCommentCount(@Param("blogId") int blogId);
 
+    //获取博客的所有博客评论list
     List<MainComment> getMainCommentLimit(Map map);
 
+    //点赞数+1
+    int addLikes(@Param("id") int id);
+
+    //点赞数-1
+    int reduceLikes(@Param("id") int id);
 
 }

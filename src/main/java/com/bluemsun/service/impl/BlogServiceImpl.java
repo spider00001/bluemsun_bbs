@@ -251,6 +251,7 @@ public class BlogServiceImpl implements BlogService {
         int isLiked = blogMapper.isBlogLiked(mapIsLiked);
         Map<String,Object> mapRes = new HashMap<String,Object>();
         if (blogRes != null) {
+            blogMapper.addViews(blogRes);
             mapRes.put("msg","查看博客成功");
             mapRes.put("status",1);
             //isLiked:  0: 未赞 ; 1:赞过
@@ -289,8 +290,9 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Map likeBlog(Map map) {
         int row = blogMapper.likeBlog(map);
+        int row1 = blogMapper.addLikes((int)map.get("blogId"));
         Map<String,Object> mapRes = new HashMap<String,Object>();
-        if (row > 0) {
+        if (row > 0 && row1 >0) {
             mapRes.put("msg","点赞博客博客成功");
             mapRes.put("status",1);
         } else {
@@ -304,7 +306,8 @@ public class BlogServiceImpl implements BlogService {
     public Map cancelLikeBlog(Map map) {
         int row = blogMapper.cancelLikeBolg(map);
         Map<String,Object> mapRes = new HashMap<String,Object>();
-        if (row > 0) {
+        int row1 = blogMapper.reduceLikes((int)map.get("blogId"));
+        if (row > 0 && row1 >0) {
             mapRes.put("msg","取消点赞博客博客成功");
             mapRes.put("status",1);
         } else {

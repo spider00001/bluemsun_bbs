@@ -26,4 +26,10 @@ public interface InsideCommentMapper {
     //获取评论分页回复list
     List<InsideComment> getInsideCommentLimit(Map map);
 
+    //点赞+1
+    int addLikes(@Param("commentInsideId") int commentInsideId);
+
+    //点赞-1
+    int reduceLikes(@Param("commentInsideId") int commentInsideId);
+
 }

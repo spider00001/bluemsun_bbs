@@ -34,4 +34,12 @@
         order by tcm.create_time desc limit #{startIndex},#{pageSize};
     </select>
 
+    <update id="addLikes" parameterType="int">
+        update bs_bbs.tb_comment_main set likes_num=likes_num+1 where id=#{id};
+    </update>
+
+    <update id="reduceLikes" parameterType="int">
+        update bs_bbs.tb_comment_main set likes_num=likes_num-1 where id=#{id};
+    </update>
+
 </mapper>

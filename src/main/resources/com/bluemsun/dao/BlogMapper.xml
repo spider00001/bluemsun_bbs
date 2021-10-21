@@ -118,7 +118,7 @@
         delete from bs_bbs.tb_blog_likes where blog_id=#{blogId} and user_id=#{userId};
     </delete>
 
-    <select id="getSelectBlogCount" resultType="Blog" parameterType="String">
+    <select id="getSelectBlogCount" resultType="int" parameterType="String">
         select count(*) from bs_bbs.tb_blog where title like concat('%' #{title} '%');
     </select>
 
@@ -127,6 +127,18 @@
         inner join bs_bbs.tb_user tu on tb.user_id = tu.id
         where title like concat('%' #{title} '%') limit #{startIndex},#{pageSize};
     </select>
+
+    <update id="addViews" parameterType="Blog">
+        update bs_bbs.tb_blog set views = views+1 where id=#{id};
+    </update>
+
+    <update id="addLikes" parameterType="Blog">
+        update bs_bbs.tb_blog set likes_num = likes_num+1 where id=#{blogId};
+    </update>
+
+    <update id="reduceLikes" parameterType="Blog">
+        update bs_bbs.tb_blog set likes_num = likes_num-1 where id=#{blogId};
+    </update>
 
 
 </mapper>

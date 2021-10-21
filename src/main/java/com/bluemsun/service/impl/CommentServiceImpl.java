@@ -7,10 +7,7 @@ import com.bluemsun.entity.MainComment;
 import com.bluemsun.entity.Page;
 import com.bluemsun.service.CommentService;
 
-import java.sql.Timestamp;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 public class CommentServiceImpl implements CommentService {
@@ -83,8 +80,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Map likesMainComment(Map map) {
         int row = mainCommentMapper.likesMainComment(map);
+        int row1 = mainCommentMapper.addLikes((int)map.get("commentMainId"));
         Map<String,Object> mapRes = new HashMap<String,Object>();
-        if (row > 0) {
+        if (row > 0 && row1 > 0) {
             mapRes.put("msg","点赞博客评论成功");
             mapRes.put("status",1);
         } else {
@@ -97,8 +95,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Map cancelLikesMainComment(Map map) {
         int row = mainCommentMapper.cancelLikesMainComment(map);
+        int row1 = mainCommentMapper.reduceLikes((int)map.get("commentMainId"));
         Map<String,Object> mapRes = new HashMap<String,Object>();
-        if (row > 0) {
+        if (row > 0 && row1 >0) {
             mapRes.put("msg","取消点赞博客评论成功");
             mapRes.put("status",1);
         } else {
@@ -111,8 +110,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Map likeInsideComment(Map map) {
         int row = insideCommentMapper.likeInsideComment(map);
+        int row1 = insideCommentMapper.addLikes((int)map.get("commentInsideId"));
         Map<String,Object> mapRes = new HashMap<String,Object>();
-        if (row > 0) {
+        if (row > 0 && row1 > 0) {
             mapRes.put("msg","点赞评论回复成功");
             mapRes.put("status",1);
         } else {
@@ -125,8 +125,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Map cancelLikesInsideComment(Map map) {
         int row = insideCommentMapper.cancelLikeInsideComment(map);
+        int row1 = insideCommentMapper.reduceLikes((int)map.get("commentInsideId"));
         Map<String,Object> mapRes = new HashMap<String,Object>();
-        if (row > 0) {
+        if (row > 0 && row1 > 0) {
             mapRes.put("msg","取消点赞评论回复成功");
             mapRes.put("status",1);
         } else {

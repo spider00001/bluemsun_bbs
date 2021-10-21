@@ -81,4 +81,14 @@ public interface BlogMapper {
 
     //搜索博客list
     List<Blog> selectBlogList(Map map);
+
+    //浏览量加一
+    int addViews(Blog blog);
+
+    //点赞数加一
+    int addLikes(@Param("blogId") int blogId);
+
+    //点赞数减一
+    int reduceLikes(@Param("blogId") int blogId);
+
 }

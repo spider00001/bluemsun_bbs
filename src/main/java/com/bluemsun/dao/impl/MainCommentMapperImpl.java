@@ -1,7 +1,6 @@
 package com.bluemsun.dao.impl;
 
 import com.bluemsun.dao.MainCommentMapper;
-import com.bluemsun.entity.Blog;
 import com.bluemsun.entity.MainComment;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
@@ -78,6 +77,28 @@ public class MainCommentMapperImpl extends SqlSessionDaoSupport implements MainC
             e.printStackTrace();
         }
         return mainCommentList;
+    }
+
+    @Override
+    public int addLikes(int id) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(MainCommentMapper.class).addLikes(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
+    public int reduceLikes(int id) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(MainCommentMapper.class).reduceLikes(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
     }
 
 

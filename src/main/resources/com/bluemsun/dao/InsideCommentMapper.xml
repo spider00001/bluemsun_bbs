@@ -34,5 +34,14 @@
         order by tci.create_time desc limit #{startIndex},#{pageSize};
     </select>
 
+    <update id="addLikes" parameterType="int">
+        update bs_bbs.tb_comment_inside set likes_num=likes_num+1 where id=#{commentInsideId};
+    </update>
+
+    <update id="reduceLikes" parameterType="int">
+        update bs_bbs.tb_comment_inside set likes_num=likes_num-1 where id=#{commentInsideId};
+    </update>
+
+
 
 </mapper>

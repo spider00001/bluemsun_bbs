@@ -78,5 +78,27 @@ public class InsideCommentMapperImpl extends SqlSessionDaoSupport implements Ins
         return insideCommentList;
     }
 
+    @Override
+    public int addLikes(int commentMainId) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(InsideCommentMapper.class).addLikes(commentMainId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
+    public int reduceLikes(int commentMainId) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(InsideCommentMapper.class).reduceLikes(commentMainId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
 
 }
