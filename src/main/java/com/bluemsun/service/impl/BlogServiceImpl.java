@@ -230,6 +230,7 @@ public class BlogServiceImpl implements BlogService {
             int blogId = blogMapper.selectUserJustReleaseBlogId((int) map.get("userId"));
             map.put("blogId",blogId);
             plateMapper.releaseBlogInPlate(map);
+            plateMapper.addPlateBlogNum((int) map.get("plateId"));
         }
         Map<String,Object> mapRes = new HashMap<String,Object>();
         if (row1 >0) {
@@ -336,5 +337,20 @@ public class BlogServiceImpl implements BlogService {
             map.put("status",2);
         }
         return map;
+    }
+
+    @Override
+    public Map deleteBlogFromPlate(Map map) {
+        int row = blogMapper.deleteBlogFromPlate(map);
+        int row2 = plateMapper.reducePlateBlogNum((int) map.get("plateId"));
+        Map<String,Object> mapRes = new HashMap<String,Object>();
+        if (row > 0 && row2 > 0) {
+            mapRes.put("msg","删除板块内博客成功");
+            mapRes.put("status",1);
+        } else {
+            mapRes.put("msg","删除板块内博客失败");
+            mapRes.put("status",2);
+        }
+        return mapRes;
     }
 }

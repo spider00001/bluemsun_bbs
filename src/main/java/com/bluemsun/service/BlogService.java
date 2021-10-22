@@ -64,4 +64,7 @@ public interface BlogService {
     //搜索博客分页
      Map selectBlogPage(int pageNum,int pageSize, String title);
 
+     //删除板块内博客
+    Map deleteBlogFromPlate(Map map);
+
 }

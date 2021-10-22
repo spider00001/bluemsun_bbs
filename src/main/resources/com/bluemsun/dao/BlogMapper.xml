@@ -140,5 +140,9 @@
         update bs_bbs.tb_blog set likes_num = likes_num-1 where id=#{blogId};
     </update>
 
+    <delete id="deleteBlogFromPlate" parameterType="map">
+        delete from bs_bbs.tb_plate_blog where plate_id=#{plateId} and blog_id=#{blogId};
+    </delete>
+
 
 </mapper>

@@ -277,5 +277,16 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
         return row;
     }
 
+    @Override
+    public int deleteBlogFromPlate(Map map) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(BlogMapper.class).deleteBlogFromPlate(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
 
 }

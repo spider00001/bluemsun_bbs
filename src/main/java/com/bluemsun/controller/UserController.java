@@ -82,17 +82,17 @@ public class UserController extends HttpServlet {
     @PostMapping("/register")
     public Map register(@RequestBody User user, HttpServletRequest req) {
         Map map = userService.addUser(user);
-        if (map.get("user") != null) {
+        if (map.containsKey("user")) {
             req.getSession().setAttribute("user",map.get("user"));
         }
-        return userService.addUser(user);
+        return map;
     }
 
     //登录
     @PostMapping("/login")
     public Map login(@RequestBody User user, HttpServletRequest req) {
         Map map = userService.userLogin(user);
-        if (map.get("user") != null) {
+        if (map.containsKey("user")) {
             req.getSession().setAttribute("user",map.get("user"));
         }
         return map;
@@ -162,9 +162,7 @@ public class UserController extends HttpServlet {
         return plateService.getAvailablePlatePage(pageNum,pageSize);
     }
 
-
     //发布文件下载的博客
-
 
     //发布博客(要选择自己的博客在哪个板块)
     @PostMapping("/releaseBlog")
@@ -355,11 +353,11 @@ public class UserController extends HttpServlet {
         return blogService.getBlogsOfPlatePage(pageNum,pageSize,id);
     }
 
-//    //删除板块内博客(仅从板块内移除)
-//    @PostMapping("/deleteBlog")
-//    public Map deletePlateBlog(@RequestBody Blog blog) {
-//        return blogService.deleteBlog(blog);
-//    }
+   //删除板块内博客(仅从板块内移除)
+    @PostMapping("/deleteBlogFromPlate")
+    public Map deleteBlogFromPlate(@RequestBody Map map) {
+        return blogService.deleteBlogFromPlate(map);
+    }
 
     //板块公告分页
     @GetMapping("/getPlateNoticePage")
@@ -410,6 +408,9 @@ public class UserController extends HttpServlet {
     }
 
     //博客迁移(如果自己有两个板块的话) (博客详情内)
+
+    //删除板块内博客
+
 
 
     /**

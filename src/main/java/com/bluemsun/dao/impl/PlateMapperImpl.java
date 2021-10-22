@@ -253,5 +253,27 @@ public class PlateMapperImpl extends SqlSessionDaoSupport implements PlateMapper
         return plateList;
     }
 
+    @Override
+    public int addPlateBlogNum(@Param("plateId") int plateId) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(PlateMapper.class).addPlateBlogNum(plateId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
+    public int reducePlateBlogNum(@Param("plateId") int plateId) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(PlateMapper.class).reducePlateBlogNum(plateId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
 
 }

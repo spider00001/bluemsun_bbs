@@ -14,7 +14,6 @@ public class Plate {
     private int blogNum;
     private String description;
     private int top;
-
     public Plate() {
     }
 
@@ -66,7 +65,6 @@ public class Plate {
         return createTime;
     }
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }

@@ -71,4 +71,11 @@ public interface PlateMapper {
     //搜索板块分页
     List<Plate> selectPlateList(Map map);
 
+    //板块内博客数量+1
+    int addPlateBlogNum(@Param("plateId") int plateId);
+
+    //板块内博客数量-1
+    int reducePlateBlogNum(@Param("plateId") int plateId);
+
+
 }

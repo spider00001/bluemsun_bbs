@@ -13,14 +13,12 @@ public class Blog {
     private Timestamp createTime;//创建时间(最后一次修改时间)
     private int views;//浏览量
     private String content;//文章
-    private int releaseForm;//发布形式(0:公开 1:私密)
     private int likesNum;//点赞数
-    private int top;
 
     public Blog() {
     }
 
-    public Blog(int id, int userId, String username, String title, Timestamp createTime, int views, String content, int releaseForm, int likesNum, int top) {
+    public Blog(int id, int userId, String username, String title, Timestamp createTime, int views, String content, int likesNum) {
         this.id = id;
         this.userId = userId;
         this.username = username;
@@ -28,9 +26,7 @@ public class Blog {
         this.createTime = createTime;
         this.views = views;
         this.content = content;
-        this.releaseForm = releaseForm;
         this.likesNum = likesNum;
-        this.top = top;
     }
 
     public int getId() {
@@ -90,28 +86,12 @@ public class Blog {
         this.content = content;
     }
 
-    public int getReleaseForm() {
-        return releaseForm;
-    }
-
-    public void setReleaseForm(int releaseForm) {
-        this.releaseForm = releaseForm;
-    }
-
     public int getLikesNum() {
         return likesNum;
     }
 
     public void setLikesNum(int likesNum) {
         this.likesNum = likesNum;
-    }
-
-    public int getTop() {
-        return top;
-    }
-
-    public void setTop(int top) {
-        this.top = top;
     }
 
     @Override
@@ -124,9 +104,7 @@ public class Blog {
                 ", createTime=" + createTime +
                 ", views=" + views +
                 ", content='" + content + '\'' +
-                ", releaseForm=" + releaseForm +
                 ", likesNum=" + likesNum +
-                ", top=" + top +
                 '}';
     }
 }

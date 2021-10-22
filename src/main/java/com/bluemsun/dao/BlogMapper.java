@@ -91,4 +91,7 @@ public interface BlogMapper {
     //点赞数减一
     int reduceLikes(@Param("blogId") int blogId);
 
+    //删除板块内博客(仅删除板块-博客关系表中的记录)
+    int deleteBlogFromPlate(Map map);
+
 }
