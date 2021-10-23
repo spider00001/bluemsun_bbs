@@ -151,6 +151,7 @@ public class CommentServiceImpl implements CommentService {
             map.put("msg","博客内博客评论分页成功");
             map.put("status",1);
             map.put("list",page.getList());
+            map.put("totalRecord",totalRecord);
         } else {
             map.put("mag","博客内博客评论分页失败");
             map.put("status",2);
@@ -172,6 +173,7 @@ public class CommentServiceImpl implements CommentService {
             map.put("msg","评论回复分页成功");
             map.put("status",1);
             map.put("list",page.getList());
+            map.put("totalRecord",totalRecord);
         } else {
             map.put("mag","评论回复分页失败");
             map.put("status",2);

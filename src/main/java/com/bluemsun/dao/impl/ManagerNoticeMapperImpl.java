@@ -31,4 +31,9 @@ public class ManagerNoticeMapperImpl extends SqlSessionDaoSupport implements Man
         return getSqlSession().getMapper(ManagerNoticeMapper.class).deleteManagerNotice(managerNotice);
     }
 
+    @Override
+    public ManagerNotice checkManageNotice(ManagerNotice managerNotice) {
+        return getSqlSession().getMapper(ManagerNoticeMapper.class).checkManageNotice(managerNotice);
+    }
+
 }

@@ -2,6 +2,7 @@ package com.bluemsun.service.impl;
 
 import com.bluemsun.dao.PlateApplicationMapper;
 import com.bluemsun.dao.PlateMapper;
+import com.bluemsun.dto.PlateApplicationDto;
 import com.bluemsun.entity.Page;
 import com.bluemsun.entity.Plate;
 import com.bluemsun.entity.PlateApplication;
@@ -34,6 +35,7 @@ public class PlateApplicationServiceImpl implements PlateApplicationService {
             map.put("mag","申请分页成功");
             map.put("status",1);
             map.put("list",page.getList());
+            map.put("totalRecord",totalRecord);
         } else {
             map.put("mag","申请分页失败");
             map.put("status",2);
@@ -55,6 +57,7 @@ public class PlateApplicationServiceImpl implements PlateApplicationService {
             map.put("mag","分类申请分页成功");
             map.put("status",1);
             map.put("list",page.getList());
+            map.put("totalRecord",totalRecord);
         } else {
             map.put("mag","分类申请分页失败");
             map.put("status",2);
@@ -76,6 +79,7 @@ public class PlateApplicationServiceImpl implements PlateApplicationService {
             map.put("mag","用户申请分页成功");
             map.put("status",1);
             map.put("list",page.getList());
+            map.put("totalRecord",totalRecord);
         } else {
             map.put("mag","用户申请分页失败");
             map.put("status",2);
@@ -85,7 +89,7 @@ public class PlateApplicationServiceImpl implements PlateApplicationService {
 
     @Override
     public Map checkPlateApplication(PlateApplication plateApplication) {
-        PlateApplication plateApplicationRes = plateApplicationMapper.checkPlateApplication(plateApplication);
+        PlateApplicationDto plateApplicationRes = plateApplicationMapper.checkPlateApplication(plateApplication);
         Map<String,Object> map = new HashMap<String,Object>();
         if (plateApplicationRes != null) {
             map.put("msg","查看申请成功");

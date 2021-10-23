@@ -21,4 +21,8 @@
         delete from bs_bbs.tb_notice_manager where id=#{id};
     </delete>
 
+    <select id="checkManageNotice" parameterType="ManagerNotice" resultType="ManagerNotice">
+        select * from tb_notice_manager where id=#{id};
+    </select>
+
 </mapper>

@@ -11,6 +11,7 @@
 
     <typeAliases>
         <package name="com.bluemsun.entity"/>
+        <package name="com.bluemsun.dto"/>
     </typeAliases>
 
     <mappers>

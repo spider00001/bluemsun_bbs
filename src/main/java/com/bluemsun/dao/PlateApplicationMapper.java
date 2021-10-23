@@ -1,5 +1,6 @@
 package com.bluemsun.dao;
 
+import com.bluemsun.dto.PlateApplicationDto;
 import com.bluemsun.entity.PlateApplication;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,7 +28,7 @@ public interface PlateApplicationMapper {
     List<PlateApplication> getMyPlateApplicationsLimit(Map map);
 
     //查看申请详情
-    PlateApplication checkPlateApplication(PlateApplication plateApplication);
+    PlateApplicationDto checkPlateApplication(PlateApplication plateApplication);
 
     //查找申请
     PlateApplication selectPlateApplication(PlateApplication plateApplication);

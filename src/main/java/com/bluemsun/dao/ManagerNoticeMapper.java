@@ -18,4 +18,7 @@ public interface ManagerNoticeMapper {
 
     //删除公告
     int deleteManagerNotice(ManagerNotice managerNotice);
+
+    //查看公告详情
+    ManagerNotice checkManageNotice(ManagerNotice managerNotice);
 }

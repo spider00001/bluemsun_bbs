@@ -263,4 +263,10 @@ public class ManagerController extends HttpServlet {
         return managerNoticeService.deleteManagerNotice(managerNotice);
     }
 
+    //查看公告详情
+    @RequestMapping("/checkManageNotice")
+    public Map checkManageNotice(@RequestBody ManagerNotice managerNotice) {
+        return managerNoticeService.checkManageNotice(managerNotice);
+    }
+
 }

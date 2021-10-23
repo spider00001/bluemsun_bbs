@@ -1,6 +1,7 @@
 package com.bluemsun.dao.impl;
 
 import com.bluemsun.dao.PlateApplicationMapper;
+import com.bluemsun.dto.PlateApplicationDto;
 import com.bluemsun.entity.PlateApplication;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
@@ -40,7 +41,7 @@ public class PlateApplicationMapperImpl extends SqlSessionDaoSupport implements 
     }
 
     @Override
-    public PlateApplication checkPlateApplication(PlateApplication plateApplication) {
+    public PlateApplicationDto checkPlateApplication(PlateApplication plateApplication) {
         return getSqlSession().getMapper(PlateApplicationMapper.class).checkPlateApplication(plateApplication);
     }
 

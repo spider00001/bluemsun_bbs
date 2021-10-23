@@ -30,7 +30,7 @@
     </select>
 
     <select id="checkUser" parameterType="User" resultType="User">
-        select id, username, sex, head_portrait, status, description, stu_number, fans_num, follow_user_num, email_count from tb_user where id=#{id};
+        select id, username, sex, head_portrait, status, description, stu_number, fans_num, follow_user_num, email_count, phone_number from tb_user where id=#{id};
     </select>
 
     <select id="selectUser" parameterType="User" resultType="User">

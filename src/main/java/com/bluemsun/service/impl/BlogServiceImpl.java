@@ -35,6 +35,7 @@ public class BlogServiceImpl implements BlogService {
             map.put("msg","帖子分页成功");
             map.put("status",1);
             map.put("list",page.getList());
+            map.put("totalRecord",totalRecord);
         } else {
             map.put("mag","帖子分页失败");
             map.put("status",2);
@@ -56,6 +57,7 @@ public class BlogServiceImpl implements BlogService {
             map.put("msg","板块内帖子分页成功");
             map.put("status",1);
             map.put("list",page.getList());
+            map.put("totalRecord",totalRecord);
         } else {
             map.put("mag","板块内帖子分页失败");
             map.put("status",2);
@@ -78,6 +80,7 @@ public class BlogServiceImpl implements BlogService {
             map.put("msg","用户帖子分页成功");
             map.put("status",1);
             map.put("list",page.getList());
+            map.put("totalRecord",totalRecord);
         } else {
             map.put("mag","用户帖子分页失败");
             map.put("status",2);
@@ -332,6 +335,7 @@ public class BlogServiceImpl implements BlogService {
             map.put("msg","搜索博客分页成功");
             map.put("status",1);
             map.put("userList",page.getList());
+            map.put("totalRecord",totalRecord);
         } else {
             map.put("msg","未搜索到博客");
             map.put("status",2);

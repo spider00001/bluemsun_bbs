@@ -66,16 +66,20 @@ public class UserServiceImpl implements UserService {
     //登录
     @Override
     public Map userLogin(User user) {
-        User userRes = null;
-        userRes = userMapper.userLogin(user);
+        User userRes =  userMapper.userLogin(user);
         Map<String,Object> map = new HashMap<String,Object>();
         if (userRes != null) {
             if (userRes.getPassword().equals(user.getPassword())) {
                 //密码设为null，为安全性考虑
-                userRes.setPassword(null);
-                map.put("user",userRes);
-                map.put("msg","登陆成功");
-                map.put("status",1);
+                if (userRes.getStatus() == 0) {
+                    userRes.setPassword(null);
+                    map.put("user",userRes);
+                    map.put("msg","登陆成功");
+                    map.put("status",1);
+                } else {
+                    map.put("msg","登录失败，账号被冻结");
+                    map.put("status",4);
+                }
             }
             else {
                 map.put("msg","登录失败，密码错误");
@@ -102,6 +106,7 @@ public class UserServiceImpl implements UserService {
             map.put("msg","用户分页成功");
             map.put("status",1);
             map.put("userList",page.getList());
+            map.put("totalRecord",totalRecord);
         } else {
             map.put("msg","用户分页失败");
             map.put("status",2);
@@ -200,6 +205,7 @@ public class UserServiceImpl implements UserService {
             mapRes.put("msg","关注分页成功");
             mapRes.put("status",1);
             mapRes.put("userList",page.getList());
+            mapRes.put("totalRecord",totalRecord);
         } else {
             mapRes.put("msg","关注分页失败");
             mapRes.put("status",2);
@@ -222,6 +228,7 @@ public class UserServiceImpl implements UserService {
             mapRes.put("msg","粉丝分页成功");
             mapRes.put("status",1);
             mapRes.put("userList",page.getList());
+            mapRes.put("totalRecord",totalRecord);
         } else {
             mapRes.put("msg","粉丝分页失败");
             mapRes.put("status",2);
@@ -273,6 +280,7 @@ public class UserServiceImpl implements UserService {
             map.put("msg","搜索用户分页成功");
             map.put("status",1);
             map.put("userList",page.getList());
+            map.put("totalRecord",totalRecord);
         } else {
             map.put("msg","未搜索到用户");
             map.put("status",2);

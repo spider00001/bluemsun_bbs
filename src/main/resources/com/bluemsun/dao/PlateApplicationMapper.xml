@@ -29,8 +29,12 @@
         select id, plate_name, create_time, status from bs_bbs.tb_plate_application where user_id=#{userId} order by create_time desc limit #{startIndex},#{pageSize};
     </select>
 
-    <select id="checkPlateApplication" parameterType="PlateApplication" resultType="PlateApplication">
-        select * from bs_bbs.tb_plate_application where id=#{id};
+    <select id="checkPlateApplication" parameterType="PlateApplication" resultType="PlateApplicationDto">
+        select tpa.id, content, plate_name, user_id, create_time, username,  head_portrait
+        from bs_bbs.tb_plate_application tpa
+        inner join bs_bbs.tb_user  tu
+        on tpa.user_id = tu.id
+        where tpa.id=#{id} ;
     </select>
 
     <select id="selectPlateApplication" parameterType="PlateApplication" resultType="PlateApplication">

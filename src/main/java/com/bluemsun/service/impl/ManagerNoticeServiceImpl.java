@@ -30,6 +30,7 @@ public class ManagerNoticeServiceImpl implements ManagerNoticeService {
             map.put("msg","管理员公告分页成功");
             map.put("status",1);
             map.put("list",page.getList());
+            map.put("totalRecord",totalRecord);
         } else {
             map.put("msg","管理员公告分页失败");
             map.put("status",2);
@@ -60,6 +61,21 @@ public class ManagerNoticeServiceImpl implements ManagerNoticeService {
             map.put("status",1);
         } else {
             map.put("msg","删除公告失败");
+            map.put("status",2);
+        }
+        return map;
+    }
+
+    @Override
+    public Map checkManageNotice(ManagerNotice managerNotice) {
+        ManagerNotice managerNoticeRes = managerNoticeMapper.checkManageNotice(managerNotice);
+        Map<String,Object> map = new HashMap<String,Object>();
+        if (managerNoticeRes != null) {
+            map.put("msg","查看公告详情成功");
+            map.put("status",1);
+            map.put("data",managerNoticeRes);
+        } else {
+            map.put("msg","查看公告详情失败");
             map.put("status",2);
         }
         return map;

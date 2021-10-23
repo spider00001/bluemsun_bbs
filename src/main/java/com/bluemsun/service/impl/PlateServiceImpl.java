@@ -27,6 +27,7 @@ public class PlateServiceImpl implements PlateService {
             map.put("msg","板块分页成功");
             map.put("status",1);
             map.put("list",page.getList());
+            map.put("totalRecord",totalRecord);
         } else {
             map.put("msg","板块分页失败");
             map.put("status",2);
@@ -44,6 +45,7 @@ public class PlateServiceImpl implements PlateService {
             map.put("msg","未冻结板块分页成功");
             map.put("status",1);
             map.put("list",page.getList());
+            map.put("totalRecord",totalRecord);
         } else {
             map.put("msg","未冻结板块分页失败");
             map.put("status",2);
@@ -226,6 +228,7 @@ public class PlateServiceImpl implements PlateService {
             map.put("msg","搜索板块分页成功");
             map.put("status",1);
             map.put("userList",page.getList());
+            map.put("totalRecord",totalRecord);
         } else {
             map.put("msg","未搜索到板块");
             map.put("status",2);

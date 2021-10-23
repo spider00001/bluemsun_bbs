@@ -18,6 +18,7 @@
     <bean id="managerNotice" class="com.bluemsun.entity.ManagerNotice"/>
     <bean id="mainComment" class="com.bluemsun.entity.MainComment"/>
     <bean id="insideComment" class="com.bluemsun.entity.InsideComment"/>
+    <bean id="plateApplicationDto" class="com.bluemsun.dto.PlateApplicationDto"/>
 
 
 <!--    <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>-->

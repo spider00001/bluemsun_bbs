@@ -30,6 +30,7 @@ public class PlateNoticeServiceImpl implements PlateNoticeService {
             map.put("msg","板块公告分页成功");
             map.put("status",1);
             map.put("list",page.getList());
+            map.put("totalRecord",totalRecord);
         } else {
             map.put("mag","板块公告分页失败");
             map.put("status",2);
