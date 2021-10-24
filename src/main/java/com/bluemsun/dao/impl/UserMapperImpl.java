@@ -2,6 +2,7 @@ package com.bluemsun.dao.impl;
 
 import com.bluemsun.dao.UserMapper;
 import com.bluemsun.entity.User;
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import java.util.HashMap;
@@ -173,6 +174,50 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
         int row = 0;
         try {
             row = getSqlSession().getMapper(UserMapper.class).cancelFollowUser(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
+    public int addFansNum(int id) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(UserMapper.class).addFansNum(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
+    public int reduceFansNum(int id) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(UserMapper.class).reduceFansNum(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
+    public int addFollowUsersNum(int id) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(UserMapper.class).addFollowUsersNum(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
+    public int reduceFollowUsersNum(int id) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(UserMapper.class).reduceFollowUsersNum(id);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -85,7 +85,7 @@
     </update>
 
     <select id="getSelectPlateCount" resultType="int" parameterType="String">
-        select count(*) from bs_bbs.tb_user where username like concat('%' #{plateName} '%');
+        select count(*) from bs_bbs.tb_plate where tb_plate.plate_name like concat('%' #{plateName} '%');
     </select>
 
     <select id="selectPlateList" parameterType="map" resultType="Plate">

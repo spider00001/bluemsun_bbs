@@ -20,7 +20,7 @@
         select count(*) from bs_bbs.tb_plate_blog where plate_id=#{id};
     </select>
 
-    <select id="getBlogsOfPlateLimit" parameterType="map" resultType="Plate">
+    <select id="getBlogsOfPlateLimit" parameterType="map" resultType="Blog">
         select tb.id, title, create_time, username, head_portrait
         from  tb_blog tb
         inner join tb_plate_blog tpb on tb.id = tpb.blog_id

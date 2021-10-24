@@ -187,7 +187,7 @@ public class BlogServiceImpl implements BlogService {
         Map<String,Object> mapRes = new HashMap<String,Object>();
         if (row > 0) {
             mapRes.put("msg","板块置顶博客成功");
-            map.put("status",1);
+            mapRes.put("status",1);
         } else {
             mapRes.put("msg","板块置顶博客失败,该位置已有板块");
             mapRes.put("status",2);
@@ -334,7 +334,7 @@ public class BlogServiceImpl implements BlogService {
         if (page.getList() != null) {
             map.put("msg","搜索博客分页成功");
             map.put("status",1);
-            map.put("userList",page.getList());
+            map.put("list",page.getList());
             map.put("totalRecord",totalRecord);
         } else {
             map.put("msg","未搜索到博客");

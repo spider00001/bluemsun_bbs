@@ -30,7 +30,6 @@ public class UserController extends HttpServlet {
         this.plateNoticeService = plateNoticeService;
     }
 
-
     /**
      * 首页 (置顶博客，置顶板块)
      *
@@ -100,7 +99,8 @@ public class UserController extends HttpServlet {
 
     //个人信息修改
     @PostMapping("/updateUser")
-    public Map updateUser(@RequestBody User user) {
+    public Map updateUser(@RequestBody User user, HttpServletRequest req) {
+        user.setId(((User) req.getSession().getAttribute("user")).getId());
         return userService.updateUser(user);
     }
 
@@ -121,15 +121,15 @@ public class UserController extends HttpServlet {
     //头像上传
 
     //查看关注列表
-    @PostMapping("/getFollowUsers")
-    public Map getFollowUsers(@RequestBody Map map) {
-        return userService.getFollowUsers(map);
+    @GetMapping("/getFollowUsers")
+    public Map getFollowUsers(int pageNum, int pageSize, int id) {
+        return userService.getFollowUsers(pageNum,pageSize,id);
     }
 
     //查看粉丝列表
-    @PostMapping("/getFans")
-    public Map getFans(@RequestBody Map map) {
-        return userService.getFans(map);
+    @GetMapping("/getFans")
+    public Map getFans(int pageNum, int pageSize, int id) {
+        return userService.getFans(pageNum,pageSize,id);
     }
 
     //查看用户详情
@@ -140,16 +140,17 @@ public class UserController extends HttpServlet {
 
     //关注
     @PostMapping("/followUser")
-    public Map followUser(@RequestBody Map map) {
+    public Map followUser(@RequestBody Map map, HttpServletRequest req) {
+        map.put("id",((User)req.getSession().getAttribute("user")).getId());
         return userService.followUser(map);
     }
 
     //取关
     @PostMapping("/cancelFollowUser")
-    public Map cancelFollowUser(@RequestBody Map map) {
+    public Map cancelFollowUser(@RequestBody Map map, HttpServletRequest req) {
+        map.put("id",((User)req.getSession().getAttribute("user")).getId());
         return userService.cancelFollowUser(map);
     }
-
 
     /**
      * 我的创作模块
@@ -166,7 +167,8 @@ public class UserController extends HttpServlet {
 
     //发布博客(要选择自己的博客在哪个板块)
     @PostMapping("/releaseBlog")
-    public Map releaseBlog(@RequestBody Map map) {
+    public Map releaseBlog(@RequestBody Map map, HttpServletRequest req) {
+        map.put("userId",(((User)req.getSession().getAttribute("user"))).getId());
         return blogService.releaseBlog(map);
     }
 

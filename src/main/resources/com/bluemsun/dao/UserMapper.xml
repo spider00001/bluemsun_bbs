@@ -100,4 +100,20 @@
         select id, username, head_portrait  from bs_bbs.tb_user where username like concat('%' #{username} '%') limit #{startIndex},#{pageSize};
     </select>
 
+    <update id="addFansNum" parameterType="int">
+        update bs_bbs.tb_user set fans_num=fans_num+1 where id=#{id};
+    </update>
+
+    <update id="reduceFansNum" parameterType="int">
+        update bs_bbs.tb_user set fans_num=fans_num-1 where id=#{id};
+    </update>
+
+    <update id="addFollowUsersNum" parameterType="int">
+        update bs_bbs.tb_user set follow_user_num=follow_user_num+1 where id=#{id};
+    </update>
+
+    <update id="reduceFollowUsersNum" parameterType="int">
+        update bs_bbs.tb_user set follow_user_num=follow_user_num-1 where id=#{id};
+    </update>
+
 </mapper>

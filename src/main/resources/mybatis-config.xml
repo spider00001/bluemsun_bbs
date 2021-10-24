@@ -6,7 +6,8 @@
 
     <!--下划线自动映射驼峰字段-->
     <settings>
-    <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="logImpl" value="LOG4J"/>
     </settings>
 
     <typeAliases>

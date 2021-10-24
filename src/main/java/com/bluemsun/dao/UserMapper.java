@@ -54,6 +54,18 @@ public interface UserMapper {
     //取关
     int cancelFollowUser(Map map);
 
+    //粉丝数量+1
+    int addFansNum(@Param("id") int id);
+
+    //粉丝数量-1
+    int reduceFansNum(@Param("id") int id);
+
+    //关注数+1
+    int addFollowUsersNum(@Param("id") int id);
+
+    //关注数-1
+    int reduceFollowUsersNum(@Param("id") int id);
+
     //获取搜索用户list
     List<User> selectUserList(Map map);
 

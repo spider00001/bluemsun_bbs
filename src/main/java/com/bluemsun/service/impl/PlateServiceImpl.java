@@ -205,10 +205,10 @@ public class PlateServiceImpl implements PlateService {
         int row = plateMapper.updatePlateDescription(plate);
         Map<String,Object> mapRes = new HashMap<String,Object>();
         if (row > 0) {
-            mapRes.put("msg","修改博客简介成功");
+            mapRes.put("msg","修改板块简介成功");
             mapRes.put("status",1);
         } else {
-            mapRes.put("msg","修改博客简介失败");
+            mapRes.put("msg","修改板块简介失败");
             mapRes.put("status",2);
         }
         return mapRes;
@@ -227,7 +227,7 @@ public class PlateServiceImpl implements PlateService {
         if (page.getList() != null) {
             map.put("msg","搜索板块分页成功");
             map.put("status",1);
-            map.put("userList",page.getList());
+            map.put("list",page.getList());
             map.put("totalRecord",totalRecord);
         } else {
             map.put("msg","未搜索到板块");

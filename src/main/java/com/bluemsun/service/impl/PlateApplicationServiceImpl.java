@@ -96,7 +96,7 @@ public class PlateApplicationServiceImpl implements PlateApplicationService {
             map.put("status",1);
             map.put("data",plateApplicationRes);
         } else {
-            map.put("msg","成功申请失败");
+            map.put("msg","查看申请失败");
             map.put("status",2);
         }
         return map;

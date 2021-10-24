@@ -7,7 +7,7 @@
           <element id="module-output" name="bluemsun_bbs" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Maven: com.alibaba:druid:1.2.6" />
+          <element id="library" level="project" name="Maven: com.alibaba:druid:1.1.22" />
           <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.2.60" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.0" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.8" />
@@ -16,12 +16,12 @@
           <element id="library" level="project" name="Maven: com.mchange:mchange-commons-java:0.2.11" />
           <element id="library" level="project" name="Maven: commons-fileupload:commons-fileupload:1.4" />
           <element id="library" level="project" name="Maven: commons-io:commons-io:2.2" />
-          <element id="library" level="project" name="Maven: javax.annotation:javax.annotation-api:1.3.2" />
           <element id="library" level="project" name="Maven: javax.servlet.jsp:jsp-api:2.2" />
           <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:4.0.1" />
           <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
           <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.5" />
           <element id="library" level="project" name="Maven: junit:junit:4.12" />
+          <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.47" />
           <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.9.7" />
           <element id="library" level="project" name="Maven: org.hamcrest:hamcrest-core:1.3" />

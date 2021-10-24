@@ -64,7 +64,6 @@ public class ManagerController extends HttpServlet {
 
     //搜索全站资源下载的博客
 
-
     /**
      *用户管理模块
      *
@@ -162,6 +161,12 @@ public class ManagerController extends HttpServlet {
     @PostMapping("/checkPlate")
     public Map checkPlate(@RequestBody Plate plate) {
         return plateService.checkPlate(plate);
+    }
+
+    //查看板块置顶博客list(进入板块详情后调)
+    @PostMapping("/getPlateBlogsHomeTop")
+    public Map getPlateBlogsHomeTop(@RequestBody Plate plate) {
+        return blogService.getPlateBlogsHomeTop(plate);
     }
 
     //板块内博客分页

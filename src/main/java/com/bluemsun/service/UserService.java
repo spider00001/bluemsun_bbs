@@ -35,10 +35,10 @@ public interface UserService {
     Map<String,Object> deleteUser(User user);
 
     //查看关注的人列表(分页)
-    Map<String,Object> getFollowUsers(Map map);
+    Map<String,Object> getFollowUsers(int pageNum, int pageSize, int id);
 
     //查看粉丝列表(分页)
-    Map<String,Object> getFans(Map map);
+    Map<String,Object> getFans(int pageNum, int pageSize, int id);
 
     //关注
     Map<String,Object> followUser(Map map);

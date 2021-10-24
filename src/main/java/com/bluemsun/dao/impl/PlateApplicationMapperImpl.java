@@ -12,56 +12,122 @@ public class PlateApplicationMapperImpl extends SqlSessionDaoSupport implements 
 
     @Override
     public int getPlateApplicationCount() {
-        return getSqlSession().getMapper(PlateApplicationMapper.class).getPlateApplicationCount();
+        int count = 0;
+        try {
+            count = getSqlSession().getMapper(PlateApplicationMapper.class).getPlateApplicationCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     @Override
-    public List<PlateApplication> getPlateApplicationsLimit(Map map) {
-        return getSqlSession().getMapper(PlateApplicationMapper.class).getPlateApplicationsLimit(map);
+    public List<PlateApplicationDto> getPlateApplicationsLimit(Map map) {
+        List<PlateApplicationDto> plateApplicationDtoList = null;
+        try {
+            plateApplicationDtoList = getSqlSession().getMapper(PlateApplicationMapper.class).getPlateApplicationsLimit(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return plateApplicationDtoList;
     }
 
     @Override
     public int getPlateApplicationClassifiedCount(int status) {
-        return getSqlSession().getMapper(PlateApplicationMapper.class).getPlateApplicationClassifiedCount(status);
+        int count = 0;
+        try {
+            count = getSqlSession().getMapper(PlateApplicationMapper.class).getPlateApplicationClassifiedCount(status);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     @Override
-    public List<PlateApplication> getPlateApplicationsClassifiedLimit(Map map) {
-        return getSqlSession().getMapper(PlateApplicationMapper.class).getPlateApplicationsClassifiedLimit(map);
+    public List<PlateApplicationDto> getPlateApplicationsClassifiedLimit(Map map) {
+        List<PlateApplicationDto> plateApplicationDtoList = null;
+        try {
+            plateApplicationDtoList = getSqlSession().getMapper(PlateApplicationMapper.class).getPlateApplicationsClassifiedLimit(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return plateApplicationDtoList;
     }
 
     @Override
     public int getMyPlateApplicationCount(int userId) {
-        return getSqlSession().getMapper(PlateApplicationMapper.class).getMyPlateApplicationCount(userId);
+        int count = 0;
+        try {
+            count = getSqlSession().getMapper(PlateApplicationMapper.class).getMyPlateApplicationCount(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     @Override
-    public List<PlateApplication> getMyPlateApplicationsLimit(Map map) {
-        return getSqlSession().getMapper(PlateApplicationMapper.class).getMyPlateApplicationsLimit(map);
+    public List<PlateApplicationDto> getMyPlateApplicationsLimit(Map map) {
+        List<PlateApplicationDto> plateApplicationDtoList = null;
+        try {
+            plateApplicationDtoList = getSqlSession().getMapper(PlateApplicationMapper.class).getMyPlateApplicationsLimit(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return plateApplicationDtoList;
     }
 
     @Override
     public PlateApplicationDto checkPlateApplication(PlateApplication plateApplication) {
-        return getSqlSession().getMapper(PlateApplicationMapper.class).checkPlateApplication(plateApplication);
+        PlateApplicationDto plateApplicationDto = null;
+        try {
+            plateApplicationDto = getSqlSession().getMapper(PlateApplicationMapper.class).checkPlateApplication(plateApplication);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return plateApplicationDto;
     }
 
     @Override
     public PlateApplication selectPlateApplication(PlateApplication plateApplication) {
-        return getSqlSession().getMapper(PlateApplicationMapper.class).selectPlateApplication(plateApplication);
+        PlateApplication plateApplicationRes = null;
+        try {
+            plateApplicationRes = getSqlSession().getMapper(PlateApplicationMapper.class).selectPlateApplication(plateApplication);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return plateApplication;
     }
 
     @Override
     public int passPlateApplication(PlateApplication plateApplication) {
-        return getSqlSession().getMapper(PlateApplicationMapper.class).passPlateApplication(plateApplication);
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(PlateApplicationMapper.class).passPlateApplication(plateApplication);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
     }
 
     @Override
     public int overrulePlateApplication(PlateApplication plateApplication) {
-        return getSqlSession().getMapper(PlateApplicationMapper.class).overrulePlateApplication(plateApplication);
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(PlateApplicationMapper.class).overrulePlateApplication(plateApplication);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
     }
 
     @Override
     public int addPlateApplication(PlateApplication plateApplication) {
-        return getSqlSession().getMapper(PlateApplicationMapper.class).addPlateApplication(plateApplication);
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(PlateApplicationMapper.class).addPlateApplication(plateApplication);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
     }
 }

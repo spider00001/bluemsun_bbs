@@ -13,42 +13,90 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
 
     @Override
     public int getBlogCount() {
-        return getSqlSession().getMapper(BlogMapper.class).getBlogCount();
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(BlogMapper.class).getBlogCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
     }
 
     @Override
     public List<Blog> getBlogsLimit(Map map) {
-        return getSqlSession().getMapper(BlogMapper.class).getBlogsLimit(map);
+        List<Blog> blogList = null;
+        try {
+            blogList = getSqlSession().getMapper(BlogMapper.class).getBlogsLimit(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return blogList;
     }
 
     @Override
     public int getBlogOfPlateCount(int id) {
-        return getSqlSession().getMapper(BlogMapper.class).getBlogOfPlateCount(id);
+        int count = 0;
+        try {
+            count = getSqlSession().getMapper(BlogMapper.class).getBlogOfPlateCount(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     @Override
     public List<Blog> getBlogsOfPlateLimit(Map map) {
-        return getSqlSession().getMapper(BlogMapper.class).getBlogsOfPlateLimit(map);
+        List<Blog> blogList = null;
+        try {
+            blogList = getSqlSession().getMapper(BlogMapper.class).getBlogsOfPlateLimit(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return blogList;
     }
 
     @Override
     public int getUserBlogCount(int id) {
-        return getSqlSession().getMapper(BlogMapper.class).getUserBlogCount(id);
+        int count = 0;
+        try {
+            count = getSqlSession().getMapper(BlogMapper.class).getUserBlogCount(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     @Override
     public List<Blog> getUserBlogsLimit(Map map) {
-        return getSqlSession().getMapper(BlogMapper.class).getUserBlogsLimit(map);
+        List<Blog> blogList = null;
+        try {
+            blogList = getSqlSession().getMapper(BlogMapper.class).getUserBlogsLimit(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return blogList;
     }
 
     @Override
     public int deleteBlog(Blog blog) {
-        return getSqlSession().getMapper(BlogMapper.class).deleteBlog(blog);
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(BlogMapper.class).deleteBlog(blog);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
     }
 
     @Override
     public List<Blog> getBlogsHomeTop() {
-        return getSqlSession().getMapper(BlogMapper.class).getBlogsHomeTop();
+        List<Blog> blogList = null;
+        try {
+            blogList = getSqlSession().getMapper(BlogMapper.class).getBlogsHomeTop();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return blogList;
     }
 
 

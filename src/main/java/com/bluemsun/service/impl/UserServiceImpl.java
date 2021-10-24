@@ -192,14 +192,14 @@ public class UserServiceImpl implements UserService {
 
     //查看关注列表(分页)
     @Override
-    public Map<String, Object> getFollowUsers(Map map) {
-        int totalRecord = userMapper.getFollowUsersCount((int)map.get("id"));
-        Page page = new Page((int)map.get("pageNum"),(int)map.get("pageSize"),totalRecord);
-        Map<String,Integer> map1 = new HashMap<String,Integer>();
-        map1.put("id",(int)map.get("id"));
-        map1.put("startIndex",page.getStartIndex());
-        map1.put("pageSize",(int)map.get("pageSize"));
-        page.setList(userMapper.getFollowUsers(map1));
+    public Map<String, Object> getFollowUsers(int pageNum, int pageSize, int id) {
+        int totalRecord = userMapper.getFollowUsersCount(id);
+        Page page = new Page(pageNum,pageSize,totalRecord);
+        Map<String,Integer> map = new HashMap<String,Integer>();
+        map.put("id",id);
+        map.put("startIndex",page.getStartIndex());
+        map.put("pageSize",pageSize);
+        page.setList(userMapper.getFollowUsers(map));
         Map<String,Object> mapRes = new HashMap<String,Object>();
         if (page.getList() != null) {
             mapRes.put("msg","关注分页成功");
@@ -215,14 +215,14 @@ public class UserServiceImpl implements UserService {
 
     //查看粉丝列表(分页)
     @Override
-    public Map<String, Object> getFans(Map map) {
-        int totalRecord = userMapper.getFansCount((int)map.get("id"));
-        Page page = new Page((int)map.get("pageNum"),(int)map.get("pageSize"),totalRecord);
-        Map<String,Integer> map1 = new HashMap<String,Integer>();
-        map1.put("id",(int)map.get("id"));
-        map1.put("startIndex",page.getStartIndex());
-        map1.put("pageSize",(int)map.get("pageSize"));
-        page.setList(userMapper.getFans(map1));
+    public Map<String, Object> getFans(int pageNum, int pageSize, int id) {
+        int totalRecord = userMapper.getFansCount(id);
+        Page page = new Page(pageNum,pageSize,totalRecord);
+        Map<String,Integer> map = new HashMap<String,Integer>();
+        map.put("id",id);
+        map.put("startIndex",page.getStartIndex());
+        map.put("pageSize",pageSize);
+        page.setList(userMapper.getFans(map));
         Map<String,Object> mapRes = new HashMap<String,Object>();
         if (page.getList() != null) {
             mapRes.put("msg","粉丝分页成功");
@@ -240,6 +240,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, Object> followUser(Map map) {
         int row = userMapper.followUser(map);
+        userMapper.addFansNum((int) map.get("userId"));
+        userMapper.addFollowUsersNum((int) map.get("id"));
         Map<String,Object> mapRes = new HashMap<String,Object>();
         if (row > 0) {
             mapRes.put("msg","关注成功");
@@ -255,6 +257,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, Object> cancelFollowUser(Map map) {
         int row = userMapper.cancelFollowUser(map);
+        userMapper.reduceFansNum((int) map.get("userId"));
+        userMapper.reduceFollowUsersNum((int) map.get("id"));
         Map<String,Object> mapRes = new HashMap<String,Object>();
         if (row > 0) {
             mapRes.put("msg","取关成功");
@@ -279,7 +283,7 @@ public class UserServiceImpl implements UserService {
         if (page.getList() != null) {
             map.put("msg","搜索用户分页成功");
             map.put("status",1);
-            map.put("userList",page.getList());
+            map.put("list",page.getList());
             map.put("totalRecord",totalRecord);
         } else {
             map.put("msg","未搜索到用户");
