@@ -1,8 +1,8 @@
 package com.bluemsun.dao;
 
+import com.bluemsun.dto.BlogUserDto;
 import com.bluemsun.entity.Blog;
 import com.bluemsun.entity.Plate;
-import com.bluemsun.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +14,7 @@ public interface BlogMapper {
 
     //全部博客数量
     int getBlogCount();
+
     //获取所有博客list
     List<Blog> getBlogsLimit(Map map);
 
@@ -62,7 +63,7 @@ public interface BlogMapper {
     int selectUserJustReleaseBlogId(@Param("userId") int userId);
 
     //查看博客详情
-    Blog checkBlog(Blog blog);
+    BlogUserDto checkBlog(Blog blog);
 
     //查看博客是否被自己赞过
     int isBlogLiked(Map map);
@@ -91,7 +92,11 @@ public interface BlogMapper {
     //点赞数减一
     int reduceLikes(@Param("blogId") int blogId);
 
-    //删除板块内博客(仅删除板块-博客关系表中的记录)
-    int deleteBlogFromPlate(Map map);
+    //更新博客热度
+    int updateBlogHeat(Blog blog);
+
+    //获取所有博客
+    List<Blog> getAllBlogs();
+
 
 }

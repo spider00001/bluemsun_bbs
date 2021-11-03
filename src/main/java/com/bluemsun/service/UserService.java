@@ -14,7 +14,7 @@ public interface UserService {
     Map<String,Object> getUsersPage(int pageNum, int pageSize);
 
     //查看用户信息
-    Map<String,Object> checkUser(User user);
+    Map<String,Object> checkUser(Map map);
 
     //新增用户(注册)
     Map<String,Object> addUser(User user);

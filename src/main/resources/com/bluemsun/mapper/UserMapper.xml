@@ -29,7 +29,7 @@
         select * from bs_bbs.tb_user where stu_number=#{stuNumber};
     </select>
 
-    <select id="checkUser" parameterType="User" resultType="User">
+    <select id="checkUser" parameterType="int" resultType="User">
         select id, username, sex, head_portrait, status, description, stu_number, fans_num, follow_user_num, email_count, phone_number from tb_user where id=#{id};
     </select>
 
@@ -115,5 +115,9 @@
     <update id="reduceFollowUsersNum" parameterType="int">
         update bs_bbs.tb_user set follow_user_num=follow_user_num-1 where id=#{id};
     </update>
+
+    <select id="isFollowUser" parameterType="map" resultType="int">
+        select count(*) from tb_user_user where user_id=#{id} and follow_user_id=#{userId};
+    </select>
 
 </mapper>

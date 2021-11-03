@@ -1,6 +1,7 @@
 package com.bluemsun.dao.impl;
 
 import com.bluemsun.dao.BlogMapper;
+import com.bluemsun.dto.BlogUserDto;
 import com.bluemsun.entity.Blog;
 import com.bluemsun.entity.Plate;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
@@ -211,14 +212,14 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
 
     //查看博客详情
     @Override
-    public Blog checkBlog(Blog blog) {
-        Blog blogRes = null;
+    public BlogUserDto checkBlog(Blog blog) {
+        BlogUserDto blogUserDto = null;
         try {
-            blogRes = getSqlSession().getMapper(BlogMapper.class).checkBlog(blog);
+            blogUserDto = getSqlSession().getMapper(BlogMapper.class).checkBlog(blog);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return blogRes;
+        return blogUserDto;
     }
 
 
@@ -326,14 +327,25 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
     }
 
     @Override
-    public int deleteBlogFromPlate(Map map) {
+    public int updateBlogHeat(Blog blog) {
         int row = 0;
         try {
-            row = getSqlSession().getMapper(BlogMapper.class).deleteBlogFromPlate(map);
+            row = getSqlSession().getMapper(BlogMapper.class).updateBlogHeat(blog);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return row;
+    }
+
+    @Override
+    public List<Blog> getAllBlogs() {
+        List<Blog> blogList = null;
+        try {
+            blogList = getSqlSession().getMapper(BlogMapper.class).getAllBlogs();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return blogList;
     }
 
 

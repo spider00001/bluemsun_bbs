@@ -1,6 +1,7 @@
 package com.bluemsun.dao;
 
 import com.bluemsun.entity.Plate;
+import com.bluemsun.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -53,11 +54,14 @@ public interface PlateMapper {
     //判断是否已经在置顶表内（暂时没用....）
     Plate isPlateTopped(Plate plate);
 
-    //在板块内添加博客
+    //判断博客是否在该板块内
+    int isBlogExistInPlate(Map map);
+
+    //选择博客所在板块
     int releaseBlogInPlate(Map map);
 
     //修改博客所在板块
-    int updateBlogPlate(Map map);
+//    int updateBlogPlate(Map map);
 
     //取消选择博客所在板块
     int deselectPlate(Map map);
@@ -77,5 +81,10 @@ public interface PlateMapper {
     //板块内博客数量-1
     int reducePlateBlogNum(@Param("plateId") int plateId);
 
+    //查看自己的板块
+    List<Plate> checkUserPlate(User user);
+
+    //查询板块名称是否存在(申请板块时板块名称查重)
+    int isPlateNameExist(@Param("plateName") String plateName);
 
 }

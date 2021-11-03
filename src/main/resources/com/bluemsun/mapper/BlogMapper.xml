@@ -23,8 +23,10 @@
     <select id="getBlogsOfPlateLimit" parameterType="map" resultType="Blog">
         select tb.id, title, create_time, username, head_portrait
         from  tb_blog tb
-        inner join tb_plate_blog tpb on tb.id = tpb.blog_id
-        join tb_user tu on tu.id = tb.user_id
+        inner join tb_plate_blog tpb
+        on tb.id = tpb.blog_id
+        join tb_user tu
+        on tu.id = tb.user_id
         where tpb.plate_id=#{id}
         order by tb.create_time desc limit #{startIndex},#{pageSize};
     </select>
@@ -94,8 +96,8 @@
         select id from bs_bbs.tb_blog where user_id=#{userId} order by create_time desc limit 0,1;
     </select>
 
-    <select id="checkBlog" parameterType="Blog" resultType="Blog">
-        select * from bs_bbs.tb_blog where id=#{id};
+    <select id="checkBlog" parameterType="Blog" resultType="BlogUserDto">
+        select tb.id, user_id, title, create_time, views, content, likes_num, username, head_portrait from bs_bbs.tb_blog tb inner join tb_user tu on tb.user_id = tu.id where tb.id=#{id};
     </select>
 
     <update id="updateBlog" parameterType="Blog">
@@ -144,5 +146,12 @@
         delete from bs_bbs.tb_plate_blog where plate_id=#{plateId} and blog_id=#{blogId};
     </delete>
 
+    <update id="updateBlogHeat" parameterType="Blog">
+        update bs_bbs.tb_blog set heat=#{heat} where id=#{id};
+    </update>
+
+    <select id="getAllBlogs" resultType="Blog">
+        select * from tb_blog;
+    </select>
 
 </mapper>

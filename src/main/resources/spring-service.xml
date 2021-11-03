@@ -54,5 +54,7 @@
     <bean id="managerNoticeService" class="com.bluemsun.service.impl.ManagerNoticeServiceImpl"/>
     <bean id="commentService" class="com.bluemsun.service.impl.CommentServiceImpl"/>
     <bean id="plateNoticeService" class="com.bluemsun.service.impl.PlateNoticeServiceImpl"/>
+    <bean id="jedisUtil" class="com.bluemsun.utils.JedisUtil"/>
+    <bean id="gson" class="com.google.gson.Gson"/>
 
 </beans>

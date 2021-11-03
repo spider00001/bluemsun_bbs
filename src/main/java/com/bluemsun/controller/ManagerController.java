@@ -20,7 +20,6 @@ public class ManagerController extends HttpServlet {
     private final PlateApplicationService plateApplicationService;
     private final ManagerNoticeService managerNoticeService;
 
-
     public ManagerController(UserService userService, BlogService blogService, PlateService plateService, PlateApplicationService plateApplicationService, ManagerNoticeService managerNoticeService) {
         this.userService = userService;
         this.blogService = blogService;
@@ -28,7 +27,6 @@ public class ManagerController extends HttpServlet {
         this.plateApplicationService = plateApplicationService;
         this.managerNoticeService = managerNoticeService;
     }
-
 
     //登录
     @PostMapping("/login")
@@ -76,12 +74,12 @@ public class ManagerController extends HttpServlet {
 
     //查看单个用户信息
     @PostMapping("/checkUser")
-    public Map<String,Object> checkUser(@RequestBody User user, HttpServletRequest req) {
-        Map<String,Object> map = userService.checkUser(user);
+    public Map<String,Object> checkUser(@RequestBody Map map, HttpServletRequest req) {
+        Map<String,Object> mapRes = userService.checkUser(map);
         if (map.get("user") != null) {
             req.getSession().setAttribute("user",map.get("user"));
         }
-        return map;
+        return mapRes;
     }
 
     //用户冻结
@@ -115,7 +113,7 @@ public class ManagerController extends HttpServlet {
 
     //查看博客详情
     @PostMapping("/checkBlog")
-    public Map checkBlog(@RequestBody Blog blog, HttpServletRequest req) {
+    public Map checkBlog(@RequestBody Blog blog) {
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("blog",blog);
         return blogService.checkBlog(map);

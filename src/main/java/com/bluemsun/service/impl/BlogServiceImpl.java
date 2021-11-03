@@ -2,15 +2,14 @@ package com.bluemsun.service.impl;
 
 import com.bluemsun.dao.BlogMapper;
 import com.bluemsun.dao.PlateMapper;
+import com.bluemsun.dto.BlogUserDto;
 import com.bluemsun.entity.Blog;
 import com.bluemsun.entity.Page;
 import com.bluemsun.entity.Plate;
 import com.bluemsun.entity.User;
 import com.bluemsun.service.BlogService;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BlogServiceImpl implements BlogService {
 
@@ -248,21 +247,21 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Map<String,Object> checkBlog(Map map) {
-        Blog blogRes = blogMapper.checkBlog((Blog) map.get("blog"));
-        Map<String,Integer> mapIsLiked = new HashMap<String,Integer>();
-        mapIsLiked.put("userId",((User) map.get("user")).getId());
-        mapIsLiked.put("blogId", ((Blog) map.get("blog")).getId());
-        int isLiked = blogMapper.isBlogLiked(mapIsLiked);
+        BlogUserDto blogRes = blogMapper.checkBlog((Blog) map.get("blog"));
         Map<String,Object> mapRes = new HashMap<String,Object>();
         if (blogRes != null) {
-            blogMapper.addViews(blogRes);
+            blogMapper.addViews((Blog) map.get("blog"));
             mapRes.put("msg","查看博客成功");
             mapRes.put("status",1);
-            //isLiked:  0: 未赞 ; 1:赞过
-            mapRes.put("isLiked",isLiked);
             mapRes.put("data",blogRes);
-            //如果isMyBlog 为1则为自己的博客;为0则不是自己的博客(管理员端调用方法这个则不用判断)
             if (map.containsKey("user")) {
+                //isLiked:  0: 未赞 ; 1:赞过
+                Map<String,Integer> mapIsLiked = new HashMap<String,Integer>();
+                mapIsLiked.put("blogId", ((Blog) map.get("blog")).getId());
+                int isLiked = blogMapper.isBlogLiked(mapIsLiked);
+                mapRes.put("isLiked",isLiked);
+                mapIsLiked.put("userId",((User) map.get("user")).getId());
+                //如果isMyBlog 为1则为自己的博客;为0则不是自己的博客(管理员端调用方法这个则不用判断)
                 mapRes.put("isMyBlog",((User) map.get("user")).getId() == blogRes.getUserId() ? 1 : 0);
             }
         } else {
@@ -344,17 +343,24 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Map deleteBlogFromPlate(Map map) {
-        int row = blogMapper.deleteBlogFromPlate(map);
-        int row2 = plateMapper.reducePlateBlogNum((int) map.get("plateId"));
-        Map<String,Object> mapRes = new HashMap<String,Object>();
-        if (row > 0 && row2 > 0) {
-            mapRes.put("msg","删除板块内博客成功");
-            mapRes.put("status",1);
-        } else {
-            mapRes.put("msg","删除板块内博客失败");
-            mapRes.put("status",2);
-        }
-        return mapRes;
+    public void updateBlogHeat() {
+        List<Blog> blogList = blogMapper.getAllBlogs();
+        UpdateBlogHeatTask task = new UpdateBlogHeatTask();
+        Timer timer = new Timer();
+//        timer.scheduleAtFixedRate();
+    }
+
+
+}
+
+class UpdateBlogHeatTask extends TimerTask {
+
+    public void run(Blog blog) {
+
+    }
+
+    @Override
+    public void run() {
+
     }
 }

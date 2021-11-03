@@ -2,10 +2,15 @@ package com.bluemsun.controller;
 
 import com.bluemsun.entity.*;
 import com.bluemsun.service.*;
+import com.bluemsun.utils.JWTUtil;
+import com.bluemsun.utils.JedisUtil;
+import com.google.gson.Gson;
+import io.jsonwebtoken.Claims;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,14 +25,16 @@ public class UserController extends HttpServlet {
     private final CommentService commentService;
     private final PlateApplicationService plateApplicationService;
     private final PlateNoticeService plateNoticeService;
+    private final JedisUtil jedisUtil;
 
-    public UserController(BlogService blogService, PlateService plateService, UserService userService, CommentService commentService, PlateApplicationService plateApplicationService, PlateNoticeService plateNoticeService) {
+    public UserController(BlogService blogService, PlateService plateService, UserService userService, CommentService commentService, PlateApplicationService plateApplicationService, PlateNoticeService plateNoticeService, JedisUtil jedisUtil) {
         this.blogService = blogService;
         this.plateService = plateService;
         this.userService = userService;
         this.commentService = commentService;
         this.plateApplicationService = plateApplicationService;
         this.plateNoticeService = plateNoticeService;
+        this.jedisUtil = jedisUtil;
     }
 
     /**
@@ -79,20 +86,26 @@ public class UserController extends HttpServlet {
      */
     //注册
     @PostMapping("/register")
-    public Map register(@RequestBody User user, HttpServletRequest req) {
+    public Map register(@RequestBody User user, HttpServletRequest req, HttpServletResponse response) {
         Map map = userService.addUser(user);
         if (map.containsKey("user")) {
             req.getSession().setAttribute("user",map.get("user"));
+            String token = JWTUtil.generateToken(((Integer)user.getId()).toString(),"Bob",((User)map.get("user")).getUsername());
+            response.setHeader("token", token);
         }
         return map;
     }
 
     //登录
     @PostMapping("/login")
-    public Map login(@RequestBody User user, HttpServletRequest req) {
+    public Map login(@RequestBody User user, HttpServletResponse response, HttpServletRequest req) {
         Map map = userService.userLogin(user);
         if (map.containsKey("user")) {
+            Gson gson = new Gson();
+            jedisUtil.set("user:1",gson.toJson(map.get("user"),User.class));
             req.getSession().setAttribute("user",map.get("user"));
+            String token = JWTUtil.generateToken(((Integer)((User)map.get("user")).getId()).toString(),"Bob",((User)map.get("user")).getUsername());
+            response.setHeader("token", token);
         }
         return map;
     }
@@ -115,7 +128,9 @@ public class UserController extends HttpServlet {
     public Map enterPersonalCenter(HttpServletRequest req) {
         //用于更新session中的用户信息
         User user = (User) req.getSession().getAttribute("user");
-        return userService.checkUser(user);
+        Map map = new HashMap();
+        map.put("id",user.getId());
+        return userService.checkUser(map);
     }
 
     //头像上传
@@ -134,8 +149,10 @@ public class UserController extends HttpServlet {
 
     //查看用户详情
     @PostMapping("/checkUser")
-    public Map checkUser(@RequestBody User user) {
-        return userService.checkUser(user);
+    public Map checkUser(@RequestBody Map map, HttpServletRequest req) {
+        Claims token = JWTUtil.verifyToken(req.getHeader("token"));
+        map.put("userId",Integer.parseInt(token.getId()));
+        return userService.checkUser(map);
     }
 
     //关注
@@ -188,12 +205,12 @@ public class UserController extends HttpServlet {
     }
 
     //重新发布前要选择自己博客所在板块
-    //1.重新选择
-    @PostMapping("/updateBlogPlate")
+    //1.选择博客所在板块
+    @PostMapping("/releaseBlogInPlate")
     public Map updateBlogPlate(@RequestBody Map map) {
-        return plateService.updateBlogPlate(map);
+        return plateService.releaseBlogInPlate(map);
     }
-    //2.取消选择
+    //2.取消选择博客所在板块
     @PostMapping("/deselectPlate")
     public Map deselectPlate(@RequestBody Map map) {
         return plateService.deselectPlate(map);
@@ -274,7 +291,7 @@ public class UserController extends HttpServlet {
 
     //删除评论回复 (如果是在自己的博客内,如果是自己的回复)
     @PostMapping("/deleteInsideComment")
-    public Map deleteInsideComment(@RequestBody InsideComment insideComment, HttpServletRequest req) {
+    public Map deleteInsideComment(@RequestBody InsideComment insideComment) {
         return commentService.deleteMyInsideComment(insideComment);
     }
 
@@ -311,6 +328,12 @@ public class UserController extends HttpServlet {
      * 板块模块
      *
      */
+    //查重板块名称
+    @GetMapping("/isPlateNameExist")
+    public Map isPlateNameExist(String plateName) {
+        return plateService.isPlateNameExist(plateName);
+    }
+
     //申请板块
     @PostMapping("/addPlateApplication")
     public Map addPlateApplication(@RequestBody PlateApplication plateApplication, HttpServletRequest req) {
@@ -329,6 +352,13 @@ public class UserController extends HttpServlet {
     @PostMapping("/checkPlateApplication")
     public Map checkPlateApplication(@RequestBody PlateApplication plateApplication) {
         return plateApplicationService.checkPlateApplication(plateApplication);
+    }
+
+    //我的板块
+    @PostMapping("/checkUserPlate")
+    public Map checkUserPlate(HttpServletRequest req) {
+        User user = (User) req.getSession().getAttribute("user");
+        return plateService.checkUserPlate(user);
     }
 
     //查看板块详情
@@ -353,12 +383,6 @@ public class UserController extends HttpServlet {
     @GetMapping("/getBlogsOfPlate")
     public Map getBlogsOfPlate(int pageNum,int pageSize,int id) {
         return blogService.getBlogsOfPlatePage(pageNum,pageSize,id);
-    }
-
-   //删除板块内博客(仅从板块内移除)
-    @PostMapping("/deleteBlogFromPlate")
-    public Map deleteBlogFromPlate(@RequestBody Map map) {
-        return blogService.deleteBlogFromPlate(map);
     }
 
     //板块公告分页
@@ -408,19 +432,5 @@ public class UserController extends HttpServlet {
     public Map cancelToppingPlateBlog(@RequestBody Map map) {
         return blogService.cancelToppingPlateBlog(map);
     }
-
-    //博客迁移(如果自己有两个板块的话) (博客详情内)
-
-    //删除板块内博客
-
-
-
-    /**
-     * 板块分类模块
-     *
-     */
-
-    //首页(只展示各种板块)
-
 
 }

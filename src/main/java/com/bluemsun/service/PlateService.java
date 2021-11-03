@@ -1,6 +1,7 @@
 package com.bluemsun.service;
 
 import com.bluemsun.entity.Plate;
+import com.bluemsun.entity.User;
 
 import java.util.Map;
 
@@ -34,10 +35,14 @@ public interface PlateService {
     //解冻板块
     Map unfreezePlate(Plate plate);
 
-    //修改博客所在板块
-    Map updateBlogPlate(Map map);
+//    //修改博客所在板块
+//    Map updateBlogPlate(Map map);
 
-    //取消博客所在板块
+
+    //选择博客所在板块
+    Map releaseBlogInPlate(Map map);
+
+    //取消选择博客所在板块
     Map deselectPlate(Map map);
 
     //修改板块简介
@@ -45,5 +50,13 @@ public interface PlateService {
 
     //搜索板块分页
     Map selectPlatePage(int pageNum, int pageSize, String plateName);
+
+    //查看自己的博客
+    Map checkUserPlate(User user);
+
+    //查询板块名称是否存在
+    Map isPlateNameExist(String plateName);
+
+    //
 
 }

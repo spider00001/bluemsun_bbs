@@ -78,10 +78,10 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
     }
 
     @Override
-    public User checkUser(User user) {
+    public User checkUser(int id) {
         User userRes = null;
         try {
-            userRes  = getSqlSession().getMapper(UserMapper.class).checkUser(user);
+            userRes  = getSqlSession().getMapper(UserMapper.class).checkUser(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -244,6 +244,17 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
             e.printStackTrace();
         }
         return count;
+    }
+
+    @Override
+    public int isFollowUser(Map map) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(UserMapper.class).isFollowUser(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
     }
 
 }

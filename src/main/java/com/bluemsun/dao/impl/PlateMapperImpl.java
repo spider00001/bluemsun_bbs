@@ -2,6 +2,7 @@ package com.bluemsun.dao.impl;
 
 import com.bluemsun.dao.PlateMapper;
 import com.bluemsun.entity.Plate;
+import com.bluemsun.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
@@ -188,6 +189,17 @@ public class PlateMapperImpl extends SqlSessionDaoSupport implements PlateMapper
     }
 
     @Override
+    public int isBlogExistInPlate(Map map) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(PlateMapper.class).isBlogExistInPlate(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
     public int releaseBlogInPlate(Map map) {
         int row = 0;
         try {
@@ -198,16 +210,16 @@ public class PlateMapperImpl extends SqlSessionDaoSupport implements PlateMapper
         return row;
     }
 
-    @Override
-    public int updateBlogPlate(Map map) {
-        int row = 0;
-        try {
-            row = getSqlSession().getMapper(PlateMapper.class).updateBlogPlate(map);
-        } catch (Exception e)  {
-            e.printStackTrace();
-        }
-        return row;
-    }
+//    @Override
+//    public int updateBlogPlate(Map map) {
+//        int row = 0;
+//        try {
+//            row = getSqlSession().getMapper(PlateMapper.class).updateBlogPlate(map);
+//        } catch (Exception e)  {
+//            e.printStackTrace();
+//        }
+//        return row;
+//    }
 
     @Override
     public int deselectPlate(Map map) {
@@ -269,6 +281,28 @@ public class PlateMapperImpl extends SqlSessionDaoSupport implements PlateMapper
         int row = 0;
         try {
             row = getSqlSession().getMapper(PlateMapper.class).reducePlateBlogNum(plateId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
+    public List<Plate> checkUserPlate(User user) {
+        List<Plate> plateList = null;
+        try {
+            plateList = getSqlSession().getMapper(PlateMapper.class).checkUserPlate(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return plateList;
+    }
+
+    @Override
+    public int isPlateNameExist(String plateName) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(PlateMapper.class).isPlateNameExist(plateName);
         } catch (Exception e) {
             e.printStackTrace();
         }

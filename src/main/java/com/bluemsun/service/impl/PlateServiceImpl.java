@@ -3,6 +3,7 @@ package com.bluemsun.service.impl;
 import com.bluemsun.dao.PlateMapper;
 import com.bluemsun.entity.Page;
 import com.bluemsun.entity.Plate;
+import com.bluemsun.entity.User;
 import com.bluemsun.service.PlateService;
 
 import java.util.HashMap;
@@ -170,20 +171,38 @@ public class PlateServiceImpl implements PlateService {
         return map;
     }
 
-    //修改博客所在板块
     @Override
-    public Map updateBlogPlate(Map map) {
-        int row = plateMapper.updateBlogPlate(map);
+    public Map releaseBlogInPlate(Map map) {
+        int isExist = plateMapper.isBlogExistInPlate(map);
         Map<String,Object> mapRes = new HashMap<String,Object>();
-        if (row > 0) {
-            mapRes.put("msg","修改博客所在板块成功");
+        if (isExist == 0) {
+            plateMapper.releaseBlogInPlate(map);
+            mapRes.put("msg","选择博客所在板块成功");
             mapRes.put("status",1);
         } else {
-            mapRes.put("msg","修改博客所在板块失败");
+            mapRes.put("msg","该博客已在该板块内");
             mapRes.put("status",2);
         }
         return mapRes;
     }
+
+//    //修改博客所在板块
+//    @Override
+//    public Map updateBlogPlate(Map map) {
+//        int row = plateMapper.updateBlogPlate(map);
+//        Map<String,Object> mapRes = new HashMap<String,Object>();
+//        if (row > 0) {
+//            mapRes.put("msg","修改博客所在板块成功");
+//            mapRes.put("status",1);
+//        } else {
+//            mapRes.put("msg","修改博客所在板块失败");
+//            mapRes.put("status",2);
+//        }
+//        return mapRes;
+//    }
+
+
+
 
     //取消博客所在板块
     @Override
@@ -231,6 +250,36 @@ public class PlateServiceImpl implements PlateService {
             map.put("totalRecord",totalRecord);
         } else {
             map.put("msg","未搜索到板块");
+            map.put("status",2);
+        }
+        return map;
+    }
+
+    @Override
+    public Map checkUserPlate(User user) {
+        List<Plate> plateList = plateMapper.checkUserPlate(user);
+        Map<String,Object> map = new HashMap<>();
+        if (plateList != null) {
+            map.put("list",plateList);
+            map.put("platesSum",plateList.size());
+            map.put("msg","查看用户板块成功");
+            map.put("status",1);
+        } else {
+            map.put("msg","该用户没有自己的板块");
+            map.put("status",2);
+        }
+        return map;
+    }
+
+    @Override
+    public Map isPlateNameExist(String plateName) {
+        int row = plateMapper.isPlateNameExist(plateName);
+        Map<String,Object> map = new HashMap<>();
+        if (row == 0) {
+            map.put("msg","板块名称可以使用");
+            map.put("status",1);
+        } else {
+            map.put("msg","板块名称已存在");
             map.put("status",2);
         }
         return map;

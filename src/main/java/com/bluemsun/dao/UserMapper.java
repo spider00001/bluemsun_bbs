@@ -28,7 +28,7 @@ public interface UserMapper {
     List<User> getUsersLimit(Map map);
 
     //查看用户详情
-    User checkUser(User user);
+    User checkUser(@Param("id") int id);
 
     //冻结用户
     int frozenUser(User user);
@@ -48,6 +48,11 @@ public interface UserMapper {
     //查看粉丝列表(分页。。。。。)
     List<User> getFans(Map map);
 
+    /**
+     * 使用动态sql，类似接口可以通过由前端传status来判断执行哪种sql
+     * @param map
+     * @return
+     */
     //关注
     int followUser(Map map);
 
@@ -71,5 +76,8 @@ public interface UserMapper {
 
     //搜索出来的用户的总数
     int getSelectUserCount(@Param("username") String username);
+
+    //检查是否已经关注该用户
+    int isFollowUser(Map map);
 
 }

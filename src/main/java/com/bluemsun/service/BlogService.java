@@ -2,7 +2,6 @@ package com.bluemsun.service;
 
 import com.bluemsun.entity.Blog;
 import com.bluemsun.entity.Plate;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -64,7 +63,7 @@ public interface BlogService {
     //搜索博客分页
      Map selectBlogPage(int pageNum,int pageSize, String title);
 
-     //删除板块内博客
-    Map deleteBlogFromPlate(Map map);
 
+    //定时更新所有博客的热度
+    void updateBlogHeat();
 }

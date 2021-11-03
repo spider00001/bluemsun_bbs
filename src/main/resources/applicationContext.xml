@@ -7,6 +7,7 @@
     <import resource="spring-dao.xml"/>
     <import resource="spring-service.xml"/>
     <import resource="spring-mvc.xml"/>
+    <import resource="Jedis.xml"/>
 
     <bean id="user" class="com.bluemsun.entity.User"/>
     <bean id="manager" class="com.bluemsun.entity.Manager"/>
@@ -19,6 +20,7 @@
     <bean id="mainComment" class="com.bluemsun.entity.MainComment"/>
     <bean id="insideComment" class="com.bluemsun.entity.InsideComment"/>
     <bean id="plateApplicationDto" class="com.bluemsun.dto.PlateApplicationDto"/>
+    <bean id="blogUserDto" class="com.bluemsun.dto.BlogUserDto"/>
 
 
 </beans>

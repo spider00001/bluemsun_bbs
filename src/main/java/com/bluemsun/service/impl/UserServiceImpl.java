@@ -6,6 +6,9 @@ import com.bluemsun.entity.Manager;
 import com.bluemsun.entity.Page;
 import com.bluemsun.entity.User;
 import com.bluemsun.service.UserService;
+import com.bluemsun.utils.JWTUtil;
+import com.bluemsun.utils.JedisUtil;
+import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -16,10 +19,14 @@ public class UserServiceImpl implements UserService {
 
     private final ManagerMapper managerMapper;
     private final UserMapper userMapper;
+    private final JedisUtil jedisUtil;
+    private final Gson gson;
 
-    public UserServiceImpl(ManagerMapper managerMapper, UserMapper userMapper) {
+    public UserServiceImpl(ManagerMapper managerMapper, UserMapper userMapper, JedisUtil jedisUtil, Gson gson) {
         this.managerMapper = managerMapper;
         this.userMapper = userMapper;
+        this.jedisUtil = jedisUtil;
+        this.gson = gson;
     }
 
     //管理员登录（暂时先放到这里....）
@@ -116,18 +123,21 @@ public class UserServiceImpl implements UserService {
 
     //查看单个用户详情页
     @Override
-    public Map<String,Object> checkUser(User user) {
-        Map<String,Object> map = new HashMap<String,Object>();
-        User userRes = userMapper.checkUser(user);
+    public Map<String,Object> checkUser(Map map) {
+        Map<String,Object> mapRes = new HashMap<String,Object>();
+        User userRes = userMapper.checkUser((int)map.get("id"));
         if (userRes != null) {
-            map.put("msg","查看用户成功");
-            map.put("status",1);
-            map.put("user",userRes);
+            mapRes.put("msg","查看用户成功");
+            mapRes.put("status",1);
+            mapRes.put("user",userRes);
+            if (map.containsKey("userId")) {
+                mapRes.put("isFollow",userMapper.isFollowUser(map));
+            }
         } else {
-            map.put("msg","查看用户失败");
-            map.put("status",2);
+            mapRes.put("msg","查看用户失败");
+            mapRes.put("status",2);
         }
-        return map;
+        return mapRes;
     }
 
     //用户信息修改
