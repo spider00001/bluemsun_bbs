@@ -17,16 +17,6 @@ public class InsideComment {
     public InsideComment() {
     }
 
-    public InsideComment(int id, String content, int commentMainId, Timestamp createTime, int userId, int likesNum, int isMy) {
-        this.id = id;
-        this.content = content;
-        this.commentMainId = commentMainId;
-        this.createTime = createTime;
-        this.userId = userId;
-        this.likesNum = likesNum;
-        this.isMy = isMy;
-    }
-
     public int getId() {
         return id;
     }

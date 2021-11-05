@@ -121,6 +121,7 @@ public class PlateServiceImpl implements PlateService {
             map.put("msg","查看置顶板块成功");
             map.put("status",1);
             map.put("list",plateList);
+            map.put("size",plateList.size());
         } else {
             map.put("msg","查看置顶板块失败");
             map.put("status",2);
@@ -143,33 +144,33 @@ public class PlateServiceImpl implements PlateService {
         return map;
     }
 
-    //冻结板块
-    public Map frozenPlate(Plate plate) {
-        int row = plateMapper.frozenPlate(plate);
-        Map<String,Object> map = new HashMap<String,Object>();
-        if (row > 0) {
-            map.put("msg","冻结板块成功");
-            map.put("status",1);
-        } else {
-            map.put("msg","冻结板块失败");
-            map.put("status",2);
-        }
-        return map;
-    }
-
-    //解冻板块
-    public Map unfreezePlate(Plate plate) {
-        int row = plateMapper.unfreezePlate(plate);
-        Map<String,Object> map = new HashMap<String,Object>();
-        if (row > 0) {
-            map.put("msg","解冻板块成功");
-            map.put("status",1);
-        } else {
-            map.put("msg","解冻板块失败");
-            map.put("status",2);
-        }
-        return map;
-    }
+//    //冻结板块
+//    public Map frozenPlate(Plate plate) {
+//        int row = plateMapper.frozenPlate(plate);
+//        Map<String,Object> map = new HashMap<String,Object>();
+//        if (row > 0) {
+//            map.put("msg","冻结板块成功");
+//            map.put("status",1);
+//        } else {
+//            map.put("msg","冻结板块失败");
+//            map.put("status",2);
+//        }
+//        return map;
+//    }
+//
+//    //解冻板块
+//    public Map unfreezePlate(Plate plate) {
+//        int row = plateMapper.unfreezePlate(plate);
+//        Map<String,Object> map = new HashMap<String,Object>();
+//        if (row > 0) {
+//            map.put("msg","解冻板块成功");
+//            map.put("status",1);
+//        } else {
+//            map.put("msg","解冻板块失败");
+//            map.put("status",2);
+//        }
+//        return map;
+//    }
 
     @Override
     public Map releaseBlogInPlate(Map map) {

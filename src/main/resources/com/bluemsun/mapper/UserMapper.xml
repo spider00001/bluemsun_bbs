@@ -120,4 +120,8 @@
         select count(*) from tb_user_user where user_id=#{id} and follow_user_id=#{userId};
     </select>
 
+    <update id="updateHeadPortrait" parameterType="User">
+        update bs_bbs.tb_user set head_portrait=#{headPortrait} where id=#{id};
+    </update>
+
 </mapper>

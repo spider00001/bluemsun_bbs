@@ -17,18 +17,6 @@ public class Plate {
     public Plate() {
     }
 
-    public Plate(int id, String plateName, int userId, String username, Timestamp createTime, int status, int blogNum, String description, int top) {
-        this.id = id;
-        this.plateName = plateName;
-        this.userId = userId;
-        this.username = username;
-        this.createTime = createTime;
-        this.status = status;
-        this.blogNum = blogNum;
-        this.description = description;
-        this.top = top;
-    }
-
     public int getId() {
         return id;
     }

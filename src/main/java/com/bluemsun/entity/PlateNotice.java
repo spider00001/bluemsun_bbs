@@ -14,14 +14,6 @@ public class PlateNotice {
     public PlateNotice() {
     }
 
-    public PlateNotice(int id, String content, Timestamp createTime, int plateId, String title) {
-        this.id = id;
-        this.content = content;
-        this.createTime = createTime;
-        this.plateId = plateId;
-        this.title = title;
-    }
-
     public int getId() {
         return id;
     }

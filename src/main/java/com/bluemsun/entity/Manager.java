@@ -8,12 +8,6 @@ public class Manager {
     public Manager() {
     }
 
-    public Manager(int id, String accountNumber, String password) {
-        this.id = id;
-        this.accountNumber = accountNumber;
-        this.password = password;
-    }
-
     public int getId() {
         return id;
     }

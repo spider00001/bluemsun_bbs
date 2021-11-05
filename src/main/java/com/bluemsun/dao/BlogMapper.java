@@ -15,13 +15,13 @@ public interface BlogMapper {
     //全部博客数量
     int getBlogCount();
 
-    //获取所有博客list
+    //获取所有博客分页list
     List<Blog> getBlogsLimit(Map map);
 
     //板块博客数量
     int getBlogOfPlateCount(@Param("id") int id);
 
-    //获取板块内博客list
+    //获取板块内博客分页list
     List<Blog> getBlogsOfPlateLimit(Map map);
 
     //获取用户博客数量
@@ -57,7 +57,7 @@ public interface BlogMapper {
     int cancelToppingPlateBlog(Map map);
 
     //发布博客
-    int releaseBlog(Map map);
+    int releaseBlog(BlogUserDto blogUserDto);
 
     //查找用户刚发布的博客的id
     int selectUserJustReleaseBlogId(@Param("userId") int userId);
@@ -83,8 +83,8 @@ public interface BlogMapper {
     //搜索博客list
     List<Blog> selectBlogList(Map map);
 
-    //浏览量加一
-    int addViews(Blog blog);
+    //redis内博客对应浏览量加一
+    boolean addViews(int blogId, int userId);
 
     //点赞数加一
     int addLikes(@Param("blogId") int blogId);
@@ -97,6 +97,5 @@ public interface BlogMapper {
 
     //获取所有博客
     List<Blog> getAllBlogs();
-
 
 }

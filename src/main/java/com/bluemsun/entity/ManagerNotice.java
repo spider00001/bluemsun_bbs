@@ -13,13 +13,6 @@ public class ManagerNotice {
     public ManagerNotice() {
     }
 
-    public ManagerNotice(int id, String content, Timestamp createTime, String title) {
-        this.id = id;
-        this.content = content;
-        this.createTime = createTime;
-        this.title = title;
-    }
-
     public int getId() {
         return id;
     }

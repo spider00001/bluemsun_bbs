@@ -2,12 +2,13 @@ package com.bluemsun.controller;
 
 import com.bluemsun.entity.*;
 import com.bluemsun.service.*;
+import com.bluemsun.utils.JWTUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -30,10 +31,12 @@ public class ManagerController extends HttpServlet {
 
     //登录
     @PostMapping("/login")
-    public Map<String,Object> login(@RequestBody Manager manager, HttpServletRequest req) {
+    public Map<String,Object> login(@RequestBody Manager manager, HttpServletResponse response) {
         Map<String,Object> map = userService.managerLogin(manager);
-        if (map.get("manager")!= null) {
-            req.getSession().setAttribute("manager",map.get("manager"));
+        if (map.containsKey("manager")) {
+            Manager managerRes = (Manager) map.get("manager");
+            String token = JWTUtil.generateToken(((Integer)managerRes.getId()).toString(),"Bob",managerRes.getAccountNumber());
+            response.setHeader("token", token);
         }
         return map;
     }
@@ -114,9 +117,7 @@ public class ManagerController extends HttpServlet {
     //查看博客详情
     @PostMapping("/checkBlog")
     public Map checkBlog(@RequestBody Blog blog) {
-        Map<String,Object> map = new HashMap<String,Object>();
-        map.put("blog",blog);
-        return blogService.checkBlog(map);
+        return blogService.checkBlog(blog,0);
     }
     
 
@@ -197,18 +198,17 @@ public class ManagerController extends HttpServlet {
         return plateService.cancelToppingPlate(plate);
     }
 
-    //冻结板块
-    @PostMapping("/frozenPlate")
-    public Map frozenPlate(@RequestBody Plate plate) {
-        return plateService.frozenPlate(plate);
-    }
-
-    //解冻板块
-    @PostMapping("/unfreezePlate")
-    public Map unfreezePlate(@RequestBody Plate plate) {
-        return plateService.unfreezePlate(plate);
-    }
-
+//    //冻结板块
+//    @PostMapping("/frozenPlate")
+//    public Map frozenPlate(@RequestBody Plate plate) {
+//        return plateService.frozenPlate(plate);
+//    }
+//
+//    //解冻板块
+//    @PostMapping("/unfreezePlate")
+//    public Map unfreezePlate(@RequestBody Plate plate) {
+//        return plateService.unfreezePlate(plate);
+//    }
 
     /**
      * 板块申请管理模块

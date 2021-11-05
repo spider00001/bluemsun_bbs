@@ -1,9 +1,12 @@
 package com.bluemsun.dao.impl;
 
 import com.bluemsun.dao.BlogMapper;
+import com.bluemsun.dao.PlateMapper;
 import com.bluemsun.dto.BlogUserDto;
 import com.bluemsun.entity.Blog;
 import com.bluemsun.entity.Plate;
+import com.bluemsun.utils.JedisUtil;
+import com.google.gson.Gson;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import java.sql.Timestamp;
@@ -11,6 +14,16 @@ import java.util.List;
 import java.util.Map;
 
 public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
+
+    private final JedisUtil jedisUtil;
+    private final Gson gson;
+    private final PlateMapper plateMapper;
+
+    public BlogMapperImpl(JedisUtil jedisUtil, Gson gson, PlateMapper plateMapper) {
+        this.jedisUtil = jedisUtil;
+        this.gson = gson;
+        this.plateMapper = plateMapper;
+    }
 
     @Override
     public int getBlogCount() {
@@ -83,6 +96,7 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
         int row = 0;
         try {
             row = getSqlSession().getMapper(BlogMapper.class).deleteBlog(blog);
+            jedisUtil.del("blog:"+blog.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -187,11 +201,12 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
 
     //发布博客
     @Override
-    public int releaseBlog(Map map) {
+    public int releaseBlog(BlogUserDto blogUserDto) {
         int row = 0;
         try {
-            map.put("createTime",new Timestamp(System.currentTimeMillis()));
-            row = getSqlSession().getMapper(BlogMapper.class).releaseBlog(map);
+            blogUserDto.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            row = getSqlSession().getMapper(BlogMapper.class).releaseBlog(blogUserDto);
+            jedisUtil.set("blog:"+blogUserDto.getId(),gson.toJson(blogUserDto));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -215,7 +230,16 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
     public BlogUserDto checkBlog(Blog blog) {
         BlogUserDto blogUserDto = null;
         try {
-            blogUserDto = getSqlSession().getMapper(BlogMapper.class).checkBlog(blog);
+            blogUserDto = gson.fromJson(jedisUtil.get("blog:"+blog.getId()),BlogUserDto.class);
+            if (blogUserDto == null) {
+                blogUserDto = getSqlSession().getMapper(BlogMapper.class).checkBlog(blog);
+                Plate plate = plateMapper.selectPlateBlogBelongs(blog.getId());
+                if (plate != null) {
+                    blogUserDto.setPlateId(plate.getId());
+                    blogUserDto.setPlateName(plate.getPlateName());
+                }
+                jedisUtil.set("blog:"+blogUserDto.getId(),gson.toJson(blogUserDto));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -241,6 +265,11 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
         int row = 0;
         try {
             row = getSqlSession().getMapper(BlogMapper.class).updateBlog(blog);
+            BlogUserDto blogUserDto = gson.fromJson(jedisUtil.get("blog:"+blog.getId()),BlogUserDto.class);
+            blogUserDto.setCreateTime(blog.getCreateTime());
+            blogUserDto.setContent(blog.getContent());
+            blogUserDto.setTitle(blog.getTitle());
+            jedisUtil.set("blog:"+blog.getId(),gson.toJson(blogUserDto));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -253,6 +282,9 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
         int row = 0;
         try {
             row = getSqlSession().getMapper(BlogMapper.class).likeBlog(map);
+            BlogUserDto blogUserDto = gson.fromJson(jedisUtil.get("blog:"+(int)map.get("blogId")),BlogUserDto.class);
+            blogUserDto.setLikesNum(blogUserDto.getLikesNum()+1);
+            jedisUtil.set("blog:"+blogUserDto.getId(),gson.toJson(blogUserDto));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -265,6 +297,9 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
         int row = 0;
         try {
             row = getSqlSession().getMapper(BlogMapper.class).cancelLikeBolg(map);
+            BlogUserDto blogUserDto = gson.fromJson(jedisUtil.get("blog:"+(int)map.get("blogId")),BlogUserDto.class);
+            blogUserDto.setLikesNum(blogUserDto.getLikesNum()-1);
+            jedisUtil.set("blog:"+blogUserDto.getId(),gson.toJson(blogUserDto));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -294,14 +329,13 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
     }
 
     @Override
-    public int addViews(Blog blog) {
-        int row = 0;
+    public boolean addViews(int blogId, int userId) {
         try {
-            row = getSqlSession().getMapper(BlogMapper.class).addViews(blog);
+            return jedisUtil.pfadd("blog_view:"+blogId,((Integer)userId).toString());
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
-        return row;
     }
 
     @Override

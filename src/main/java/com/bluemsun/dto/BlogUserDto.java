@@ -6,29 +6,44 @@ import java.sql.Timestamp;
 
 public class BlogUserDto {
 
-    private int id;//博客id
-    private int userId;//用户id
-    private String username;//用户名
-    private String title;//标题
-    private Timestamp createTime;//创建时间(最后一次修改时间)
-    private int views;//浏览量
-    private String content;//内容
-    private int likesNum;//点赞数
-    private String headPortrait;//头像资源路径
+    private int id;// 博客id
+    private int userId;// 用户id
+    private String username;// 用户名
+    private String title;// 标题
+    private Timestamp createTime;// 创建时间(最后一次修改时间)
+    private int views;// 浏览量
+    private String content;// 内容
+    private int likesNum;// 点赞数
+    private String headPortrait;// 头像资源路径
+    private int blogType;// 板块类型 0文章 1资源下载
+    private String plateName;// 所属板块名称
+    private int plateId;// 所属板块id
+
+    public int getBlogType() {
+        return blogType;
+    }
+
+    public void setBlogType(int blogType) {
+        this.blogType = blogType;
+    }
 
     public BlogUserDto() {
     }
 
-    public BlogUserDto(int id, int userId, String username, String title, Timestamp createTime, int views, String content, int likesNum, String headPortrait) {
-        this.id = id;
-        this.userId = userId;
-        this.username = username;
-        this.title = title;
-        this.createTime = createTime;
-        this.views = views;
-        this.content = content;
-        this.likesNum = likesNum;
-        this.headPortrait = headPortrait;
+    public String getPlateName() {
+        return plateName;
+    }
+
+    public void setPlateName(String plateName) {
+        this.plateName = plateName;
+    }
+
+    public int getPlateId() {
+        return plateId;
+    }
+
+    public void setPlateId(int plateId) {
+        this.plateId = plateId;
     }
 
     public int getId() {
@@ -116,6 +131,9 @@ public class BlogUserDto {
                 ", content='" + content + '\'' +
                 ", likesNum=" + likesNum +
                 ", headPortrait='" + headPortrait + '\'' +
+                ", blogType=" + blogType +
+                ", plateName='" + plateName + '\'' +
+                ", plateId=" + plateId +
                 '}';
     }
 }

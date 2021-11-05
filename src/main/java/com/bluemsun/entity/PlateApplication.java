@@ -15,15 +15,6 @@ public class PlateApplication {
     public PlateApplication() {
     }
 
-    public PlateApplication(int id, String content, String plateName, int userId, Timestamp createTime, int status) {
-        this.id = id;
-        this.content = content;
-        this.plateName = plateName;
-        this.userId = userId;
-        this.createTime = createTime;
-        this.status = status;
-    }
-
     public int getId() {
         return id;
     }

@@ -49,4 +49,7 @@ public interface UserService {
     //搜索用户分页
     Map<String,Object> selectUserPage(int pageNum, int pageSize,String username);
 
+    //修改用户头像
+    Map<String,Object> updateHeadPortrait(User user);
+
 }

@@ -18,21 +18,6 @@ public class User {
     public User() {
     }
 
-    public User(int id, String username, String password, int sex, String headPortrait, int status, String description, String stuNumber, int fansNum, int followUserNum, String phoneNumber, String emailCount) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.sex = sex;
-        this.headPortrait = headPortrait;
-        this.status = status;
-        this.description = description;
-        this.stuNumber = stuNumber;
-        this.fansNum = fansNum;
-        this.followUserNum = followUserNum;
-        this.phoneNumber = phoneNumber;
-        this.emailCount = emailCount;
-    }
-
     public int getId() {
         return id;
     }

@@ -3,12 +3,23 @@ package com.bluemsun.dao.impl;
 import com.bluemsun.dao.PlateApplicationMapper;
 import com.bluemsun.dto.PlateApplicationDto;
 import com.bluemsun.entity.PlateApplication;
+import com.bluemsun.utils.JedisUtil;
+import com.google.gson.Gson;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import java.util.List;
 import java.util.Map;
 
 public class PlateApplicationMapperImpl extends SqlSessionDaoSupport implements PlateApplicationMapper {
+
+
+    private final JedisUtil jedisUtil;
+    private final Gson gson;
+
+    public PlateApplicationMapperImpl(JedisUtil jedisUtil, Gson gson) {
+        this.jedisUtil = jedisUtil;
+        this.gson = gson;
+    }
 
     @Override
     public int getPlateApplicationCount() {
@@ -80,7 +91,11 @@ public class PlateApplicationMapperImpl extends SqlSessionDaoSupport implements 
     public PlateApplicationDto checkPlateApplication(PlateApplication plateApplication) {
         PlateApplicationDto plateApplicationDto = null;
         try {
-            plateApplicationDto = getSqlSession().getMapper(PlateApplicationMapper.class).checkPlateApplication(plateApplication);
+            plateApplicationDto = gson.fromJson(jedisUtil.get("plateApplication:"+plateApplication.getId()),PlateApplicationDto.class);
+            if (plateApplicationDto == null) {
+                plateApplicationDto = getSqlSession().getMapper(PlateApplicationMapper.class).checkPlateApplication(plateApplication);
+                jedisUtil.set("plateApplication:"+plateApplicationDto.getId(),gson.toJson(plateApplicationDto));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,7 +110,7 @@ public class PlateApplicationMapperImpl extends SqlSessionDaoSupport implements 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return plateApplication;
+        return plateApplicationRes;
     }
 
     @Override
@@ -103,6 +118,9 @@ public class PlateApplicationMapperImpl extends SqlSessionDaoSupport implements 
         int row = 0;
         try {
             row = getSqlSession().getMapper(PlateApplicationMapper.class).passPlateApplication(plateApplication);
+            PlateApplicationDto plateApplicationDto = gson.fromJson(jedisUtil.get("plateApplication:"+plateApplication.getId()),PlateApplicationDto.class);
+            plateApplicationDto.setStatus(1);
+            jedisUtil.set("plateApplication:"+plateApplication.getId(),gson.toJson(plateApplicationDto));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -114,6 +132,9 @@ public class PlateApplicationMapperImpl extends SqlSessionDaoSupport implements 
         int row = 0;
         try {
             row = getSqlSession().getMapper(PlateApplicationMapper.class).overrulePlateApplication(plateApplication);
+            PlateApplicationDto plateApplicationDto = gson.fromJson(jedisUtil.get("plateApplication:"+plateApplication.getId()),PlateApplicationDto.class);
+            plateApplicationDto.setStatus(2);
+            jedisUtil.set("plateApplication:"+plateApplication.getId(),gson.toJson(plateApplicationDto));
         } catch (Exception e) {
             e.printStackTrace();
         }

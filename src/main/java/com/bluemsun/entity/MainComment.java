@@ -18,16 +18,6 @@ public class MainComment {
     public MainComment() {
     }
 
-    public MainComment(int id, String content, int blogId, Timestamp createTime, int userId, int likesNum, int isMy) {
-        this.id = id;
-        this.content = content;
-        this.blogId = blogId;
-        this.createTime = createTime;
-        this.userId = userId;
-        this.likesNum = likesNum;
-        this.isMy = isMy;
-    }
-
     public int getId() {
         return id;
     }

@@ -80,4 +80,6 @@ public interface UserMapper {
     //检查是否已经关注该用户
     int isFollowUser(Map map);
 
+    int updateHeadPortrait(User user);
+
 }

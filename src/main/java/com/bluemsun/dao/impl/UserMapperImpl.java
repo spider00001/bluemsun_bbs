@@ -2,14 +2,23 @@ package com.bluemsun.dao.impl;
 
 import com.bluemsun.dao.UserMapper;
 import com.bluemsun.entity.User;
-import org.apache.ibatis.annotations.Param;
+import com.bluemsun.utils.JedisUtil;
+import com.google.gson.Gson;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
+
+    private final JedisUtil jedisUtil;
+    private final Gson gson;
+
+    public UserMapperImpl(JedisUtil jedisUtil, Gson gson) {
+        this.jedisUtil = jedisUtil;
+        this.gson = gson;
+    }
+
 
     @Override
     public int addUser(User user) {
@@ -38,6 +47,7 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
         int row = 0;
         try {
             row = getSqlSession().getMapper(UserMapper.class).deleteUser(user);
+            jedisUtil.del("user:"+user.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -49,6 +59,14 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
         int row = 0;
         try {
             row = getSqlSession().getMapper(UserMapper.class).updateUser(user);
+            User userRes = gson.fromJson(jedisUtil.get("user:"+user.getId()),User.class);
+            userRes.setUsername(user.getUsername());
+            userRes.setPassword(user.getPassword());
+            userRes.setEmailCount(user.getEmailCount());
+            userRes.setSex(user.getSex());
+            userRes.setPhoneNumber(user.getPhoneNumber());
+            userRes.setDescription(user.getDescription());
+            jedisUtil.set("user:"+user.getId(),gson.toJson(userRes));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -81,7 +99,11 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
     public User checkUser(int id) {
         User userRes = null;
         try {
-            userRes  = getSqlSession().getMapper(UserMapper.class).checkUser(id);
+            userRes = gson.fromJson(jedisUtil.get("user:"+id),User.class);
+            if (userRes == null) {
+                userRes  = getSqlSession().getMapper(UserMapper.class).checkUser(id);
+                jedisUtil.set("user:"+userRes.getId(),gson.toJson(userRes));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -251,6 +273,17 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
         int row = 0;
         try {
             row = getSqlSession().getMapper(UserMapper.class).isFollowUser(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
+    public int updateHeadPortrait(User user) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(UserMapper.class).updateHeadPortrait(user);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,5 +1,6 @@
 package com.bluemsun.dao;
 
+import com.bluemsun.entity.Blog;
 import com.bluemsun.entity.Plate;
 import com.bluemsun.entity.User;
 import org.apache.ibatis.annotations.Param;
@@ -30,9 +31,6 @@ public interface PlateMapper {
     //删除板块
     int deletePlate(Plate plate);
 
-    //查找板块(sql语句还没写)
-    int selectPlate(Plate plate);
-
     //查看置顶板块
     List<Plate> getPlatesOfHome();
 
@@ -45,11 +43,11 @@ public interface PlateMapper {
     //取消置顶板块
     int cancelToppingPlate(Plate plate);
 
-    //冻结板块
-    int frozenPlate(Plate plate);
-
-    //解冻板块
-    int unfreezePlate(Plate plate);
+//    //冻结板块
+//    int frozenPlate(Plate plate);
+//
+//    //解冻板块
+//    int unfreezePlate(Plate plate);
 
     //判断是否已经在置顶表内（暂时没用....）
     Plate isPlateTopped(Plate plate);
@@ -59,9 +57,6 @@ public interface PlateMapper {
 
     //选择博客所在板块
     int releaseBlogInPlate(Map map);
-
-    //修改博客所在板块
-//    int updateBlogPlate(Map map);
 
     //取消选择博客所在板块
     int deselectPlate(Map map);
@@ -86,5 +81,8 @@ public interface PlateMapper {
 
     //查询板块名称是否存在(申请板块时板块名称查重)
     int isPlateNameExist(@Param("plateName") String plateName);
+
+    //查看博客所属板块
+    Plate selectPlateBlogBelongs(@Param("blogId") int blogId);
 
 }

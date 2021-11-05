@@ -302,4 +302,18 @@ public class UserServiceImpl implements UserService {
         return map;
     }
 
+    @Override
+    public Map<String, Object> updateHeadPortrait(User user) {
+        int row = userMapper.updateHeadPortrait(user);
+        Map<String,Object> map = new HashMap<String,Object>();
+        if (row > 0) {
+            map.put("msg","头像修改成功");
+            map.put("status",1);
+        } else {
+            map.put("msg","头像修改失败");
+            map.put("status",2);
+        }
+        return map;
+    }
+
 }

@@ -14,19 +14,17 @@ public class Blog {
     private int views;//浏览量
     private String content;//文章
     private int likesNum;//点赞数
+    private int blogType;//博客类型：0文章 1资源下载博客
 
     public Blog() {
     }
 
-    public Blog(int id, int userId, String username, String title, Timestamp createTime, int views, String content, int likesNum) {
-        this.id = id;
-        this.userId = userId;
-        this.username = username;
-        this.title = title;
-        this.createTime = createTime;
-        this.views = views;
-        this.content = content;
-        this.likesNum = likesNum;
+    public int getBlogType() {
+        return blogType;
+    }
+
+    public void setBlogType(int blogType) {
+        blogType = blogType;
     }
 
     public int getId() {
@@ -105,6 +103,7 @@ public class Blog {
                 ", views=" + views +
                 ", content='" + content + '\'' +
                 ", likesNum=" + likesNum +
+                ", blogType=" + blogType +
                 '}';
     }
 }

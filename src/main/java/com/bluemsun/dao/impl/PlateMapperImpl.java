@@ -3,6 +3,8 @@ package com.bluemsun.dao.impl;
 import com.bluemsun.dao.PlateMapper;
 import com.bluemsun.entity.Plate;
 import com.bluemsun.entity.User;
+import com.bluemsun.utils.JedisUtil;
+import com.google.gson.Gson;
 import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
@@ -10,6 +12,14 @@ import java.util.List;
 import java.util.Map;
 
 public class PlateMapperImpl extends SqlSessionDaoSupport implements PlateMapper {
+
+    private final JedisUtil jedisUtil;
+    private final Gson gson;
+
+    public PlateMapperImpl(JedisUtil jedisUtil, Gson gson) {
+        this.jedisUtil = jedisUtil;
+        this.gson = gson;
+    }
 
     //获取所有板块数量
     @Override
@@ -63,7 +73,11 @@ public class PlateMapperImpl extends SqlSessionDaoSupport implements PlateMapper
     public Plate checkPlate(Plate plate) {
         Plate plateRes = null;
         try {
-            plateRes = getSqlSession().getMapper(PlateMapper.class).checkPlate(plate);
+            plateRes = gson.fromJson(jedisUtil.get("plate:"+plate.getId()),Plate.class);
+            if (plateRes == null) {
+                plateRes = getSqlSession().getMapper(PlateMapper.class).checkPlate(plate);
+                jedisUtil.set("plate:"+plate.getId(),gson.toJson(plateRes));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,18 +101,7 @@ public class PlateMapperImpl extends SqlSessionDaoSupport implements PlateMapper
         int row = 0;
         try {
             row = getSqlSession().getMapper(PlateMapper.class).deletePlate(plate);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return row;
-    }
-
-    //查找板块
-    @Override
-    public int selectPlate(Plate plate) {
-        int row = 0;
-        try {
-            row = getSqlSession().getMapper(PlateMapper.class).selectPlate(plate);
+            jedisUtil.del("plate:"+plate.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -152,29 +155,29 @@ public class PlateMapperImpl extends SqlSessionDaoSupport implements PlateMapper
         return row;
     }
 
-    //冻结板块
-    @Override
-    public int frozenPlate(Plate plate) {
-        int row = 0;
-        try {
-            row = getSqlSession().getMapper(PlateMapper.class).frozenPlate(plate);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return row;
-    }
-
-    //解冻板块
-    @Override
-    public int unfreezePlate(Plate plate) {
-        int row = 0;
-        try {
-            row = getSqlSession().getMapper(PlateMapper.class).unfreezePlate(plate);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return row;
-    }
+//    //冻结板块
+//    @Override
+//    public int frozenPlate(Plate plate) {
+//        int row = 0;
+//        try {
+//            row = getSqlSession().getMapper(PlateMapper.class).frozenPlate(plate);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return row;
+//    }
+//
+//    //解冻板块
+//    @Override
+//    public int unfreezePlate(Plate plate) {
+//        int row = 0;
+//        try {
+//            row = getSqlSession().getMapper(PlateMapper.class).unfreezePlate(plate);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return row;
+//    }
 
     //判断该板块是否已经在首页板块置顶表内
     @Override
@@ -307,6 +310,17 @@ public class PlateMapperImpl extends SqlSessionDaoSupport implements PlateMapper
             e.printStackTrace();
         }
         return row;
+    }
+
+    @Override
+    public Plate selectPlateBlogBelongs(int blogId) {
+        Plate plate = null;
+        try {
+            plate = getSqlSession().getMapper(PlateMapper.class).selectPlateBlogBelongs(blogId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return plate;
     }
 
 

@@ -88,8 +88,8 @@
         delete from bs_bbs.tb_plate_home_blog where plate_id=#{plateId} and blog_id=#{blogId};
     </delete>
 
-    <insert id="releaseBlog" parameterType="map">
-        insert into bs_bbs.tb_blog (user_id, title, create_time, content) values (#{userId},#{title},#{createTime},#{content});
+    <insert id="releaseBlog" parameterType="BlogUserDto">
+        insert into bs_bbs.tb_blog (user_id, title, create_time, content, blog_type) values (#{userId},#{title},#{createTime},#{content},#{blogType});
     </insert>
 
     <select id="selectUserJustReleaseBlogId" parameterType="int" resultType="int">
@@ -97,11 +97,14 @@
     </select>
 
     <select id="checkBlog" parameterType="Blog" resultType="BlogUserDto">
-        select tb.id, user_id, title, create_time, views, content, likes_num, username, head_portrait from bs_bbs.tb_blog tb inner join tb_user tu on tb.user_id = tu.id where tb.id=#{id};
+        select tb.id, tb.user_id, title, tb.create_time, views, content, likes_num, username, head_portrait, blog_type
+        from bs_bbs.tb_blog tb
+            inner join tb_user tu on tb.user_id = tu.id
+        where tb.id=#{id};
     </select>
 
     <update id="updateBlog" parameterType="Blog">
-        update bs_bbs.tb_blog set content=#{content},title=#{title} where id=#{id};
+        update bs_bbs.tb_blog set content=#{content},title=#{title}, create_time=#{createTime} where id=#{id};
     </update>
 
     <delete id="deleteMyBlog" parameterType="Blog">
@@ -129,10 +132,6 @@
         inner join bs_bbs.tb_user tu on tb.user_id = tu.id
         where title like concat('%' #{title} '%') limit #{startIndex},#{pageSize};
     </select>
-
-    <update id="addViews" parameterType="Blog">
-        update bs_bbs.tb_blog set views = views+1 where id=#{id};
-    </update>
 
     <update id="addLikes" parameterType="Blog">
         update bs_bbs.tb_blog set likes_num = likes_num+1 where id=#{blogId};

@@ -1,5 +1,6 @@
 package com.bluemsun.controller;
 
+import com.bluemsun.dto.BlogUserDto;
 import com.bluemsun.entity.*;
 import com.bluemsun.service.*;
 import com.bluemsun.utils.JWTUtil;
@@ -7,13 +8,16 @@ import com.bluemsun.utils.JedisUtil;
 import com.google.gson.Gson;
 import io.jsonwebtoken.Claims;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
@@ -25,16 +29,14 @@ public class UserController extends HttpServlet {
     private final CommentService commentService;
     private final PlateApplicationService plateApplicationService;
     private final PlateNoticeService plateNoticeService;
-    private final JedisUtil jedisUtil;
 
-    public UserController(BlogService blogService, PlateService plateService, UserService userService, CommentService commentService, PlateApplicationService plateApplicationService, PlateNoticeService plateNoticeService, JedisUtil jedisUtil) {
+    public UserController(BlogService blogService, PlateService plateService, UserService userService, CommentService commentService, PlateApplicationService plateApplicationService, PlateNoticeService plateNoticeService) {
         this.blogService = blogService;
         this.plateService = plateService;
         this.userService = userService;
         this.commentService = commentService;
         this.plateApplicationService = plateApplicationService;
         this.plateNoticeService = plateNoticeService;
-        this.jedisUtil = jedisUtil;
     }
 
     /**
@@ -76,20 +78,15 @@ public class UserController extends HttpServlet {
         return blogService.selectBlogPage(pageNum,pageSize,title);
     }
 
-    //搜索全站资源下载的博客
-
-
-
     /**
      * 用户信息模块
      *
      */
     //注册
     @PostMapping("/register")
-    public Map register(@RequestBody User user, HttpServletRequest req, HttpServletResponse response) {
+    public Map register(@RequestBody User user, HttpServletResponse response) {
         Map map = userService.addUser(user);
         if (map.containsKey("user")) {
-            req.getSession().setAttribute("user",map.get("user"));
             String token = JWTUtil.generateToken(((Integer)user.getId()).toString(),"Bob",((User)map.get("user")).getUsername());
             response.setHeader("token", token);
         }
@@ -98,22 +95,59 @@ public class UserController extends HttpServlet {
 
     //登录
     @PostMapping("/login")
-    public Map login(@RequestBody User user, HttpServletResponse response, HttpServletRequest req) {
+    public Map login(@RequestBody User user, HttpServletResponse response) {
         Map map = userService.userLogin(user);
         if (map.containsKey("user")) {
-            Gson gson = new Gson();
-            jedisUtil.set("user:1",gson.toJson(map.get("user"),User.class));
-            req.getSession().setAttribute("user",map.get("user"));
             String token = JWTUtil.generateToken(((Integer)((User)map.get("user")).getId()).toString(),"Bob",((User)map.get("user")).getUsername());
             response.setHeader("token", token);
         }
         return map;
     }
 
+    //用户头像上传
+    @PostMapping(value="/uploadHeadPortrait")
+    public Map uploadHeadPortrait(@RequestParam("file") MultipartFile file, HttpServletRequest request, HttpServletRequest req) {
+        Map<String,Object> map = new HashMap<String,Object>();
+        try {
+            if (file.getSize() <= 2097152) {
+                String disposition = file.getOriginalFilename();
+                String suffix = disposition.substring(disposition.lastIndexOf("."));
+                if (suffix.contains("png")||suffix.contains("jpg")) {
+                    //随机生成的UUID，作为文件名的一部分，加上刚才获取到的后缀作为最终文件名
+                    String filename = UUID.randomUUID()+suffix;
+                    String serverPath = request.getSession().getServletContext().getRealPath("headPortrait");
+                    File fileDisk = new File(serverPath);
+                    if (!fileDisk.exists()) {
+                        fileDisk.mkdir();
+                    }
+                    String fileParts = serverPath + "/" + filename;
+                    file.transferTo(new File(fileParts));
+                    String projectServerPath = request.getScheme() + "://" + request.getServerName() +
+                            ":" + request.getServerPort() + request.getContextPath() + "/headPortrait/" + filename;
+                    User user = new User();
+                    Claims token = JWTUtil.verifyToken(req.getHeader("token"));
+                    user.setId(Integer.parseInt(token.getId()));
+                    user.setHeadPortrait(projectServerPath);
+                    userService.updateHeadPortrait(user);
+                    map.put("msg","上传成功");
+                    map.put("status",1);
+                } else {
+                    map.put("msg","上传失败,只支持.png或.jpg格式的图片！");
+                    map.put("status",2);
+                }
+            } else {
+                map.put("msg","上传失败,上传图片最大2M！");
+                map.put("status",2);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
+
     //个人信息修改
-    @PostMapping("/updateUser")
-    public Map updateUser(@RequestBody User user, HttpServletRequest req) {
-        user.setId(((User) req.getSession().getAttribute("user")).getId());
+    @PostMapping("/updateUser")//接口文档请求数据里面要加user的id
+    public Map updateUser(@RequestBody User user) {
         return userService.updateUser(user);
     }
 
@@ -126,14 +160,11 @@ public class UserController extends HttpServlet {
     //进入个人中心 (未测试........)
     @PostMapping("/enterPersonalCenter")
     public Map enterPersonalCenter(HttpServletRequest req) {
-        //用于更新session中的用户信息
-        User user = (User) req.getSession().getAttribute("user");
         Map map = new HashMap();
-        map.put("id",user.getId());
+        Claims token = JWTUtil.verifyToken(req.getHeader("token"));
+        map.put("id",Integer.parseInt(token.getId()));
         return userService.checkUser(map);
     }
-
-    //头像上传
 
     //查看关注列表
     @GetMapping("/getFollowUsers")
@@ -158,14 +189,16 @@ public class UserController extends HttpServlet {
     //关注
     @PostMapping("/followUser")
     public Map followUser(@RequestBody Map map, HttpServletRequest req) {
-        map.put("id",((User)req.getSession().getAttribute("user")).getId());
+        Claims token = JWTUtil.verifyToken(req.getHeader("token"));
+        map.put("id",Integer.parseInt(token.getId()));
         return userService.followUser(map);
     }
 
     //取关
     @PostMapping("/cancelFollowUser")
     public Map cancelFollowUser(@RequestBody Map map, HttpServletRequest req) {
-        map.put("id",((User)req.getSession().getAttribute("user")).getId());
+        Claims token = JWTUtil.verifyToken(req.getHeader("token"));
+        map.put("id",Integer.parseInt(token.getId()));
         return userService.cancelFollowUser(map);
     }
 
@@ -173,6 +206,59 @@ public class UserController extends HttpServlet {
      * 我的创作模块
      *
      */
+    //资源博客上传文件
+    @PostMapping("/uploadBlogResourceFile")
+    public Map uploadBlogResourceFile(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+        Map<String,Object> map = new HashMap<String,Object>();
+        try {
+            if (file.getSize() <= 104857600) {
+                String disposition = file.getOriginalFilename();
+                String suffix = disposition.substring(disposition.lastIndexOf("."));
+                //随机生成的UUID，作为文件名的一部分，加上刚才获取到的后缀作为最终文件名
+                String filename = UUID.randomUUID()+suffix;
+                String serverPath = request.getSession().getServletContext().getRealPath("blogResourceFile");
+                File fileDisk = new File(serverPath);
+                if (!fileDisk.exists()) {
+                    fileDisk.mkdir();
+                }
+                String fileParts = serverPath + File.separator + filename;
+                file.transferTo(new File(fileParts));
+                map.put("msg","上传成功");
+                map.put("status",1);
+                map.put("fileURL",fileParts);
+            } else {
+                map.put("msg","上传失败,文件太大");
+                map.put("status",2);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
+
+    //资源博客下载文件
+    @PostMapping("/downloadBlogResourceFile")
+    public void downloadBlogResourceFile(@RequestBody Map map, HttpServletResponse resp, HttpServletRequest request) {
+        try {
+            String blogResourceFile = (String) map.get("fileURL");
+            String path = request.getSession().getServletContext().getRealPath("fileURL")+ File.separator + blogResourceFile;
+            File file = new File(path);
+            //设置响应头信息
+            resp.addHeader("Content-Disposition","attachemt;filename="+file.getName());
+            //设置文件ContentType类型，这样设置，会自动判断下载文件类型
+            resp.setContentType("multipart/form-data");
+            InputStream bis = new BufferedInputStream(new FileInputStream(file));
+            BufferedOutputStream out = new BufferedOutputStream(resp.getOutputStream());
+            int len;
+            while((len = bis.read()) != -1){
+                out.write(len);
+                out.flush();
+            }
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     //发布博客前 或者 编辑后重新发布博客前。 要选择自己要发布到的板块(分页)
     @GetMapping("/getAvailablePlatePage")
@@ -180,22 +266,19 @@ public class UserController extends HttpServlet {
         return plateService.getAvailablePlatePage(pageNum,pageSize);
     }
 
-    //发布文件下载的博客
-
     //发布博客(要选择自己的博客在哪个板块)
     @PostMapping("/releaseBlog")
-    public Map releaseBlog(@RequestBody Map map, HttpServletRequest req) {
-        map.put("userId",(((User)req.getSession().getAttribute("user"))).getId());
-        return blogService.releaseBlog(map);
+    public Map releaseBlog(@RequestBody BlogUserDto blogUserDto, HttpServletRequest req) {
+        Claims token = JWTUtil.verifyToken(req.getHeader("token"));
+        blogUserDto.setUserId(Integer.parseInt(token.getId()));
+        return blogService.releaseBlog(blogUserDto);
     }
 
     //查看博客详情
     @PostMapping("/checkBlog")
     public Map checkBlog(@RequestBody Blog blog, HttpServletRequest req) {
-        Map<String,Object> map = new HashMap<String,Object>();
-        map.put("user",req.getSession().getAttribute("user"));
-        map.put("blog",blog);
-        return blogService.checkBlog(map);
+        Claims token = JWTUtil.verifyToken(req.getHeader("token"));
+        return blogService.checkBlog(blog,Integer.parseInt(token.getId()));
     }
 
     //删除自己的博客(只能在“我的创作”里面的博客分页时删除)
@@ -232,14 +315,16 @@ public class UserController extends HttpServlet {
     //点赞博客
     @PostMapping("/likeBlog")
     public Map likeBlog(@RequestBody Map map, HttpServletRequest req) {
-        map.put("userId",((User) req.getSession().getAttribute("user")).getId());
+        Claims token = JWTUtil.verifyToken(req.getHeader("token"));
+        map.put("userId",Integer.parseInt(token.getId()));
         return blogService.likeBlog(map);
     }
 
     //取消点赞博客
     @PostMapping("/cancelLikeBlog")
     public Map cancelLikeBlog(@RequestBody Map map, HttpServletRequest req) {
-        map.put("userId",((User) req.getSession().getAttribute("user")).getId());
+        Claims token = JWTUtil.verifyToken(req.getHeader("token"));
+        map.put("userId",Integer.parseInt(token.getId()));
         return blogService.cancelLikeBlog(map);
     }
 
@@ -298,28 +383,32 @@ public class UserController extends HttpServlet {
     //点赞博客评论
     @PostMapping("/likesMainComment")
     public Map likesMainComment(@RequestBody Map map, HttpServletRequest req) {
-        map.put("userId",((User) req.getSession().getAttribute("user")).getId());
+        Claims token = JWTUtil.verifyToken(req.getHeader("token"));
+        map.put("userId",Integer.parseInt(token.getId()));
         return commentService.likesMainComment(map);
     }
 
     //取消点赞博客评论
     @PostMapping("/cancelLikesMainComment")
     public Map cancelLikesMainComment(@RequestBody Map map, HttpServletRequest req) {
-        map.put("userId",((User) req.getSession().getAttribute("user")).getId());
+        Claims token = JWTUtil.verifyToken(req.getHeader("token"));
+        map.put("userId",Integer.parseInt(token.getId()));
         return commentService.cancelLikesMainComment(map);
     }
 
     //点赞评论回复
     @PostMapping("/likeInsideComment")
     public Map likeInsideComment(@RequestBody Map map, HttpServletRequest req) {
-        map.put("userId",((User) req.getSession().getAttribute("user")).getId());
+        Claims token = JWTUtil.verifyToken(req.getHeader("token"));
+        map.put("userId",Integer.parseInt(token.getId()));
         return commentService.likeInsideComment(map);
     }
 
     //取消点赞评论回复
     @PostMapping("/cancelLikesInsideComment")
     public Map cancelLikesInsideComment(@RequestBody Map map, HttpServletRequest req) {
-        map.put("userId",((User) req.getSession().getAttribute("user")).getId());
+        Claims token = JWTUtil.verifyToken(req.getHeader("token"));
+        map.put("userId",Integer.parseInt(token.getId()));
         return commentService.cancelLikesInsideComment(map);
     }
 
@@ -337,15 +426,16 @@ public class UserController extends HttpServlet {
     //申请板块
     @PostMapping("/addPlateApplication")
     public Map addPlateApplication(@RequestBody PlateApplication plateApplication, HttpServletRequest req) {
-        plateApplication.setUserId(((User)req.getSession().getAttribute("user")).getId());
+        Claims token = JWTUtil.verifyToken(req.getHeader("token"));
+        plateApplication.setUserId(Integer.parseInt(token.getId()));
         return plateApplicationService.addPlateApplication(plateApplication);
     }
 
     //查看我的板块申请list(分页)
     @GetMapping("/getMyPlateApplicationPage")
     public Map getMyPlateApplicationPage(int pageNum, int pageSize, HttpServletRequest req) {
-        int userId = ((User)req.getSession().getAttribute("user")).getId();
-        return plateApplicationService.getMyPlateApplicationPage(pageNum,pageSize,userId);
+        Claims token = JWTUtil.verifyToken(req.getHeader("token"));
+        return plateApplicationService.getMyPlateApplicationPage(pageNum,pageSize,Integer.parseInt(token.getId()));
     }
 
     //查看板块申请详情
@@ -355,9 +445,11 @@ public class UserController extends HttpServlet {
     }
 
     //我的板块
-    @PostMapping("/checkUserPlate")
+    @PostMapping("/checkUserPlate")//这里要改成传userId
     public Map checkUserPlate(HttpServletRequest req) {
-        User user = (User) req.getSession().getAttribute("user");
+        Claims token = JWTUtil.verifyToken(req.getHeader("token"));
+        User user = new User();
+        user.setId(Integer.parseInt(token.getId()));
         return plateService.checkUserPlate(user);
     }
 
@@ -432,5 +524,7 @@ public class UserController extends HttpServlet {
     public Map cancelToppingPlateBlog(@RequestBody Map map) {
         return blogService.cancelToppingPlateBlog(map);
     }
+
+
 
 }

@@ -29,11 +29,11 @@ public interface PlateService {
     //取消板块置顶
     Map cancelToppingPlate(Plate plate);
 
-    //冻结板块
-    Map frozenPlate(Plate plate);
-
-    //解冻板块
-    Map unfreezePlate(Plate plate);
+//    //冻结板块
+//    Map frozenPlate(Plate plate);
+//
+//    //解冻板块
+//    Map unfreezePlate(Plate plate);
 
 //    //修改博客所在板块
 //    Map updateBlogPlate(Map map);

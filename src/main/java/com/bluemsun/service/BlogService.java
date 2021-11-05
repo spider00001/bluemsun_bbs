@@ -1,9 +1,9 @@
 package com.bluemsun.service;
 
+import com.bluemsun.dto.BlogUserDto;
 import com.bluemsun.entity.Blog;
 import com.bluemsun.entity.Plate;
 
-import java.util.List;
 import java.util.Map;
 
 public interface BlogService {
@@ -44,12 +44,11 @@ public interface BlogService {
     //取消板块置顶博客
     Map cancelToppingPlateBlog(Map map);
 
-
     //发布博客
-    Map releaseBlog(Map map);
+    Map releaseBlog(BlogUserDto blogUserDto);
 
     //查看博客详情
-    Map<String,Object> checkBlog(Map map);
+    Map<String,Object> checkBlog(Blog blog, int userId);
 
     //编辑博客
     Map updateBlog(Blog blog);
@@ -63,7 +62,4 @@ public interface BlogService {
     //搜索博客分页
      Map selectBlogPage(int pageNum,int pageSize, String title);
 
-
-    //定时更新所有博客的热度
-    void updateBlogHeat();
 }

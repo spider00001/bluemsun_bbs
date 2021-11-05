@@ -4,17 +4,22 @@ import com.bluemsun.dao.ManagerNoticeMapper;
 import com.bluemsun.entity.ManagerNotice;
 import com.bluemsun.entity.Page;
 import com.bluemsun.service.ManagerNoticeService;
+import com.bluemsun.utils.JedisUtil;
+import com.google.gson.Gson;
 
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ManagerNoticeServiceImpl implements ManagerNoticeService {
 
     private final ManagerNoticeMapper managerNoticeMapper;
+    private final JedisUtil jedisUtil;
+    private final Gson gson;
 
-    public ManagerNoticeServiceImpl(ManagerNoticeMapper managerNoticeMapper) {
+    public ManagerNoticeServiceImpl(ManagerNoticeMapper managerNoticeMapper, JedisUtil jedisUtil, Gson gson) {
         this.managerNoticeMapper = managerNoticeMapper;
+        this.jedisUtil = jedisUtil;
+        this.gson = gson;
     }
 
     @Override
