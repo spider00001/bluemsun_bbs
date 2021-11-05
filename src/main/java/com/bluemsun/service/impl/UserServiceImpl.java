@@ -8,8 +8,10 @@ import com.bluemsun.entity.User;
 import com.bluemsun.service.UserService;
 import com.bluemsun.utils.JWTUtil;
 import com.bluemsun.utils.JedisUtil;
+import com.bluemsun.utils.SHAUtil;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
+import sun.security.provider.SHA;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +35,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String,Object> managerLogin(Manager manager) {
         Manager managerRes = managerMapper.selectManagerByAccountNumber(manager);
+        try {
+            manager.setPassword(SHAUtil.encryptSHA(manager.getPassword()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Map<String,Object> map = new HashMap<String,Object>();
         if (managerRes != null) {
             if (managerRes.getPassword().equals(manager.getPassword())) {
@@ -54,6 +61,11 @@ public class UserServiceImpl implements UserService {
     //注册
     @Override
     public Map addUser(User user) {
+        try {
+            user.setPassword(SHAUtil.encryptSHA(user.getPassword()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         int res = userMapper.addUser(user);
         Map<String,Object> map = new HashMap<String,Object>();
         if (res > 0) {
@@ -76,6 +88,12 @@ public class UserServiceImpl implements UserService {
         User userRes =  userMapper.userLogin(user);
         Map<String,Object> map = new HashMap<String,Object>();
         if (userRes != null) {
+            try {
+                user.setPassword(SHAUtil.encryptSHA(user.getPassword()));
+                System.out.println(user.getPassword());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             if (userRes.getPassword().equals(user.getPassword())) {
                 //密码设为null，为安全性考虑
                 if (userRes.getStatus() == 0) {
