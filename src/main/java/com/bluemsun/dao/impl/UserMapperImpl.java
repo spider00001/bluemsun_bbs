@@ -37,7 +37,11 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
     public User userLogin(User user) {
         User userRes = null;
         try {
-            userRes = getSqlSession().getMapper(UserMapper.class).userLogin(user);
+            userRes = gson.fromJson(jedisUtil.get("user:"+user.getId()),User.class);
+            if (userRes == null) {
+                userRes = getSqlSession().getMapper(UserMapper.class).userLogin(user);
+                jedisUtil.set("user:"+userRes.getId(),gson.toJson(userRes));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

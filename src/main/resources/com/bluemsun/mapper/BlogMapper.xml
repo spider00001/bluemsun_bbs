@@ -48,7 +48,7 @@
     </delete>
 
     <select id="getBlogsHomeTop" resultType="Blog">
-        select top, tb.id, title, username, create_time, head_portrait
+        select top, tb.id, title, username, create_time, head_portrait,blog_type
         from tb_home_blog thb
         inner join bs_bbs.tb_blog tb on thb.blog_id=tb.id
         join tb_user tu on tu.id = tb.user_id

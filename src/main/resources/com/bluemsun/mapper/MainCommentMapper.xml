@@ -25,8 +25,8 @@
         select count(*) from bs_bbs.tb_comment_main where blog_id=#{blogId};
     </select>
 
-    <select id="getMainCommentLimit" parameterType="map" resultType="java.util.HashMap">
-        select user_id as userId, tcm.id, content, create_time as createTime, username, head_portrait as headPortrait, likes_num as likesNum
+    <select id="getMainCommentLimit" parameterType="map" resultType="MainCommentDto">
+        select user_id, tcm.id, content, create_time, username, head_portrait, likes_num
         from bs_bbs.tb_comment_main tcm
         inner join bs_bbs.tb_user tu
         on tcm.user_id = tu.id
@@ -41,5 +41,10 @@
     <update id="reduceLikes" parameterType="int">
         update bs_bbs.tb_comment_main set likes_num=likes_num-1 where id=#{id};
     </update>
+
+    <select id="selectUserByMainCommentId" parameterType="int" resultType="User">
+        select tbu.id, username from tb_user tbu
+            inner join tb_comment_main tcm on tbu.id = tcm.user_id where tcm.id=#{id};
+    </select>
 
 </mapper>

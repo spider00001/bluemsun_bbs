@@ -25,8 +25,8 @@
         select count(*) from bs_bbs.tb_comment_inside where comment_main_id=#{commentMainId};
     </select>
 
-    <select id="getInsideCommentLimit" parameterType="map" resultType="java.util.HashMap">
-        select user_id as userId, tci.id, content, create_time as createTime, username, head_portrait as headPortrait, likes_num as likesNum
+    <select id="getInsideCommentLimit" parameterType="map" resultType="InsideCommentDto">
+        select user_id, tci.id, content, create_time, username, head_portrait, likes_num
         from bs_bbs.tb_comment_inside tci
         inner join bs_bbs.tb_user tu
         on tci.user_id = tu.id

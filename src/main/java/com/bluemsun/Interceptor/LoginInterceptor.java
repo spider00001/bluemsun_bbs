@@ -3,6 +3,8 @@ package com.bluemsun.Interceptor;
 import com.alibaba.fastjson.JSON;
 import com.bluemsun.utils.JWTUtil;
 import com.bluemsun.utils.JedisUtil;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwt;
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,15 +34,22 @@ public class LoginInterceptor implements HandlerInterceptor {
             headerToken = request.getHeader("token");
             if (headerToken != null) {
                 try {
-                    //先去redis的token黑名单找，如果找到了：说明这个token即使未过期也不能使用
-                    //                       如果未找到：再去判断他是否过期
-                    if (jedisUtil.get("token:"+headerToken) == null) {
-                        // 对token更新与验证
-                        headerToken = JWTUtil.updateToken(headerToken);
-                        LOG.debug("token验证通过,并且续期了");
+                    Claims verifyToken = JWTUtil.verifyToken(headerToken);
+                    //这里判断了用户端与管理员端的token不可以通用
+                    if ((request.getRequestURI().contains("user") && verifyToken.getSubject().equals("BBSUser"))
+                            || (request.getRequestURI().contains("manager") && verifyToken.getSubject().equals("BBSManager"))) {
+                        //先去redis的token黑名单找，如果找到了：说明这个token即使未过期也不能使用
+                        //                       如果未找到：再去判断他是否过期
+                        if (jedisUtil.get("token:"+headerToken) == null) {
+                            // 对token更新与验证
+                            headerToken = JWTUtil.updateToken(headerToken);
+                            LOG.debug("token验证通过,并且续期了");
+                        } else {
+                            LOG.debug("token在黑名单里面，不能使用");
+                            responseData = "The token has expired!";
+                        }
                     } else {
-                        LOG.debug("token在黑名单里面，不能使用");
-                        responseData = "The token has expired!";
+                        responseData = "Token is legitimate!";
                     }
                 } catch (Exception e) {
                     LOG.debug("token过期了!");
@@ -50,6 +59,11 @@ public class LoginInterceptor implements HandlerInterceptor {
             } else {
                 // 如果没有token，返回错误信息
                 responseData = "There is no token!";
+            }
+            //如果是退出登录，则需要把返回的token加入黑名单
+            if (request.getRequestURI().contains("logOut")) {
+                jedisUtil.set("token:"+headerToken,headerToken);
+                responseData = "The token has expired!";
             }
         }
         // 如果有错误信息

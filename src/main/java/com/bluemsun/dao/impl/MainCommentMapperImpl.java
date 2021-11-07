@@ -2,6 +2,7 @@ package com.bluemsun.dao.impl;
 
 import com.bluemsun.dao.MainCommentMapper;
 import com.bluemsun.entity.MainComment;
+import com.bluemsun.entity.User;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import java.sql.Timestamp;
@@ -101,5 +102,14 @@ public class MainCommentMapperImpl extends SqlSessionDaoSupport implements MainC
         return row;
     }
 
-
+    @Override
+    public User selectUserByMainCommentId(int id) {
+        User user = null;
+        try {
+            user = getSqlSession().getMapper(MainCommentMapper.class).selectUserByMainCommentId(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 }

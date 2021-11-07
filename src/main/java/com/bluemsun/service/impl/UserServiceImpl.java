@@ -90,7 +90,6 @@ public class UserServiceImpl implements UserService {
         if (userRes != null) {
             try {
                 user.setPassword(SHAUtil.encryptSHA(user.getPassword()));
-                System.out.println(user.getPassword());
             } catch (Exception e) {
                 e.printStackTrace();
             }

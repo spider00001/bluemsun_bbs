@@ -36,7 +36,7 @@ public class ManagerController extends HttpServlet {
         Map<String,Object> map = userService.managerLogin(manager);
         if (map.containsKey("manager")) {
             Manager managerRes = (Manager) map.get("manager");
-            String token = JWTUtil.generateToken(((Integer)managerRes.getId()).toString(),"Bob",managerRes.getAccountNumber());
+            String token = JWTUtil.generateToken(((Integer)managerRes.getId()).toString(),"Bob","BBSManager");
             response.setHeader("token", token);
         }
         return map;
@@ -279,6 +279,4 @@ public class ManagerController extends HttpServlet {
     public Map checkManageNotice(@RequestBody ManagerNotice managerNotice) {
         return managerNoticeService.checkManageNotice(managerNotice);
     }
-
-
 }

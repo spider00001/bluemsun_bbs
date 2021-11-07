@@ -21,6 +21,8 @@
     <bean id="insideComment" class="com.bluemsun.entity.InsideComment"/>
     <bean id="plateApplicationDto" class="com.bluemsun.dto.PlateApplicationDto"/>
     <bean id="blogUserDto" class="com.bluemsun.dto.BlogUserDto"/>
+    <bean id="mainCommentDto" class="com.bluemsun.dto.MainCommentDto"/>
+    <bean id="insideCommentDto" class="com.bluemsun.dto.InsideCommentDto"/>
 
 
 </beans>

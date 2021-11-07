@@ -2,6 +2,7 @@ package com.bluemsun.dao;
 
 import com.bluemsun.entity.Blog;
 import com.bluemsun.entity.MainComment;
+import com.bluemsun.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -32,5 +33,8 @@ public interface MainCommentMapper {
 
     //点赞数-1
     int reduceLikes(@Param("id") int id);
+
+    //查看评论的user
+    User selectUserByMainCommentId(@Param("id") int id);
 
 }

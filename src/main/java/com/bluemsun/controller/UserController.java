@@ -4,8 +4,6 @@ import com.bluemsun.dto.BlogUserDto;
 import com.bluemsun.entity.*;
 import com.bluemsun.service.*;
 import com.bluemsun.utils.JWTUtil;
-import com.bluemsun.utils.JedisUtil;
-import com.google.gson.Gson;
 import io.jsonwebtoken.Claims;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
@@ -30,14 +28,16 @@ public class UserController extends HttpServlet {
     private final CommentService commentService;
     private final PlateApplicationService plateApplicationService;
     private final PlateNoticeService plateNoticeService;
+    private final ManagerNoticeService managerNoticeService;
 
-    public UserController(BlogService blogService, PlateService plateService, UserService userService, CommentService commentService, PlateApplicationService plateApplicationService, PlateNoticeService plateNoticeService) {
+    public UserController(BlogService blogService, PlateService plateService, UserService userService, CommentService commentService, PlateApplicationService plateApplicationService, PlateNoticeService plateNoticeService, ManagerNoticeService managerNoticeService) {
         this.blogService = blogService;
         this.plateService = plateService;
         this.userService = userService;
         this.commentService = commentService;
         this.plateApplicationService = plateApplicationService;
         this.plateNoticeService = plateNoticeService;
+        this.managerNoticeService = managerNoticeService;
     }
 
     /**
@@ -54,6 +54,12 @@ public class UserController extends HttpServlet {
     @GetMapping("/getPlatesOfHome")
     public Map getPlatesOfHome() {
         return plateService.getPlatesOfHome();
+    }
+
+    //最新管理员公告
+    @GetMapping("/getManagerNotice")
+    public Map getManagerNotice(int pageNum,int pageSize) {
+        return managerNoticeService.getManagerNoticePage(pageNum,pageSize);
     }
 
 
@@ -88,7 +94,7 @@ public class UserController extends HttpServlet {
     public Map register(@RequestBody User user, HttpServletResponse response) {
         Map map = userService.addUser(user);
         if (map.containsKey("user")) {
-            String token = JWTUtil.generateToken(((Integer)user.getId()).toString(),"Bob",((User)map.get("user")).getUsername());
+            String token = JWTUtil.generateToken(((Integer)user.getId()).toString(),"Bob","BBSUser");
             response.setHeader("token", token);
         }
         return map;
@@ -99,7 +105,7 @@ public class UserController extends HttpServlet {
     public Map login(@RequestBody User user, HttpServletResponse response) {
         Map map = userService.userLogin(user);
         if (map.containsKey("user")) {
-            String token = JWTUtil.generateToken(((Integer)((User)map.get("user")).getId()).toString(),"Bob",((User)map.get("user")).getUsername());
+            String token = JWTUtil.generateToken(((Integer)((User)map.get("user")).getId()).toString(),"Bob","BBSUser");
             response.setHeader("token", token);
         }
         return map;
@@ -356,7 +362,8 @@ public class UserController extends HttpServlet {
     //评论博客
     @PostMapping("/addMainComment")
     public Map addMainComment(@RequestBody MainComment mainComment, HttpServletRequest req) {
-        mainComment.setUserId(((User) req.getSession().getAttribute("user")).getId());
+        Claims token = JWTUtil.verifyToken(req.getHeader("token"));
+        mainComment.setUserId(Integer.parseInt(token.getId()));
         return commentService.addMainComment(mainComment);
     }
 
@@ -376,7 +383,8 @@ public class UserController extends HttpServlet {
     //回复评论
     @PostMapping("/addInsideComment")
     public Map addInsideComment(@RequestBody InsideComment insideComment, HttpServletRequest req) {
-        insideComment.setUserId(((User) req.getSession().getAttribute("user")).getId());
+        Claims token = JWTUtil.verifyToken(req.getHeader("token"));
+        insideComment.setUserId(Integer.parseInt(token.getId()));
         return commentService.addInsideComment(insideComment);
     }
 

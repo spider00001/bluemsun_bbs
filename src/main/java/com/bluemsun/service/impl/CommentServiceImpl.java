@@ -2,9 +2,11 @@ package com.bluemsun.service.impl;
 
 import com.bluemsun.dao.InsideCommentMapper;
 import com.bluemsun.dao.MainCommentMapper;
+import com.bluemsun.dao.UserMapper;
 import com.bluemsun.entity.InsideComment;
 import com.bluemsun.entity.MainComment;
 import com.bluemsun.entity.Page;
+import com.bluemsun.entity.User;
 import com.bluemsun.service.CommentService;
 
 import java.util.HashMap;
@@ -14,10 +16,12 @@ public class CommentServiceImpl implements CommentService {
 
     private final MainCommentMapper mainCommentMapper;
     private final InsideCommentMapper insideCommentMapper;
+    private final UserMapper userMapper;
 
-    public CommentServiceImpl(MainCommentMapper mainCommentMapper, InsideCommentMapper insideCommentMapper) {
+    public CommentServiceImpl(MainCommentMapper mainCommentMapper, InsideCommentMapper insideCommentMapper, UserMapper userMapper) {
         this.mainCommentMapper = mainCommentMapper;
         this.insideCommentMapper = insideCommentMapper;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -50,6 +54,10 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Map addInsideComment(InsideComment insideComment) {
+        User userM = mainCommentMapper.selectUserByMainCommentId(insideComment.getCommentMainId());
+        User userI = userMapper.checkUser(insideComment.getUserId());
+        String content = userI.getUsername()+" 回复了 "+userM.getUsername()+":"+insideComment.getContent();
+        insideComment.setContent(content);
         int row = insideCommentMapper.addInsideComment(insideComment);
         Map<String,Object> map = new HashMap<String,Object>();
         if (row > 0) {
