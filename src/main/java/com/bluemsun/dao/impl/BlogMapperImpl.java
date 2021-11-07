@@ -329,13 +329,46 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
     }
 
     @Override
-    public boolean addViews(int blogId, int userId) {
+    public boolean addBlogViewsOfRedis(int blogId, int userId) {
         try {
             return jedisUtil.pfadd("blog_view:"+blogId,((Integer)userId).toString());
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public long getBlogViewsOfRedis(Blog blog) {
+        long views = 0;
+        try {
+            views = jedisUtil.pfcount("blog_view:"+blog.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return views;
+    }
+
+    @Override
+    public int updateBlogViews(Blog blog) {
+        int row = 0;
+        try {
+            row = getSqlSession().getMapper(BlogMapper.class).updateBlogViews(blog);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
+    public long getBlogViews(int blogId) {
+        long views = 0;
+        try {
+            views = getSqlSession().getMapper(BlogMapper.class).getBlogViews(blogId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return views;
     }
 
     @Override
@@ -382,5 +415,38 @@ public class BlogMapperImpl extends SqlSessionDaoSupport implements BlogMapper {
         return blogList;
     }
 
+    @Override
+    public void updateAllBlogsViews() {
+        List<Blog> allBlogsList =  getSqlSession().getMapper(BlogMapper.class).getAllBlogs();
+        for (Blog blog: allBlogsList) {
+            blog.setViews(blog.getViews() + getBlogViewsOfRedis(blog));
+            getSqlSession().getMapper(BlogMapper.class).updateBlogViews(blog);
+        }
+        //flush存浏览量的DB1
+        jedisUtil.flushDB(1);
+    }
+
+    @Override
+    public void updateAllBlogsHeat() {
+        List<Blog> allBlogsList =  getSqlSession().getMapper(BlogMapper.class).getAllBlogs();
+        for (Blog blog : allBlogsList) {
+            double heat = (blog.getViews() + blog.getLikesNum()*100L + 1) / (1+((new Timestamp(System.currentTimeMillis()).getTime() - blog.getCreateTime().getTime()))/86400000);
+//            System.out.println("+++++++++++++++++heat="+(1+((new Timestamp(System.currentTimeMillis()).getTime() - blog.getCreateTime().getTime()))/86400000));
+            blog.setHeat(heat);
+            updateBlogHeat(blog);
+            jedisUtil.del("blog:"+blog.getId());
+        }
+    }
+
+    @Override
+    public List<Blog> getHeatTopBlogs() {
+        List<Blog> blogList = null;
+        try {
+            blogList = getSqlSession().getMapper(BlogMapper.class).getHeatTopBlogs();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return blogList;
+    }
 
 }

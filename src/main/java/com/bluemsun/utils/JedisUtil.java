@@ -147,14 +147,12 @@ public class JedisUtil {
         }
     }
 
-    public boolean flushDB(int db) {
+    public void flushDB(int db) {
         try {
             jedis.select(db);
             jedis.flushDB();
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         } finally {
             jedis.select(0);
         }

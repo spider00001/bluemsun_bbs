@@ -97,7 +97,7 @@
     </select>
 
     <select id="checkBlog" parameterType="Blog" resultType="BlogUserDto">
-        select tb.id, tb.user_id, title, tb.create_time, views, content, likes_num, username, head_portrait, blog_type
+        select tb.id, tb.user_id, title, tb.create_time, views, content, likes_num, username, head_portrait, blog_type, heat
         from bs_bbs.tb_blog tb
             inner join tb_user tu on tb.user_id = tu.id
         where tb.id=#{id};
@@ -149,8 +149,20 @@
         update bs_bbs.tb_blog set heat=#{heat} where id=#{id};
     </update>
 
+    <select id="getBlogViews" resultType="long" parameterType="int">
+        select views from tb_blog where id=#{blogId};
+    </select>
+
+    <update id="updateBlogViews" parameterType="Blog">
+        update bs_bbs.tb_blog set views=#{views} where id=#{id};
+    </update>
+
     <select id="getAllBlogs" resultType="Blog">
-        select * from tb_blog;
+        select * from tb_blog  order by id;
+    </select>
+
+    <select id="getHeatTopBlogs" resultType="Blog">
+        select id, title from tb_blog order by heat desc limit 0,5;
     </select>
 
 </mapper>

@@ -52,4 +52,7 @@ public interface UserService {
     //修改用户头像
     Map<String,Object> updateHeadPortrait(User user);
 
+    //退出登录
+    void userLogOut(String token);
+
 }

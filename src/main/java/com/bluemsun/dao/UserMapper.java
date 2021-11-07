@@ -80,6 +80,10 @@ public interface UserMapper {
     //检查是否已经关注该用户
     int isFollowUser(Map map);
 
+    //更新用户头像
     int updateHeadPortrait(User user);
+
+    //退出登录
+    void userLogOut(String token);
 
 }

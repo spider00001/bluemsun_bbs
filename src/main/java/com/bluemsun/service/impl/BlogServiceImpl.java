@@ -259,18 +259,21 @@ public class BlogServiceImpl implements BlogService {
     public Map<String,Object> checkBlog(Blog blog, int userId) {
         Map<String,Object> mapRes = new HashMap<String,Object>();
         BlogUserDto blogRes = blogMapper.checkBlog(blog);
-        blogMapper.addViews(blog.getId(),userId);
         if (blogRes != null) {
-            mapRes.put("data",blogRes);
-            mapRes.put("msg","查看博客成功");
-            mapRes.put("status",1);
             //isLiked:  0: 未赞 ; 1:赞过
             Map<String,Integer> mapIsLiked = new HashMap<String,Integer>();
-            mapIsLiked.put("blogId", blogRes.getId());
-            mapIsLiked.put("userId",userId);
-            mapRes.put("isLiked",blogMapper.isBlogLiked(mapIsLiked));
-            //如果isMyBlog 为1则为自己的博客;为0则不是自己的博客(管理员端调用方法这个则不用判断)
-            mapRes.put("isMyBlog",userId == blogRes.getUserId() ? 1 : 0);
+            if (userId != 0) {
+                mapIsLiked.put("blogId", blogRes.getId());
+                mapIsLiked.put("userId",userId);
+                mapRes.put("isLiked",blogMapper.isBlogLiked(mapIsLiked));
+                //如果isMyBlog 为1则为自己的博客;为0则不是自己的博客(管理员端调用方法这个则不用判断)
+                mapRes.put("isMyBlog",userId == blogRes.getUserId() ? 1 : 0);
+                blogMapper.addBlogViewsOfRedis(blog.getId(),userId);
+                blogRes.setViews(blogRes.getViews()+blogMapper.getBlogViewsOfRedis(blog));
+                mapRes.put("data",blogRes);
+                mapRes.put("msg","查看博客成功");
+                mapRes.put("status",1);
+            }
         } else {
             mapRes.put("msg","查看博客失败");
             mapRes.put("status",2);
@@ -346,6 +349,31 @@ public class BlogServiceImpl implements BlogService {
             map.put("status",2);
         }
         return map;
+    }
+
+    @Override
+    public void updateAllBlogsViews() {
+        blogMapper.updateAllBlogsViews();
+    }
+
+    @Override
+    public void updateAllBlogsHeat() {
+        blogMapper.updateAllBlogsHeat();
+    }
+
+    @Override
+    public Map getHeatTopBlogs() {
+        List<Blog> blogList = blogMapper.getHeatTopBlogs();
+        Map<String,Object> mapRes = new HashMap<String,Object>();
+        if (blogList != null) {
+            mapRes.put("list",blogList);
+            mapRes.put("msg","获取热门博客5个成功");
+            mapRes.put("status",1);
+        } else {
+            mapRes.put("msg","获取热门博客5个失败");
+            mapRes.put("status",2);
+        }
+        return mapRes;
     }
 
 }

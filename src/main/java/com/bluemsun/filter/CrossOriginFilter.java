@@ -54,8 +54,8 @@ public class CrossOriginFilter implements Filter {
            //即 Access-Control-Allow-Methods 和Access-Control-Allow-Headers 提供的信息可以被缓存多久
            response.setHeader("Access-Control-Max-Age", "86400");
            //设置除了简单响应首部以外，需要暴露给外部的其他首部
-           response.setHeader("Access-Control-Expose-Headers", "Authorization");
-           response.setHeader("Access-Control-Expose-Headers", "token");
+//           response.setHeader("Access-Control-Expose-Headers", "Authorization");
+           response.setHeader("Access-Control-Expose-Headers", "Authorization,token");
         filterChain.doFilter(request, response);
     }
 

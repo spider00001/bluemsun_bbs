@@ -60,6 +60,15 @@ public interface BlogService {
     Map cancelLikeBlog(Map map);
 
     //搜索博客分页
-     Map selectBlogPage(int pageNum,int pageSize, String title);
+    Map selectBlogPage(int pageNum,int pageSize, String title);
+
+    //更新博客浏览量
+    void updateAllBlogsViews();
+
+    //更新博客热度
+    void updateAllBlogsHeat();
+
+    //获取热门博客5个(返回博客id及题目)
+    Map getHeatTopBlogs();
 
 }

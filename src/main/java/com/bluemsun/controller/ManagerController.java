@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -38,6 +39,15 @@ public class ManagerController extends HttpServlet {
             String token = JWTUtil.generateToken(((Integer)managerRes.getId()).toString(),"Bob",managerRes.getAccountNumber());
             response.setHeader("token", token);
         }
+        return map;
+    }
+
+    @PostMapping("/logOut")
+    public Map logOut(HttpServletRequest req) {
+        Map map = new HashMap();
+        userService.userLogOut(req.getHeader("token"));
+        map.put("msg","退出登录成功");
+        map.put("status",1);
         return map;
     }
 
@@ -119,7 +129,6 @@ public class ManagerController extends HttpServlet {
     public Map checkBlog(@RequestBody Blog blog) {
         return blogService.checkBlog(blog,0);
     }
-    
 
     //删除博客
     @PostMapping("/deleteBlog")
@@ -144,7 +153,6 @@ public class ManagerController extends HttpServlet {
     public Map cancelToppingBlog(@RequestBody Blog blog) {
         return blogService.cancelToppingBlog(blog);
     }
-
 
     /**
      * 板块管理模块
@@ -271,5 +279,6 @@ public class ManagerController extends HttpServlet {
     public Map checkManageNotice(@RequestBody ManagerNotice managerNotice) {
         return managerNoticeService.checkManageNotice(managerNotice);
     }
+
 
 }

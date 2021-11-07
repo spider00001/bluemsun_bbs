@@ -7,6 +7,7 @@ import com.bluemsun.utils.JWTUtil;
 import com.bluemsun.utils.JedisUtil;
 import com.google.gson.Gson;
 import io.jsonwebtoken.Claims;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -104,6 +105,16 @@ public class UserController extends HttpServlet {
         return map;
     }
 
+    //退出登录
+    @PostMapping("/userLogOut")
+    public Map userLogOut(HttpServletRequest req) {
+        userService.userLogOut(req.getHeader("token"));
+        Map map = new HashMap();
+        map.put("msg","退出登录成功");
+        map.put("status",1);
+        return map;
+    }
+
     //用户头像上传
     @PostMapping(value="/uploadHeadPortrait")
     public Map uploadHeadPortrait(@RequestParam("file") MultipartFile file, HttpServletRequest request, HttpServletRequest req) {
@@ -146,8 +157,10 @@ public class UserController extends HttpServlet {
     }
 
     //个人信息修改
-    @PostMapping("/updateUser")//接口文档请求数据里面要加user的id
-    public Map updateUser(@RequestBody User user) {
+    @PostMapping("/updateUser")
+    public Map updateUser(@RequestBody User user, HttpServletRequest req) {
+        Claims token = JWTUtil.verifyToken(req.getHeader("token"));
+        user.setId(Integer.parseInt(token.getId()));
         return userService.updateUser(user);
     }
 
@@ -288,7 +301,7 @@ public class UserController extends HttpServlet {
     }
 
     //重新发布前要选择自己博客所在板块
-    //1.选择博客所在板块
+    //1.选择博客所在板块 ; 移动博客到其他自己的板块(先查看我的板块)
     @PostMapping("/releaseBlogInPlate")
     public Map updateBlogPlate(@RequestBody Map map) {
         return plateService.releaseBlogInPlate(map);
@@ -445,7 +458,7 @@ public class UserController extends HttpServlet {
     }
 
     //我的板块
-    @PostMapping("/checkUserPlate")//这里要改成传userId
+    @PostMapping("/checkUserPlate")
     public Map checkUserPlate(HttpServletRequest req) {
         Claims token = JWTUtil.verifyToken(req.getHeader("token"));
         User user = new User();
@@ -525,6 +538,18 @@ public class UserController extends HttpServlet {
         return blogService.cancelToppingPlateBlog(map);
     }
 
+    //定时(每天0点)写入博客浏览量到MYSql数据库,及更新博客热度
+//    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "0 */10 * * * ?")//10分钟更新一次
+    public void updateAllBlogsViews() {
+        blogService.updateAllBlogsViews();
+        blogService.updateAllBlogsHeat();
+    }
 
+    //获取热门博客
+    @GetMapping("/getHeatTopBlogs")
+    public Map getHeatTopBlogs() {
+        return blogService.getHeatTopBlogs();
+    }
 
 }

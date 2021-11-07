@@ -51,7 +51,7 @@ public interface PlateService {
     //搜索板块分页
     Map selectPlatePage(int pageNum, int pageSize, String plateName);
 
-    //查看自己的博客
+    //查看自己的板块
     Map checkUserPlate(User user);
 
     //查询板块名称是否存在

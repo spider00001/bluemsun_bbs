@@ -11,10 +11,19 @@ public class Blog {
     private String username;//用户名
     private String title;//标题
     private Timestamp createTime;//创建时间(最后一次修改时间)
-    private int views;//浏览量
+    private long views;//浏览量
     private String content;//文章
     private int likesNum;//点赞数
     private int blogType;//博客类型：0文章 1资源下载博客
+    private double heat;//热度
+
+    public double getHeat() {
+        return heat;
+    }
+
+    public void setHeat(double heat) {
+        this.heat = heat;
+    }
 
     public Blog() {
     }
@@ -68,11 +77,11 @@ public class Blog {
         this.createTime = createTime;
     }
 
-    public int getViews() {
+    public long getViews() {
         return views;
     }
 
-    public void setViews(int views) {
+    public void setViews(long views) {
         this.views = views;
     }
 
@@ -104,6 +113,7 @@ public class Blog {
                 ", content='" + content + '\'' +
                 ", likesNum=" + likesNum +
                 ", blogType=" + blogType +
+                ", heat=" + heat +
                 '}';
     }
 }

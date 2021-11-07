@@ -14,7 +14,7 @@ public class JWTUtil {
 
     // token加密时使用的秘钥，一旦得到此秘钥也就可以伪造token了
     public static String secretKey = "bluemsunBBSJwtSecretKey";
-    // 代表token的有效时间
+    // 代表token的有效时间(30min)
     public final static long KEEP_TIME = 1800000;
 
     /**

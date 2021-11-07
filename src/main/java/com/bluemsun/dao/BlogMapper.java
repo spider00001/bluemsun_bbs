@@ -84,7 +84,16 @@ public interface BlogMapper {
     List<Blog> selectBlogList(Map map);
 
     //redis内博客对应浏览量加一
-    boolean addViews(int blogId, int userId);
+    boolean addBlogViewsOfRedis(int blogId, int userId);
+
+    //获取redis里博客的浏览量
+    long getBlogViewsOfRedis(Blog blog);
+
+    //更新数据库里面博客浏览量
+    int updateBlogViews(Blog blog);
+
+    //获取数据库里博客的浏览量
+    long getBlogViews(@Param("blogId") int blogId);
 
     //点赞数加一
     int addLikes(@Param("blogId") int blogId);
@@ -97,5 +106,14 @@ public interface BlogMapper {
 
     //获取所有博客
     List<Blog> getAllBlogs();
+
+    //更新MYSql里所有博客浏览量
+    void updateAllBlogsViews();
+
+    //更新博客热度
+    void updateAllBlogsHeat();
+
+    //获取热门博客5个
+    List<Blog> getHeatTopBlogs();
 
 }

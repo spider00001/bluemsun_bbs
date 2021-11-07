@@ -2,8 +2,10 @@ package com.bluemsun.dao.impl;
 
 import com.bluemsun.dao.UserMapper;
 import com.bluemsun.entity.User;
+import com.bluemsun.utils.JWTUtil;
 import com.bluemsun.utils.JedisUtil;
 import com.google.gson.Gson;
+import io.jsonwebtoken.Claims;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import java.util.List;
@@ -95,6 +97,8 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
         return userList;
     }
 
+
+    //有点问题.................
     @Override
     public User checkUser(int id) {
         User userRes = null;
@@ -102,7 +106,7 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
             userRes = gson.fromJson(jedisUtil.get("user:"+id),User.class);
             if (userRes == null) {
                 userRes  = getSqlSession().getMapper(UserMapper.class).checkUser(id);
-                jedisUtil.set("user:"+userRes.getId(),gson.toJson(userRes));
+                jedisUtil.set("user:"+id,gson.toJson(userRes));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -284,10 +288,23 @@ public class UserMapperImpl extends SqlSessionDaoSupport implements UserMapper {
         int row = 0;
         try {
             row = getSqlSession().getMapper(UserMapper.class).updateHeadPortrait(user);
+            //删除原始user，这样下次查看user时头像URL就与数据库里面同步了
+            jedisUtil.del("user:" + user.getId());
+            System.out.println("============"+user.getId()+"==========");
         } catch (Exception e) {
             e.printStackTrace();
         }
         return row;
+    }
+
+    @Override
+    public void userLogOut(String token) {
+        try {
+            jedisUtil.set("token:"+token,token);
+            jedisUtil.expire("token:"+token,1800);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

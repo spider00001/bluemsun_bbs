@@ -11,13 +11,22 @@ public class BlogUserDto {
     private String username;// 用户名
     private String title;// 标题
     private Timestamp createTime;// 创建时间(最后一次修改时间)
-    private int views;// 浏览量
+    private long views;// 浏览量
     private String content;// 内容
     private int likesNum;// 点赞数
     private String headPortrait;// 头像资源路径
     private int blogType;// 板块类型 0文章 1资源下载
     private String plateName;// 所属板块名称
     private int plateId;// 所属板块id
+    private double heat;//热度
+
+    public double getHeat() {
+        return heat;
+    }
+
+    public void setHeat(double heat) {
+        this.heat = heat;
+    }
 
     public int getBlogType() {
         return blogType;
@@ -87,11 +96,11 @@ public class BlogUserDto {
         this.createTime = createTime;
     }
 
-    public int getViews() {
+    public long getViews() {
         return views;
     }
 
-    public void setViews(int views) {
+    public void setViews(long views) {
         this.views = views;
     }
 
@@ -134,6 +143,7 @@ public class BlogUserDto {
                 ", blogType=" + blogType +
                 ", plateName='" + plateName + '\'' +
                 ", plateId=" + plateId +
+                ", heat=" + heat +
                 '}';
     }
 }

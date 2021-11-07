@@ -14,7 +14,7 @@
     </delete>
 
     <update id="updateUser" parameterType="User">
-        update bs_bbs.tb_user set username=#{username},password=#{password},sex=#{sex},description=#{description},head_portrait=#{headPortrait}, phone_number=#{phoneNumber},email_count=#{emailCount} where id=#{id};
+        update bs_bbs.tb_user set username=#{username},password=#{password},sex=#{sex},description=#{description},phone_number=#{phoneNumber},email_count=#{emailCount} where id=#{id};
     </update>
 
     <select id="getUserCount" resultType="int">
@@ -30,7 +30,7 @@
     </select>
 
     <select id="checkUser" parameterType="int" resultType="User">
-        select id, username, sex, head_portrait, status, description, stu_number, fans_num, follow_user_num, email_count, phone_number from tb_user where id=#{id};
+        select id, username, sex, head_portrait, status, description, stu_number, fans_num, follow_user_num, email_count, phone_number,password from tb_user where id=#{id};
     </select>
 
     <select id="selectUser" parameterType="User" resultType="User">

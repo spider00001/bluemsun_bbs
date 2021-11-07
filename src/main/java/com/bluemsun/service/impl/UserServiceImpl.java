@@ -145,12 +145,12 @@ public class UserServiceImpl implements UserService {
         Map<String,Object> mapRes = new HashMap<String,Object>();
         User userRes = userMapper.checkUser((int)map.get("id"));
         if (userRes != null) {
-            mapRes.put("msg","查看用户成功");
-            mapRes.put("status",1);
-            mapRes.put("user",userRes);
             if (map.containsKey("userId")) {
                 mapRes.put("isFollow",userMapper.isFollowUser(map));
             }
+            mapRes.put("msg","查看用户成功");
+            mapRes.put("status",1);
+            mapRes.put("user",userRes);
         } else {
             mapRes.put("msg","查看用户失败");
             mapRes.put("status",2);
@@ -332,6 +332,11 @@ public class UserServiceImpl implements UserService {
             map.put("status",2);
         }
         return map;
+    }
+
+    @Override
+    public void userLogOut(String token) {
+        userMapper.userLogOut(token);
     }
 
 }
